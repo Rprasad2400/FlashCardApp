@@ -1,6 +1,6 @@
 // JavaScript source code
 import React, { useState } from 'react';
-
+import { Container } from 'react-bootstrap';
 import '../App.css';
 
 export default function Flashcard({ flashcard }) {

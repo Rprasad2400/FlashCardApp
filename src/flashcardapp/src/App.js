@@ -13,6 +13,7 @@ import StudyNow from './Views/StudyNow';
 import OSFlash from './Views/OSflash';
 import OSmod1 from './Views/OSmod1';
 import Nav from './Components/nav';
+import FlashCardDisplay from './Views/FlashCardDisplay';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/study-now" exact={true} element={<StudyNow/>} />
                 <Route path="/OS-flashcards" exact={true} element={<OSFlash/>} />
                 <Route path="/module1" exact={true} element={<OSmod1/>} />
+                <Route path="/FlashcardDisplay" exact={true} element={<FlashCardDisplay/>} />
             </Routes>
         </Router>
     </div>

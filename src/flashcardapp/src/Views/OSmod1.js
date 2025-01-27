@@ -4,7 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
-
+import  Button  from 'react-bootstrap/Button';
+import { Link } from "react-router-dom";
 import '../App.css';
 
 import FlashcardList from '../Components/FlashcardList';
@@ -34,6 +35,7 @@ const SAMPLE_FLASHCARDS = [
         ]
     },
 ]
+
 
 export default function OSFlash() {
     const [flashcards, setFlashcards] = useState(SAMPLE_FLASHCARDS)
@@ -69,7 +71,12 @@ export default function OSFlash() {
           <Col md={9} className="p-4 col-debug">
             <h1>Module 1: OS Fundamentals</h1>
             <div className="mt-5">
+              <div className="button-container">
                 <h2>Flashcards</h2>
+                <Button  as={Link} to="/FlashCardDisplay" variant="primary">
+                 Go to Target
+                  </Button>
+                </div>
                 <div className="flashcard-container">
                     <FlashcardList flashcards={flashcards} />
                 </div>
