@@ -13,7 +13,7 @@ import StudyNow from './Views/StudyNow';
 import OSFlash from './Views/OSflash';
 import OSmod1 from './Views/OSmod1';
 import Nav from './Components/nav';
-import FlashCardDisplay from './Views/FlashCardDisplay';
+import FlashCardDisplay from './Views/carddisplay/FlashCardDisplay';
 
 function App() {
   return (

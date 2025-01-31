@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Button, Row, Col } from 'react-bootstrap';
-import Flashcard from '../Components/Flashcard';
-import '../App.css';
+import Flashcard from '../../Components/flashcard/Flashcard';
+import styles from './carddisplay.modules.css';
 
 const SAMPLE_FLASHCARDS = [
     {
@@ -28,6 +28,7 @@ export default function FlashCardDisplay() {
 
     const onRedButtonClick = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % SAMPLE_FLASHCARDS.length);
+        
     };
 
     const onGreenButtonClick = () => {
@@ -35,13 +36,15 @@ export default function FlashCardDisplay() {
     };
 
     return (
-        <Container className="d-flex flex-column align-items-center justify-content-center" style={{ height: '100vh' }}>
-            <Flashcard flashcard={SAMPLE_FLASHCARDS[currentIndex]} />
-            <Row className="mt-3">
-                <Col>
+        <Container className={styles.container}>
+            <Row className={styles.row}>
+            <Flashcard width="350px" height="200px" flashcard={SAMPLE_FLASHCARDS[currentIndex]} />
+            </Row>
+            <Row className={styles.row}>
+                <Col className={styles.col}>
                     <Button variant="danger" onClick={onRedButtonClick}>Red Button</Button>
                 </Col>
-                <Col>
+                <Col className={styles.col}>
                     <Button variant="success" onClick={onGreenButtonClick}>Green Button</Button>
                 </Col>
             </Row>
