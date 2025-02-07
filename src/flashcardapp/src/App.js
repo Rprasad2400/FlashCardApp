@@ -30,6 +30,7 @@ function App() {
                   <Route path="/OS-flashcards" exact={true} element={<OSFlash />} />
                   <Route path="/module1" exact={true} element={<OSmod1 />} />
                   <Route path="/account-page" exact={true} element={<Account />} />
+                  <Route path="/FlashCardDisplay" exact={true} element={<FlashCardDisplay />} />
             </Routes>
         </Router>
     </div>

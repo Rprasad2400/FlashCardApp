@@ -2,27 +2,7 @@
   background-color: white;
 }
 
-/* Makes card responsive to page changes*/
-/*.card{
-  display: flex;*/  /* Align content inside card */
-  /*justify-content: center;
-  align-items: center;
-  position: relative;
-  padding: 10px; /* Adds internal spacing */
-  border-radius: 10px;  /* Rounded corners for visual appeal */
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
-  box-sizing: border-box; /* Includes padding in width/height */
-  background-color: white;
-  width: 200px;
-  aspect-ratio: 1 / 1; /* Maintain a 1:1 aspect ratio (square) */
-  margin: 10px; /* Space between cards */
-  flex-direction: column;
-  transform: perspective(1000px) rotateY(var(--rotate-y, 0)) translateY(var(--translate-y, 0));
-  transform-style: preserve-3d;*/ /*Things on back now go on front*/
-  /*transition: 150ms;*/ /* Allows for rotation animation*/
-  /*cursor: pointer;*/ /* mouse turns into click icon when hovering*/
-  /*overflow: hidden;*/
-/*}*/
+
 
 /*.card:hover {
   --translate-y: -2px;
