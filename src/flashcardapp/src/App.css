@@ -3,9 +3,9 @@
 }
 
 /* Makes card responsive to page changes*/
-.card{
-  display: flex;  /* Align content inside card */
-  justify-content: center;
+/*.card{
+  display: flex;*/  /* Align content inside card */
+  /*justify-content: center;
   align-items: center;
   position: relative;
   padding: 10px; /* Adds internal spacing */
@@ -18,16 +18,16 @@
   margin: 10px; /* Space between cards */
   flex-direction: column;
   transform: perspective(1000px) rotateY(var(--rotate-y, 0)) translateY(var(--translate-y, 0));
-  transform-style: preserve-3d; /*Things on back now go on front*/
-  transition: 150ms; /* Allows for rotation animation*/
-  cursor: pointer; /* mouse turns into click icon when hovering*/
+  transform-style: preserve-3d;*/ /*Things on back now go on front*/
+  /*transition: 150ms;*/ /* Allows for rotation animation*/
+  /*cursor: pointer;*/ /* mouse turns into click icon when hovering*/
   /*overflow: hidden;*/
-}
+/*}*/
 
-.card:hover {
+/*.card:hover {
   --translate-y: -2px;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);
-}
+}*/
 
 .card.flip {
   --rotate-y: 180deg;
