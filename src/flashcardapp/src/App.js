@@ -15,6 +15,7 @@ import OSmod1 from './Views/OSmod1';
 import Account from './Views/Account';
 import Login from './Views/Login'
 import Nav from './Components/nav';
+import FlashCardDisplay from './Views/carddisplay/FlashCardDisplay';
 
 function App() {
   return (

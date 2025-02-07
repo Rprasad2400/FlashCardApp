@@ -1,17 +1,20 @@
 // JavaScript source code
 import React, { useState } from 'react';
+import { Container } from 'react-bootstrap';
+import styles from './Flashcard.module.css';
 
-import '../App.css';
-
-export default function Flashcard({ flashcard }) {
+export default function Flashcard({ flashcard, width, height }) {
     const [flip, setFlip] = useState(false)
     return (
+      
     
       <div
-        className={`card ${flip ? 'flip' : ''}`} /* creates a class "card" and, if flip is true, "flip"*/
+      className={`${styles.card} ${flip ? styles.flip : ''}`}  // Applying styles
+      style={{ width: width, height: height }} /* creates a class "card" and, if flip is true, "flip"*/
         onClick={() => setFlip(!flip)}
       >
-        <div className="front">
+        
+        <div className={styles.front}>
             {flashcard.question}
             {/* <div className= "flashcard-options">
                 {flashcard.options.map(option => {
@@ -19,7 +22,8 @@ export default function Flashcard({ flashcard }) {
                 })}
             </div> */}
         </div>
-            <div className='back'>{flashcard.answer}</div>
+            <div className={styles.back}>{flashcard.answer}</div>
       </div>
+      
     );
   }
