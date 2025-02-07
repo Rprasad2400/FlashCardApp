@@ -1,23 +1,38 @@
 import logo from './logo.svg';
 import './App.css';
 
+// Bootstrap CSS
+import "bootstrap/dist/css/bootstrap.min.css";
+// Bootstrap Bundle JS
+import "bootstrap/dist/js/bootstrap.bundle.min";
+
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import Home from './Views/Home';
+import StudyNow from './Views/StudyNow';
+import OSFlash from './Views/OSflash';
+import OSmod1 from './Views/OSmod1';
+import Account from './Views/Account';
+import Login from './Views/Login'
+import Nav from './Components/nav';
+import FlashCardDisplay from './Views/carddisplay/FlashCardDisplay';
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        {/*define routes*/}
+        <Router>
+            <Nav /> {/*places nav bar*/}
+              <Routes>
+                  <Route path="/" exact={true} element={<Login />} />
+                  <Route path="/home" exact={true} element={<Home />} /> {/* This works because our root path (just the "/") is what appears when the page is opened*/}
+                  <Route path="/study-now" exact={true} element={<StudyNow />} />
+                  <Route path="/OS-flashcards" exact={true} element={<OSFlash />} />
+                  <Route path="/module1" exact={true} element={<OSmod1 />} />
+                  <Route path="/account-page" exact={true} element={<Account />} />
+                  <Route path="/FlashCardDisplay" exact={true} element={<FlashCardDisplay />} />
+            </Routes>
+        </Router>
     </div>
   );
 }
