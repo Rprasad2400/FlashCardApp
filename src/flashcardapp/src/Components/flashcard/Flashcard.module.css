@@ -1,35 +1,101 @@
-.card {
-  position: relative;
-  width: var(--flashcard-width, 150px);
-  height: var(--flashcard-height, 150px);
-  margin: 10px;
-  cursor: pointer;
-  transform-style: preserve-3d; /* Crucial for 3D flips */
-  transition: transform 300ms ease-in-out;
-}
+/* Makes card responsive to page changes*/
+.card{
+    display: flex;  /* Align content inside card */
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 10px; /* Adds internal spacing */
+    border-radius: 10px;  /* Rounded corners for visual appeal */
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+    box-sizing: border-box; /* Includes padding in width/height */
+    background-color: white;
+    width: var(--flashcard-width, 150px); /* Default to 300px if not set */
+    height: var(--flashcard-height, 150px); /* Default to 300px if not set */
+    margin: 10px; /* Space between cards */
+    flex-direction: column;
+    transform: perspective(1000px) rotateY(var(--rotate-y, 0)) translateY(var(--translate-y, 0));
+    transform-style: preserve-3d; /*Things on back now go on front*/
+    transition: 150ms; /* Allows for rotation animation*/
+    cursor: pointer; /* mouse turns into click icon when hovering*/
+    /*overflow: hidden;*/
+  }
 
-.card.flip {
-  transform: rotateY(180deg);
-}
 
-/* Front/Back shared styles */
-.front,
-.back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3);
-  background: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  backface-visibility: hidden; /* Hide mirror effect */
-  -webkit-backface-visibility: hidden; /* Safari fix */
-}
+ 
 
-/* Back face starts flipped */
-.back {
-  transform: rotateY(180deg);
-}
+  
+.card:hover {
+    --translate-y: -2px;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);
+  }
+  
+  .card.flip {
+    --rotate-y: 180deg;
+  }
+  
+  .card-grid {
+    display: flex;
+    flex-wrap: wrap; /* Ensures flashcards wrap to the next row */
+    gap: 20px; /* Adds space between flashcards */
+    justify-content: flex-start; /* Aligns flashcards to the left */
+  }
+  
+  .flashcard-options {
+    display: flex; /* Flex layout for options */
+    flex-wrap: wrap; /* Allow wrapping if options overflow */
+    gap: 5px; /* Add space between options */
+    justify-content: flex-start; /* Align options to the left */
+    margin-top: 10px; /* Add spacing above options */
+  } 
+
+  /*Styles the options */
+/*.flashcard-option {
+  background-color: #007bff; /* Blue background for options */
+/*  color: white; /* White text */
+/*  padding: 5px 10px; /* Padding inside the option */
+/*  border-radius: 5px; /* Rounded corners for options */
+/*  font-size: 14px; /* Font size for options */
+/*  text-align: center; /* Center text */
+/*  max-width: 100%; /* Prevent options from exceeding card width */
+/*}*/
+
+/* May not be needed */
+.flashcard-container {
+    display: flex;
+    flex-wrap: wrap; /* Ensures cards wrap to the next row if needed */
+    gap: 20px; /* Adds space between cards */
+    justify-content: flex-start; /* Aligns cards to the left */
+    padding: 10px; /* Optional padding for the container */
+  }
+  
+  /* May not do anything*/
+  .flashcard-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start; /* Align flashcards to the left */
+    padding: 10px; /* Optional padding inside the container */
+  }
+  
+  /* So back and front of the card don't offset each other*/
+  .card .front,
+  .card .back {
+    position: absolute; /* Stack .front and .back on top of each other */
+    width: 100%;
+    height: 100%;
+    top: 0; /* Align to the top of the card */
+    left: 0; /* Align to the left of the card */
+    backface-visibility: hidden; /* Hide the back when the front is visible */
+    display: flex; /* Align text and options */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    text-align: center;
+    font-size: 18px;
+    padding: 10px;
+    box-sizing: border-box; /* Include padding in width/height */
+  }
+  
+  .card .back {
+    transform: rotateY(180deg);
+  }
+  

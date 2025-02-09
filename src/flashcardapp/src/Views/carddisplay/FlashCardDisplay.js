@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Container, Button, Row, Col } from 'react-bootstrap';
 import Flashcard from '../../Components/flashcard/Flashcard';
 import styles from './carddisplay.modules.css';
@@ -25,38 +25,27 @@ const SAMPLE_FLASHCARDS = [
 export default function FlashCardDisplay() {
 
     const [currentIndex, setCurrentIndex] = React.useState(0);
-    const [isFlipped, setIsFlipped] = useState(false); // flip state
-
-    useEffect(() => {
-        setIsFlipped(false);
-    }, [currentIndex]);
 
     const onRedButtonClick = () => {
-        setCurrentIndex((prev) => (prev + 1) % SAMPLE_FLASHCARDS.length);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % SAMPLE_FLASHCARDS.length);
         
     };
 
     const onGreenButtonClick = () => {
-        setCurrentIndex((prev) => (prev + 1) % SAMPLE_FLASHCARDS.length);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % SAMPLE_FLASHCARDS.length);
     };
 
     return (
         <Container className={styles.container}>
             <Row className={styles.row}>
-            <Flashcard 
-          width="350px" 
-          height="200px" 
-          flashcard={SAMPLE_FLASHCARDS[currentIndex]}
-          isFlipped={isFlipped} // Pass flip state as prop
-          onFlip={() => setIsFlipped(!isFlipped)} // Pass flip handler
-        />
+            <Flashcard width="350px" height="200px" flashcard={SAMPLE_FLASHCARDS[currentIndex]} />
             </Row>
             <Row className={styles.row}>
                 <Col className={styles.col}>
-                    <Button variant="danger" onClick={onRedButtonClick}>WRONG</Button>
+                    <Button variant="danger" onClick={onRedButtonClick}>Red Button</Button>
                 </Col>
                 <Col className={styles.col}>
-                    <Button variant="success" onClick={onGreenButtonClick}>CORRECT</Button>
+                    <Button variant="success" onClick={onGreenButtonClick}>Green Button</Button>
                 </Col>
             </Row>
         </Container>
