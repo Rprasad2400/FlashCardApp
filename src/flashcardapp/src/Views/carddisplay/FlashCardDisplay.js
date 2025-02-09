@@ -36,15 +36,15 @@ export default function FlashCardDisplay() {
     };
 
     return (
-        <Container className={styles.container}>
-            <Row className={styles.row}>
+        <Container className="display-container"> {/*You have to name these as things other than basic containers*/}
+            <Row className="display-row">         {/*e.g. row, col, container. If you don't it will apply to all of them.*/}
             <Flashcard width="350px" height="200px" flashcard={SAMPLE_FLASHCARDS[currentIndex]} />
             </Row>
-            <Row className={styles.row}>
-                <Col className={styles.col}>
+            <Row className="display-row">
+                <Col className="display-col">
                     <Button variant="danger" onClick={onRedButtonClick}>Red Button</Button>
                 </Col>
-                <Col className={styles.col}>
+                <Col className="display-col">
                     <Button variant="success" onClick={onGreenButtonClick}>Green Button</Button>
                 </Col>
             </Row>
