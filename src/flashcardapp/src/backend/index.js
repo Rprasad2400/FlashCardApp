@@ -122,22 +122,38 @@ mongoose.connect("mongodb+srv://jordanlevy:blahblahpassword@cluster0.ieq1i.mongo
 .then(() => console.log('Connected to yourDB-name database'))
 .catch(err => console.error("Database connection error:", err));
 
-// Schema for users of app
+// // Schema for users of app
+// const UserSchema = new mongoose.Schema({
+//     name: {
+//         type: String,
+//         required: true,
+//     },
+//     email: {
+//         type: String,
+//         required: true,
+//         unique: true,
+//     },
+//     date: {
+//         type: Date,
+//         default: Date.now,
+//     },
+// }, { autoIndex: false });  // Disable automatic index creation
+
 const UserSchema = new mongoose.Schema({
-    name: {
-        type: String,
+    _id: {
+        type: String, // username as _id, so it's a string
         required: true,
     },
     email: {
         type: String,
         required: true,
-        unique: true,
     },
-    date: {
-        type: Date,
-        default: Date.now,
+    pass: {
+        type: String,
+        required: true,
     },
 }, { autoIndex: false });  // Disable automatic index creation
+
 const User = mongoose.model('users', UserSchema);
 //User.createIndexes(); // it was messing it up for reason 
 
@@ -158,21 +174,93 @@ app.get("/", (req, resp) => {
     // backend working properly
 });
 
+// app.post("/register", async (req, resp) => {
+//     try {
+//         const user = new User(req.body);
+//         let result = await user.save();
+//         result = result.toObject();
+//         if (result) {
+//             delete result.password;
+//             resp.send(req.body);
+//             console.log(result);
+//         } else {
+//             console.log("User already register");
+//         }
+
+//     } catch (e) {
+//         resp.send("Something Went Wrong");
+//     }
+// });
+
 app.post("/register", async (req, resp) => {
+    console.log("Received registration request:", req.body);
     try {
-        const user = new User(req.body);
-        let result = await user.save();
-        result = result.toObject();
-        if (result) {
-            delete result.password;
-            resp.send(req.body);
-            console.log(result);
-        } else {
-            console.log("User already register");
+        const { user, pass, email } = req.body.form_Data || req.body; // Handles both cases;
+        
+        if (!user || !pass || !email) {
+            return resp.status(400).json({ error: "Missing email, username, or password" });
         }
 
+        const newUser = new User({
+            _id: user, // Assign username as _id
+            pass: pass,
+            email: email,
+        });
+        let result = await newUser.save();
+        result = result.toObject();
+        resp.send(result);
+        console.log(result);
     } catch (e) {
-        resp.send("Something Went Wrong");
+        console.error(e);
+        resp.status(400).send("Something Went Wrong");
     }
 });
+
+// for password validation
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+// Login API
+app.post("/login", async (req, res) => {
+    try {
+        console.log("Received Login request:", req.body);
+        //console.log(await User.find()); // shows all entries in the collection
+        const { user, pass } = req.body;
+        const foundUser = await User.findOne({ _id: user });
+
+        if (!foundUser) {
+            console.log("User Not Found!");
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        console.log("found user");
+
+        console.log("Stored password:", foundUser.pass);
+        console.log("Entered password:", pass);
+
+        // We will use this once we start hashing passwords (bcrypt expects the DB pass to be hashed and fails otherwise)
+        // const isMatch = await bcrypt.compare(pass, foundUser.pass);
+        // if (!isMatch) {
+        //     console.log("Invalid Credentials!");
+        //     return res.status(400).json({ message: "Invalid credentials" });
+        // }
+
+        if (pass !== foundUser.pass) {
+            console.log("Invalid Credentials!");
+            return res.status(400).json({ message: "Invalid credentials" });
+        }
+
+        console.log("correct password");
+
+        const token = jwt.sign({ userId: foundUser._id }, "your_secret_key", { expiresIn: "1h" });
+        res.json({ token, message: "Login successful" });
+
+        console.log("Login Successful");
+
+    } catch (e) {
+        console.error("Error Logging In:", e);
+        res.status(500).json({ message: "Error logging in" });
+    }
+});
+
 app.listen(5000);
