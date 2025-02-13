@@ -1,0 +1,224 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\Account.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Views\\Account.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\App.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\App.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\OSmod1.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Views\\OSmod1.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Components\\FlashcardList.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Components\\FlashcardList.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Components\\Flashcard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Components\\Flashcard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\Login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Views\\Login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\Account.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Views\\Account.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Components\\OSsidebar.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Components\\OSsidebar.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Components\\nav.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Components\\nav.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\App.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\App.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\StudyNow.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Views\\StudyNow.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\Home.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Views\\Home.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Flashcard.js",
+              "DocumentMoniker": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Components\\Flashcard.js",
+              "RelativeDocumentMoniker": "src\\Components\\Flashcard.js",
+              "ToolTip": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Components\\Flashcard.js",
+              "RelativeToolTip": "src\\Components\\Flashcard.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-01-29T23:49:59.291Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FlashcardList.js",
+              "DocumentMoniker": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Components\\FlashcardList.js",
+              "RelativeDocumentMoniker": "src\\Components\\FlashcardList.js",
+              "ToolTip": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Components\\FlashcardList.js",
+              "RelativeToolTip": "src\\Components\\FlashcardList.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-01-29T23:46:58.128Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Account.css",
+              "DocumentMoniker": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\Account.css",
+              "RelativeDocumentMoniker": "src\\Views\\Account.css",
+              "ToolTip": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\Account.css",
+              "RelativeToolTip": "src\\Views\\Account.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-01-29T23:26:57.295Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "OSsidebar.js",
+              "DocumentMoniker": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Components\\OSsidebar.js",
+              "RelativeDocumentMoniker": "src\\Components\\OSsidebar.js",
+              "ToolTip": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Components\\OSsidebar.js",
+              "RelativeToolTip": "src\\Components\\OSsidebar.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-01-29T22:52:09.1Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Login.css",
+              "DocumentMoniker": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\Login.css",
+              "RelativeDocumentMoniker": "src\\Views\\Login.css",
+              "ToolTip": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\Login.css",
+              "RelativeToolTip": "src\\Views\\Login.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-01-29T20:54:48.523Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Account.js",
+              "DocumentMoniker": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\Account.js",
+              "RelativeDocumentMoniker": "src\\Views\\Account.js",
+              "ToolTip": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\Account.js",
+              "RelativeToolTip": "src\\Views\\Account.js",
+              "ViewState": "AgIAACoAAAAAYGZmZmYowEIAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-01-29T18:16:23.462Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "StudyNow.js",
+              "DocumentMoniker": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\StudyNow.js",
+              "RelativeDocumentMoniker": "src\\Views\\StudyNow.js",
+              "ToolTip": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\StudyNow.js",
+              "RelativeToolTip": "src\\Views\\StudyNow.js",
+              "ViewState": "AgIAAAMAAACwyszMzMwnwAYAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-01-29T20:56:28.576Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "OSmod1.js",
+              "DocumentMoniker": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\OSmod1.js",
+              "RelativeDocumentMoniker": "src\\Views\\OSmod1.js",
+              "ToolTip": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\OSmod1.js",
+              "RelativeToolTip": "src\\Views\\OSmod1.js",
+              "ViewState": "AgIAACsAAAAA2pmZmZkVwCYAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-01-29T20:35:40.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "App.css",
+              "DocumentMoniker": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\App.css",
+              "RelativeDocumentMoniker": "src\\App.css",
+              "ToolTip": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\App.css",
+              "RelativeToolTip": "src\\App.css",
+              "ViewState": "AgIAAAYAAABgAQAAAAAhwAIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-01-29T19:48:47.137Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "nav.js",
+              "DocumentMoniker": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Components\\nav.js",
+              "RelativeDocumentMoniker": "src\\Components\\nav.js",
+              "ToolTip": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Components\\nav.js",
+              "RelativeToolTip": "src\\Components\\nav.js",
+              "ViewState": "AgIAAAAAAAAIMjMzMzP7vwEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-01-29T18:18:05.687Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Home.js",
+              "DocumentMoniker": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\Home.js",
+              "RelativeDocumentMoniker": "src\\Views\\Home.js",
+              "ToolTip": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\Views\\Home.js",
+              "RelativeToolTip": "src\\Views\\Home.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-01-29T18:16:48.059Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.js",
+              "DocumentMoniker": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\App.js",
+              "RelativeDocumentMoniker": "src\\App.js",
+              "ToolTip": "D:\\Senior Project\\FlashCardApp\\src\\flashcardapp\\src\\App.js",
+              "RelativeToolTip": "src\\App.js",
+              "ViewState": "AgIAAAsAAAAA/v////8gwBwAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-01-29T18:07:59.652Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
