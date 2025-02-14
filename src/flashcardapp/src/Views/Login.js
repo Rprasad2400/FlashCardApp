@@ -91,7 +91,7 @@ export default function Login() {
 
         //event.preventDefault();
         let result = await fetch(
-        'http://localhost:5000/login', {
+        'http://localhost:5000/api/auth/login', {
             method: "post",
             body: JSON.stringify(form_Data),
             headers: {
@@ -138,7 +138,7 @@ export default function Login() {
 
         event.preventDefault();
         let result = await fetch(
-        'http://localhost:5000/register', {
+        'http://localhost:5000/api/auth/register', {
             method: "post",
             body: JSON.stringify(form_Register_Data),
             headers: {
