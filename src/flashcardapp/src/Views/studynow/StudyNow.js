@@ -9,7 +9,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import '../../App.css';
 
-import osImage from '../../OS Image.png';
+import osImage from '../../assets/images/OS Image.png';
 
 function StudyNow() {
     return (
