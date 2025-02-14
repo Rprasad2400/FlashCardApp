@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import '../App.css';
+import '../../App.css';
 
 function Home() {
     return (

@@ -48,7 +48,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button, Image, Form, Card } from 'react-bootstrap';
 import './Login.css';
-import loginImage from '../Login Image.jpg';
+import loginImage from '../../Login Image.jpg';
 
 export default function Login() {
     const [validated, setValidated] = useState(false);

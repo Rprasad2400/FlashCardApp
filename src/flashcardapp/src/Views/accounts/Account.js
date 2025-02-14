@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, Button, Image, ListGroup, Modal, Form,  } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import defaultImg from '../default-profile.png';
-import osImg from '../OS Image.png';
+import defaultImg from '../../default-profile.png';
+import osImg from '../../OS Image.png';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const SAMPLE_COURSES = [
