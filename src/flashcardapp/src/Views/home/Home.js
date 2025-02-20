@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import { Button, Card, Modal, Form, } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import osImage from '../OS Image.png';
-import '../App.css';
+import '../../App.css';
 
 function Home() {
     const [showModal, setShowModal] = useState(false);
