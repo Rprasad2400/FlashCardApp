@@ -18,6 +18,7 @@ import Nav from './Components/nav';
 import FlashCardDisplay from './Views/carddisplay/FlashCardDisplay';
 
 function App() {
+  const isAuthenticated = /* Your authentication logic (e.g., check token, session) */ false;
   return (
     <div className="App">
         {/*define routes*/}
