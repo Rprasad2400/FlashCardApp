@@ -1,4 +1,4 @@
-.container {
+.display-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,9 +11,7 @@
 
 }
 
-
-
-.row {
+.display-row {
     padding: 10px;
     align-items: center;
     width: 100%;
@@ -21,14 +19,14 @@
     justify-content: space-around;
 }
 
-button {
+.display-button {
     width: 200px;
     height: 40px;
     font-size: 16px;
     align-self: center;
 }
 
-.col {
+.display-col {
     padding: 10px;
     align-items: center;
     width: 100%;
