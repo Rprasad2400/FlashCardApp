@@ -18,11 +18,12 @@ import Nav from './Components/navbar/nav';
 import FlashCardDisplay from './Views/carddisplay/FlashCardDisplay';
 
 function App() {
+  const isAuthenticated = /* Your authentication logic (e.g., check token, session) */ false;
   return (
     <div className="App">
         {/*define routes*/}
         <Router>
-            <Nav /> {/*places nav bar*/}
+            <Nav isAuthenticated={true}/> {/*places nav bar*/}
               <Routes>
                   <Route path="/" exact={true} element={<Login />} />
                   <Route path="/home" exact={true} element={<Home />} /> {/* This works because our root path (just the "/") is what appears when the page is opened*/}
