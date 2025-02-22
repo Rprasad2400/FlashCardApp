@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
-
+import TileCard from '../../Components/tilecard/tilecard';
 function OSFlash() {
     return (
       <Container fluid>
@@ -41,6 +41,9 @@ function OSFlash() {
               Start with OS fundamentals like procedure calls and system calls, the generations of operating systems and their influences, 
               the effects of multiprogramming vs. uniprogramming, and other concepts.
             </p>
+            <TileCard targetUrl="/module1" name="Module 1: OS Fundamentals" imageUrl="https://picsum.photos/id/237/200/300" />
+            <TileCard targetUrl="/module2" name="Module 2: Process Fundamentals" imageUrl="https://picsum.photos/id/238/200/300" />
+            <TileCard targetUrl="/module3"  name="Module 3: Interprocess Communication" imageUrl="https://picsum.photos/id/239/200/300" />
           </Col>
         </Row>
       </Container>
