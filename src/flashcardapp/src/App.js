@@ -23,7 +23,7 @@ function App() {
     <div className="App">
         {/*define routes*/}
         <Router>
-            <Nav /> {/*places nav bar*/}
+            <Nav isAuthenticated={true}/> {/*places nav bar*/}
               <Routes>
                   <Route path="/" exact={true} element={<Login />} />
                   <Route path="/home" exact={true} element={<Home />} /> {/* This works because our root path (just the "/") is what appears when the page is opened*/}
