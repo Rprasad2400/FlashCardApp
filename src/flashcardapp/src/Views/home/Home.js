@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Calendar from 'react-calendar';
 import { Button, Card, Modal, Form, ProgressBar } from 'react-bootstrap';
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import ListGroup from 'react-bootstrap/ListGroup';

@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Flashcard = require("../models/FlashCard");
+const {FlashCard} = require('../models/FlashCard'); 
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.post("/create", async (req, res) => {
             return res.status(400).json({ error: "Missing question or answer" });
         }
 
-        const newFlashcard = new Flashcard({
+        const newFlashcard = new FlashCard({
             question,
             answer,
         });
@@ -35,7 +35,7 @@ router.get("/get", async (req, res) => {
     console.log("Received get request:", req.body);
     try {
         const { question } = req.body;
-        const foundFlashcard = await Flashcard.findOne({ question: question });
+        const foundFlashcard = await FlashCard.findOne({ question: question });
         if (!foundFlashcard) {
             return res.status(400).json({ message: "Flashcard not found" });
         }
@@ -50,7 +50,7 @@ router.get("/get", async (req, res) => {
 router.get("/getAll", async (req, res) => {
     console.log("Received get all request:", req.body);
     try {
-        const allFlashcards = await Flashcard.find({});
+        const allFlashcards = await FlashCard.find({});
         if (!allFlashcards) {
             return res.status(400).json({ message: "Flashcards not found" });
         }
@@ -70,7 +70,7 @@ router.put("/update", async (req, res) => {
         if (!question || !answer) {
             return res.status(400).json({ error: "Missing question or answer" });
         }
-        const updatedFlashcard = await Flashcard.findOneAndUpdate({ question: question }, { answer: answer }, { new: true });
+        const updatedFlashcard = await FlashCard.findOneAndUpdate({ question: question }, { answer: answer }, { new: true });
         if (!updatedFlashcard) {
             return res.status(400).json({ message: "Flashcard not found" });
         }
@@ -90,7 +90,7 @@ router.delete("/delete", async (req, res) => {
         if (!question) {
             return res.status(400).json({ error: "Missing question" });
         }
-        const deletedFlashcard = await Flashcard.findOneAndDelete({ question: question });
+        const deletedFlashcard = await FlashCard.findOneAndDelete({ question: question });
         if (!deletedFlashcard) {
             return res.status(400).json({ message: "Flashcard not found" });
         }

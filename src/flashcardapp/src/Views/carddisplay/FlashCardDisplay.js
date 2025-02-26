@@ -1,77 +1,86 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Button, Row, Col } from 'react-bootstrap';
 import Flashcard from '../../Components/flashcard/Flashcard';
-import styles from './carddisplay.modules.css';
-import { useState, useEffect } from 'react';
-import fetchFlashcards  from '../../scripts/card/FlashcardService';
-
-
-/*
-const SAMPLE_FLASHCARDS = [
-    {
-        id: 1,
-        question: 'What is a system call?',
-        answer: 'I have no idea tbh',
-    },
-    {
-        id: 2,
-        question: 'What is a React Hook?',
-        answer: 'idk',
-    },
-    {
-        id: 3,
-        question: 'What is the capital of France?',
-        answer: 'Paris',
-    },
-];
-*/
-
-
+import styles from './carddisplay.module.css';
+import fetchFlashcards from '../../scripts/card/FlashcardService';
+import CircularButton from '../../Components/circularbutton/circular-button';
+import loop from '../../assets/images/loop.jpg';
+import shuffle from '../../assets/images/shuffle.png';
+import StreakScore from '../../Components/streakScore/streakScore';
 export default function FlashCardDisplay() {
-
     const [flashcards, setFlashcards] = useState([]);
-    const [currentIndex, setCurrentIndex] = React.useState(0);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentScore, setCurrentScore] = useState(0);
+    const [streak, setStreak] = useState(0);
 
-  
-    // Fetch flashcards when the component mounts
+
     useEffect(() => {
-      const getFlashcards = async () => {
-        const data = await fetchFlashcards();
-        console.log(data);
-        setFlashcards(data.flashcards); // Update state with fetched flashcards
-      };
-  
-      getFlashcards();
-    }, []); // Empty dependency array to run only once when the component mounts
-    console.log(flashcards);
-    //get the flashcards from the returned object as it returns a json of message: "Flashcards found", flashcards: allFlashcards
-    const SAMPLE_FLASHCARDS = flashcards;
+        const getFlashcards = async () => {
+            const data = await fetchFlashcards();
+            setFlashcards(data.flashcards);
+        };
+        getFlashcards();
+    }, []);
 
-  const currentFlashcard = flashcards[currentIndex];
-  if (!currentFlashcard) {
-    return <div>Loading...</div>; // Show loading if flashcards are not fetched yet
-}
+    const SAMPLE_FLASHCARDS = flashcards;
+    const currentFlashcard = flashcards[currentIndex];
+
+    if (!currentFlashcard) {
+        return <div>Loading...</div>;
+    }
 
     const onRedButtonClick = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % SAMPLE_FLASHCARDS.length);
-        
+        setStreak(0);
+
     };
 
     const onGreenButtonClick = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % SAMPLE_FLASHCARDS.length);
+        setStreak((prevStreak) => prevStreak + 1);
+        setCurrentScore((prevScore) => prevScore + (100* (streak+1)));
+        console.log(currentScore);
+        
     };
 
     return (
-        <Container className="display-container"> {/*You have to name these as things other than basic containers*/}
-            <Row className="display-row">         {/*e.g. row, col, container. If you don't it will apply to all of them.*/}
-            <Flashcard width="350px" height="200px" flashcard={SAMPLE_FLASHCARDS[currentIndex]} />
-            </Row>
-            <Row className="display-row">
-                <Col className="display-col">
-                    <Button variant="danger" onClick={onRedButtonClick}>Red Button</Button>
+        <Container className={styles.displayContainer}>
+            {/* Title & Stars Row */}
+            <Row className={styles.headerRow}>
+                <Col className={styles.titleCol}>
+                    <h1 className={styles.title}>Flashcard Display</h1>
                 </Col>
-                <Col className="display-col">
-                    <Button variant="success" onClick={onGreenButtonClick}>Green Button</Button>
+                <Col className={styles.starsCol}>
+                    <span className={styles.stars}>⭐ ⭐ ⭐</span>
+                </Col>
+            </Row>
+
+            {/* Main Layout */}
+            <Row className={styles.displayRow}>
+                {/* Left Column (Buttons) */}
+                <Col className={styles.leftCol} xs="auto">
+                    <div className={styles.buttonContainer}>
+                        <CircularButton imageSrc={loop}/>
+                        <CircularButton imageSrc={shuffle}/>
+                    </div>
+                </Col>
+
+                {/* Middle Column (Flashcard & Buttons) */}
+                <Col className={styles.middleCol}>
+                    <div className={styles.flashcardContainer}>
+                        <Flashcard width="550px" height="300px" flashcard={SAMPLE_FLASHCARDS[currentIndex]} />
+                    </div>
+                    <div className={styles.buttonRow}>
+                        <Button variant="danger" onClick={onRedButtonClick}>Red Button</Button>
+                        <Button variant="success" onClick={onGreenButtonClick}>Green Button</Button>
+                    </div>
+                </Col>
+
+                {/* Right Column (Final Column) */}
+                <Col className={styles.rightCol} xs="auto">
+                    <div className={styles.scoreContainer}>
+                        <StreakScore currentScore={currentScore} streak={streak} />
+                    </div>
                 </Col>
             </Row>
         </Container>
