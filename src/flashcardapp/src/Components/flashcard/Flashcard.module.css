@@ -99,3 +99,9 @@
   .card .back {
     transform: rotateY(180deg);
   }
+
+
+
+.noAnimation {
+  transition: none !important;
+}

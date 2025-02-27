@@ -15,15 +15,39 @@ export default function FlashCardDisplay() {
 
 
     useEffect(() => {
+        //TODO: Put this in a seperate function
         const getFlashcards = async () => {
-            const data = await fetchFlashcards();
-            setFlashcards(data.flashcards);
+            // Retrieve from localStorage first
+            const savedFlashcards = localStorage.getItem('flashcards');
+            if (savedFlashcards!=="undefined") {
+                console.log('Loading from local storage');
+                setFlashcards(JSON.parse(savedFlashcards));
+                return; // Stop API fetch if local data exists
+            }
+    
+            // Fetch from API if local data does not exist
+            try {
+                console.log('Fetching from API');
+                const data = await fetchFlashcards();
+                if (data) {  // Ensure data is not undefined/null
+                    setFlashcards(data.flashcards);
+                    localStorage.setItem('flashcards', JSON.stringify(data.flashcards)); // Save to localStorage
+                } else {
+                    console.warn("Fetched data is empty or invalid");
+                }
+            } catch (error) {
+                console.error("Failed to fetch flashcards:", error);
+            }
         };
+    
         getFlashcards();
     }, []);
+    
 
+    
     const SAMPLE_FLASHCARDS = flashcards;
     const currentFlashcard = flashcards[currentIndex];
+    
 
     if (!currentFlashcard) {
         return <div>Loading...</div>;
@@ -68,7 +92,7 @@ export default function FlashCardDisplay() {
                 {/* Middle Column (Flashcard & Buttons) */}
                 <Col className={styles.middleCol}>
                     <div className={styles.flashcardContainer}>
-                        <Flashcard width="550px" height="300px" flashcard={SAMPLE_FLASHCARDS[currentIndex]} />
+                        <Flashcard width="550px" height="300px" flashcard={SAMPLE_FLASHCARDS[currentIndex]} resetFlip={currentIndex} />
                     </div>
                     <div className={styles.buttonRow}>
                         <Button variant="danger" onClick={onRedButtonClick}>Red Button</Button>

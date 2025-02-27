@@ -80,6 +80,7 @@ export default function OSFlash() {
                 <div className="flashcard-container">
                     <FlashcardList flashcards={flashcards} />
                 </div>
+                
             </div>
           </Col>
         </Row>
