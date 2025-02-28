@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const Set = require('../models/Set');
 
 const router = express.Router();
@@ -14,8 +15,9 @@ router.get('/', async (req, res) => {
 });
 
 // Get one set
-router.get('/:id', getSet, (req, res) => {
-    res.json(res.set);
+router.get('/get/:id', getSet, (req, res) => {
+    console.log("entered");
+    res.json(req.set);
 });
 
 // Create one set
@@ -72,6 +74,7 @@ router.delete('/:id', getSet, async (req, res) => {
 
 async function getSet(req, res, next) {
     let set;
+
     try {
         set = await Set.findById(req.params.id);
         if (set == null) {
@@ -81,7 +84,7 @@ async function getSet(req, res, next) {
         return res.status(500).json({ message: err.message });
     }
 
-    res.set = set;
+    req.set = set;
     next();
 }
 

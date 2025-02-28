@@ -40,4 +40,21 @@ const createSet = async (set) => {
     }
 };
 
-export default { fetchSets, createSet };
+const findSet = async (id) => {
+    try {
+        console.log('Finding set:', id);
+        const response = await fetch(`http://localhost:5000/api/set/get/${id}`); // Adjust this URL as necessary
+        if (!response.ok) {
+            throw new Error('Failed to find set');
+        }
+        const set = await response.json();
+        console.log('Found set:', set);
+        return set;
+    } catch (error) {
+        console.error('Error finding set:', error);
+        return null; // return null in case of error
+    }
+};
+
+
+export default { fetchSets, createSet, findSet };

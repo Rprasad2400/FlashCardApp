@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Module } = require('./Module'); // Import only the Schema
 const CourseSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -13,7 +14,7 @@ const CourseSchema = new mongoose.Schema({
         required: true,
     },
     modules: {
-        type: Array,
+        type: [Module],
         required: true,
     },
 }, { autoIndex: false });  // Disable automatic index creation

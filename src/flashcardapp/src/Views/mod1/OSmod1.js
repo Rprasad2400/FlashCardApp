@@ -7,8 +7,13 @@ import Nav from 'react-bootstrap/Nav';
 import  Button  from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
 import '../../App.css';
+import TileCard from '../../Components/tilecard/tilecard';
+import api from '../../scripts/set/SetService';
+import { useNavigate } from 'react-router-dom';
+
 
 import FlashcardList from '../../Components/flashcardlist/FlashcardList';
+import { useEffect } from 'react';
 const SAMPLE_FLASHCARDS = [
     {
         id: 1,
@@ -38,7 +43,40 @@ const SAMPLE_FLASHCARDS = [
 
 
 export default function OSFlash() {
-    const [flashcards, setFlashcards] = useState(SAMPLE_FLASHCARDS)
+
+    //TODO: do a find to get the flashcard tied to the accountID
+    //TODO: display that flashcard information?
+    const accountID ="67c1fb04b144d1276b668a06";
+    const [flashcards, setFlashcards] = useState(SAMPLE_FLASHCARDS);
+    const [data, setData] = useState(null);
+    const navigate = useNavigate();
+    useEffect(() => {
+      async function fetchFlashcards() {
+        try {
+          const response = await api.findSet(accountID);
+          setData(response.data);
+          if (response) {
+            setData(response);
+            console.log(response);
+          } else {
+            console.error("No set found");
+          }
+        
+        } catch (error) {
+          console.error("Error fetching flashcards:", error);
+        }
+      }
+
+      fetchFlashcards();
+    }, [accountID]);
+    if(!data){ 
+      return <div>Loading...</div>;
+    }
+
+    console.log(data)
+
+
+    
     return (
       <Container fluid>
         <Row>
@@ -72,16 +110,49 @@ export default function OSFlash() {
             <h1>Module 1: OS Fundamentals</h1>
             <div className="mt-5">
               <div className="button-container">
-                <h2>Flashcards</h2>
+                <h2>Official Module Flashcards</h2>
                 <Button  as={Link} to="/FlashCardDisplay" variant="primary">
-                 Go to Target
+                → Most Recent
                   </Button>
                 </div>
+                {/*
                 <div className="flashcard-container">
                     <FlashcardList flashcards={flashcards} />
-                </div>
+                </div> */}
+                <div 
+    className="card" 
+    onClick={() => {
+        const savedFlashcards = localStorage.getItem('flashcards');
+        if (savedFlashcards=="undefined") {
+        localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
+        navigate(`/FlashCardDisplay`); 
+        }
+        else{
+            localStorage.removeItem('flashcards');
+            localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
+            navigate(`/FlashCardDisplay`); 
+        }
+    }}
+    style={{
+        borderRadius: '15px', 
+        minHeight: '30vh', 
+        padding: '20px', 
+        margin: '10px', 
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+    }}
+>
+    <h3>{data.name}</h3>
+    <p>{data.description}</p>
+    <p>Total Flashcards: {data.flashcards.length}</p>
+</div>
+
+                
                 
             </div>
+            <div className="mt-5">
+              <h2>Quizzes</h2>
+              <Button variant="primary">Go to Target</Button>
+              </div>
           </Col>
         </Row>
       </Container>
