@@ -7,14 +7,18 @@ import CircularButton from '../../Components/circularbutton/circular-button';
 import loop from '../../assets/images/loop.jpg';
 import shuffle from '../../assets/images/shuffle.png';
 import StreakScore from '../../Components/streakScore/streakScore';
+import { useNavigate } from 'react-router-dom';
 export default function FlashCardDisplay() {
     const [flashcards, setFlashcards] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [currentScore, setCurrentScore] = useState(0);
+    const [currentMisses, setMissed] = useState(0);
     const [streak, setStreak] = useState(0);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
+
         //TODO: Put this in a seperate function
         const getFlashcards = async () => {
             // Retrieve from localStorage first
@@ -49,18 +53,23 @@ export default function FlashCardDisplay() {
     const currentFlashcard = flashcards[currentIndex];
     
 
+
+    if (currentIndex >= SAMPLE_FLASHCARDS.length) {
+        navigate('/flashEnd', { state: { score: currentScore, misses: currentMisses } });
+    }
     if (!currentFlashcard) {
         return <div>Loading...</div>;
     }
 
     const onRedButtonClick = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % SAMPLE_FLASHCARDS.length);
+        setMissed((prevMissed) => (prevMissed + 1));
         setStreak(0);
 
     };
 
     const onGreenButtonClick = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % SAMPLE_FLASHCARDS.length);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) );
         setStreak((prevStreak) => prevStreak + 1);
         setCurrentScore((prevScore) => prevScore + (100* (streak+1)));
         console.log(currentScore);
@@ -103,7 +112,7 @@ export default function FlashCardDisplay() {
                 {/* Right Column (Final Column) */}
                 <Col className={styles.rightCol} xs="auto">
                     <div className={styles.scoreContainer}>
-                        <StreakScore currentScore={currentScore} streak={streak} />
+                        <StreakScore currentScore={currentScore} streak={streak} misses={currentMisses}/>
                     </div>
                 </Col>
             </Row>

@@ -16,6 +16,7 @@ import Account from './Views/accounts/Account';
 import Login from './Views/login/Login'
 import Nav from './Components/navbar/nav';
 import FlashCardDisplay from './Views/carddisplay/FlashCardDisplay';
+import FlashEnd from './Views/flashEnd/flashEnd';
 
 function App() {
   const isAuthenticated = /* Your authentication logic (e.g., check token, session) */ false;
@@ -32,6 +33,7 @@ function App() {
                   <Route path="/module1" exact={true} element={<OSmod1 />} />
                   <Route path="/account-page" exact={true} element={<Account />} />
                   <Route path="/FlashCardDisplay" exact={true} element={<FlashCardDisplay />} />
+                  <Route path="/flashEnd" exact={true} element={<FlashEnd />} />
             </Routes>
         </Router>
     </div>

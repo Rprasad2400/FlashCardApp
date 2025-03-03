@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 
-function StreakScore({ streak, currentScore }) {
+function StreakScore({ streak, currentScore, misses }) {
   const [scoreDisplay, setScoreDisplay] = useState(`${currentScore}`);
-
+  const pointsEarned = 100 * streak;
   useEffect(() => {
     // Calculate points earned
-    const pointsEarned = 100 * streak;
+    
     const newScore = currentScore + pointsEarned;
 
     // Show calculation temporarily
-    if(streak > 0){
+    if(streak >= 0){
         setScoreDisplay(`${currentScore} + (${streak} x 100)`);
     }
     else{
@@ -22,7 +22,12 @@ function StreakScore({ streak, currentScore }) {
     return () => clearTimeout(timer); // Cleanup on re-renders
   }, [streak, currentScore]); // Run effect when parameters change
 
-  return <p>Score: {scoreDisplay}</p>;
+  return  <div> 
+    <p>Total Score: {scoreDisplay}</p>
+    <p>Round Score: {pointsEarned}</p>
+    <p>Streak: {streak}</p>
+    <p>Missed: {misses}</p>
+  </div>;
 }
 
 export default StreakScore;
