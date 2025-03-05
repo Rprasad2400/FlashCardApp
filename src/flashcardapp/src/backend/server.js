@@ -29,5 +29,7 @@ app.use("/api/auth", require("./routes/auth"));
 
 
 app.use("/api/card", require("./routes/card"));
+
+app.use("/api/set", require("./routes/set"));
 // Start Server
 app.listen(5000);

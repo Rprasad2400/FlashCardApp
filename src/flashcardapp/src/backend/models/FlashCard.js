@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const FlashCardSchema = new mongoose.Schema({
     question: {
         type: String,
@@ -11,4 +10,7 @@ const FlashCardSchema = new mongoose.Schema({
     },
 }, { autoIndex: false });  // Disable automatic index creation
 
-module.exports = mongoose.model('flashcards', FlashCardSchema);
+const FlashCard = mongoose.model('flashcards', FlashCardSchema);
+
+module.exports = { FlashCard, FlashCardSchema };
+
