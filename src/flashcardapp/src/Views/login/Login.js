@@ -107,25 +107,19 @@ export default function Login() {
         result = await result.json();
         console.warn(result);
         alert("Login successful!");
-            set_Form_Data({
-                user: "",
-                pass: ""
-            });
-             // Redirect to another page (e.g., home)
-            navigate("/home");
 
-        // if (result) {
-        //     alert("Login successful!");
-        //     set_Form_Data({
-        //         user: "",
-        //         pass: ""
-        //     });
-        //      // Redirect to another page (e.g., home)
-        //     navigate("/home");
-        // }
-        // else {
-        //     alert("Registration failed.");
-        // }
+        // set username and password (used later for retrieving information)
+        localStorage.setItem('username', form_Register_Data.user);
+        localStorage.setItem('password', form_Register_Data.pass);
+
+        set_Form_Data({
+            user: "",
+            pass: ""
+        });
+
+        // Redirect to another page (e.g., home)
+        navigate("/home");
+      
     };
 
     const handleRegisterSubmit = async (event) => {
