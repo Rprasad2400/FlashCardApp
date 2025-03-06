@@ -90,7 +90,8 @@
     justify-content: center; /* Center content horizontally */
     align-items: center; /* Center content vertically */
     text-align: center;
-    font-size: 18px;
+    /* font size that grows with the screen */
+    font-size: calc(12px + 1vw);
     padding: 10px;
     box-sizing: border-box; /* Include padding in width/height */
   }
@@ -98,4 +99,3 @@
   .card .back {
     transform: rotateY(180deg);
   }
-  

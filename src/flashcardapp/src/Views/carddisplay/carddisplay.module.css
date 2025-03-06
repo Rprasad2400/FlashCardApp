@@ -1,0 +1,98 @@
+/* Container to center everything */
+.displayContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+/* Title & Stars Row */
+.headerRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.titleCol {
+    flex: 1;
+}
+
+.title {
+    font-size: 2rem;
+    text-align: left;
+}
+
+.starsCol {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+   
+}
+
+.stars {
+    font-size: 1.5rem;
+    padding: 5px;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, .3);
+}
+
+/* Main Layout */
+.displayRow {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Left Column: Circular Buttons */
+.leftCol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.buttonContainer {
+    padding: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px; /* Space between buttons */
+}
+
+/* Middle Column */
+.middleCol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.flashcardContainer {
+    margin-bottom: 20px;
+}
+
+/* Buttons Below Flashcard */
+.buttonRow {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    gap: 20px;
+}
+.buttonRow button {
+    padding: 15px 30px; /* Adjust padding for bigger buttons */
+    font-size: 1.25rem; /* Increase text size */
+}
+
+
+/* Right Column */
+.rightCol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

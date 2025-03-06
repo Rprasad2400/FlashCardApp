@@ -5,8 +5,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 
-import Flashcard from './flashcard/Flashcard';
-import '../App.css';
+import Flashcard from '../flashcard/Flashcard';
+import '../../App.css';
 
 export default function FlashcardList({ flashcards }) {
     return (

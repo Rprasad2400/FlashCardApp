@@ -48,7 +48,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button, Image, Form, Card } from 'react-bootstrap';
 import './Login.css';
-import loginImage from '../Login Image.jpg';
+import loginImage from '../../assets/images/Login Image.jpg';
 
 export default function Login() {
     const [validated, setValidated] = useState(false);
@@ -91,7 +91,7 @@ export default function Login() {
 
         //event.preventDefault();
         let result = await fetch(
-        'http://localhost:5000/login', {
+        'http://localhost:5000/api/auth/login', {
             method: "post",
             body: JSON.stringify(form_Data),
             headers: {
@@ -107,25 +107,19 @@ export default function Login() {
         result = await result.json();
         console.warn(result);
         alert("Login successful!");
-            set_Form_Data({
-                user: "",
-                pass: ""
-            });
-             // Redirect to another page (e.g., home)
-            navigate("/home");
 
-        // if (result) {
-        //     alert("Login successful!");
-        //     set_Form_Data({
-        //         user: "",
-        //         pass: ""
-        //     });
-        //      // Redirect to another page (e.g., home)
-        //     navigate("/home");
-        // }
-        // else {
-        //     alert("Registration failed.");
-        // }
+        // set username and password (used later for retrieving information)
+        localStorage.setItem('username', form_Register_Data.user);
+        localStorage.setItem('password', form_Register_Data.pass);
+
+        set_Form_Data({
+            user: "",
+            pass: ""
+        });
+
+        // Redirect to another page (e.g., home)
+        navigate("/home");
+      
     };
 
     const handleRegisterSubmit = async (event) => {
@@ -138,7 +132,7 @@ export default function Login() {
 
         event.preventDefault();
         let result = await fetch(
-        'http://localhost:5000/register', {
+        'http://localhost:5000/api/auth/register', {
             method: "post",
             body: JSON.stringify(form_Register_Data),
             headers: {

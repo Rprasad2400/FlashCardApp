@@ -8,13 +8,13 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import Home from './Views/Home';
-import StudyNow from './Views/StudyNow';
-import OSFlash from './Views/OSflash';
-import OSmod1 from './Views/OSmod1';
-import Account from './Views/Account';
-import Login from './Views/Login'
-import Nav from './Components/nav';
+import Home from './Views/home/Home';
+import StudyNow from './Views/studynow/StudyNow';
+import OSFlash from './Views/flash/OSflash';
+import OSmod1 from './Views/mod1/OSmod1';
+import Account from './Views/accounts/Account';
+import Login from './Views/login/Login'
+import Nav from './Components/navbar/nav';
 import FlashCardDisplay from './Views/carddisplay/FlashCardDisplay';
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
     <div className="App">
         {/*define routes*/}
         <Router>
-            <Nav /> {/*places nav bar*/}
+            <Nav isAuthenticated={true}/> {/*places nav bar*/}
               <Routes>
                   <Route path="/" exact={true} element={<Login />} />
                   <Route path="/home" exact={true} element={<Home />} /> {/* This works because our root path (just the "/") is what appears when the page is opened*/}

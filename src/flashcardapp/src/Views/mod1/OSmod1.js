@@ -6,9 +6,9 @@ import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import  Button  from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
-import '../App.css';
+import '../../App.css';
 
-import FlashcardList from '../Components/FlashcardList';
+import FlashcardList from '../../Components/flashcardlist/FlashcardList';
 const SAMPLE_FLASHCARDS = [
     {
         id: 1,
