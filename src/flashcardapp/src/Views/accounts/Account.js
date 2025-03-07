@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, Image, ListGroup, Modal, Form,  } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import defaultImg from '../../assets/images/default-profile.png';
@@ -41,19 +41,20 @@ export default function ProfilePage() {
     const [showCreateSetModal, setShowCreateSetModal] = useState(false);
     const [activeSection, setActiveSection] = useState("profile");
     const [showModal, setShowModal] = useState(false);
-    const [username, setUsername] = useState(localStorage.getItem('username')); // State for username input
+    const [username, setUsername] = useState(localStorage.getItem('username') || ''); // State for username input
     //const [courses, setCourses] = useState(SAMPLE_COURSES);
     const [tempImage, setTempImage] = useState(null); // Temporary storage for preview before saving
     const [profileImage, setProfileImage] = useState(defaultImg); // Stores the displayed profile image
     const navigate = useNavigate();
+    const [newUsername, setNewUsername] = useState(''); // New username input
 
     // Save profile changes
-    const handleSaveChanges = () => {
-        if (tempImage) {
-            setProfileImage(tempImage); // Apply new profile image
-        }
-        setShowModal(false);
-    };
+    // const handleSaveChanges = () => {
+    //     if (tempImage) {
+    //         setProfileImage(tempImage); // Apply new profile image
+    //     }
+    //     setShowModal(false);
+    // };
 
     // Handle image selection
     const handleImageChange = (event) => {
@@ -72,6 +73,31 @@ export default function ProfilePage() {
         const updatedFlashcards = [...flashcards];
         updatedFlashcards[index][field] = value;
         setFlashcards(updatedFlashcards);
+    };
+
+    const handleUsernameUpdate = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/api/changeUsername/update-username', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ oldUsername: username, newUsername })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Update the username in localStorage and the state
+                localStorage.setItem('username', newUsername);
+                setUsername(newUsername);
+                alert(data.message); // Success message
+                setShowModal(false); // Close the modal
+            } else {
+                alert(data.message); // Show error message
+            }
+        } catch (error) {
+            console.error("Error updating username:", error);
+            alert("Failed to update username.");
+        }
     };
 
     return (
@@ -143,7 +169,7 @@ export default function ProfilePage() {
                     <Button variant="secondary" onClick={() => setShowModal(false)}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleSaveChanges}>
+                    <Button variant="primary" onClick={handleUsernameUpdate}>
                         Save Changes
                     </Button>
                 </Modal.Footer>

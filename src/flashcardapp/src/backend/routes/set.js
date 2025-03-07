@@ -70,6 +70,24 @@ router.delete('/:id', getSet, async (req, res) => {
     }
 });
 
+// search sets
+router.get('/search', async (req, res) => {
+    console.log("Inside the Damn thing");
+    try {
+        const { query } = req.query;
+        console.log("Query: ", query );
+        if (!query) return res.json([]);
+
+        const results = await Set.find({
+            name: { $regex: query, $options: 'i' } // Case-insensitive match
+        }).limit(5); // Limit recommendations
+
+        res.json(results);
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 async function getSet(req, res, next) {
     let set;
     try {
