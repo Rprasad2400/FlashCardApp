@@ -41,7 +41,7 @@ export default function ProfilePage() {
     const [showCreateSetModal, setShowCreateSetModal] = useState(false);
     const [activeSection, setActiveSection] = useState("profile");
     const [showModal, setShowModal] = useState(false);
-    const [username, setUsername] = useState(""); // State for username input
+    const [username, setUsername] = useState(localStorage.getItem('username')); // State for username input
     //const [courses, setCourses] = useState(SAMPLE_COURSES);
     const [tempImage, setTempImage] = useState(null); // Temporary storage for preview before saving
     const [profileImage, setProfileImage] = useState(defaultImg); // Stores the displayed profile image
