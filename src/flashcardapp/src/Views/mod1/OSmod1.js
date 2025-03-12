@@ -10,10 +10,11 @@ import '../../App.css';
 import TileCard from '../../Components/tilecard/tilecard';
 import api from '../../scripts/set/SetService';
 import { useNavigate } from 'react-router-dom';
-
+import SetsModal from '../../Components/setsModal/setsModal';
 
 import FlashcardList from '../../Components/flashcardlist/FlashcardList';
 import { useEffect } from 'react';
+
 const SAMPLE_FLASHCARDS = [
     {
         id: 1,
@@ -48,6 +49,7 @@ export default function OSFlash() {
     //TODO: display that flashcard information?
     const accountID ="67c1fb04b144d1276b668a06";
     const [flashcards, setFlashcards] = useState(SAMPLE_FLASHCARDS);
+    const [showModal, setShowModal] = useState(false);
     const [data, setData] = useState(null);
     const navigate = useNavigate();
     useEffect(() => {
@@ -122,16 +124,23 @@ export default function OSFlash() {
                 <div 
     className="card" 
     onClick={() => {
-        const savedFlashcards = localStorage.getItem('flashcards');
+        /*const savedFlashcards = localStorage.getItem('flashcards');
         if (savedFlashcards=="undefined") {
         localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
-        navigate(`/FlashCardDisplay`); 
+        
+        //navigate(`/FlashCardDisplay`); 
+
+        
         }
         else{
             localStorage.removeItem('flashcards');
             localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
-            navigate(`/FlashCardDisplay`); 
+            //navigate(`/FlashCardDisplay`); 
         }
+            */
+           console.log("clicked");
+        setShowModal(true);
+
     }}
     style={{
         borderRadius: '15px', 
@@ -155,6 +164,9 @@ export default function OSFlash() {
               </div>
           </Col>
         </Row>
+
+        <SetsModal isOpen={showModal} closeModal={() => setShowModal(false)} />
       </Container>
+
     );
   }
