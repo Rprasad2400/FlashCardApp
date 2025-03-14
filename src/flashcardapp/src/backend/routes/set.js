@@ -3,6 +3,24 @@ const Set = require('../models/Set');
 
 const router = express.Router();
 
+// search sets
+router.get('/search', async (req, res) => {
+    console.log("Inside the Damn thing");
+    try {
+        const { query } = req.query;
+        console.log("Query: ", query );
+        if (!query) return res.json([]);
+
+        const results = await Set.find({
+            name: { $regex: query, $options: 'i' } // Case-insensitive match
+        }).limit(5); // Limit recommendations
+
+        res.json(results);
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 // Get all sets
 router.get('/', async (req, res) => {
     try {
@@ -67,24 +85,6 @@ router.delete('/:id', getSet, async (req, res) => {
         res.json({ message: 'Deleted Set' });
     } catch (err) {
         res.status(500).json({ message: err.message });
-    }
-});
-
-// search sets
-router.get('/search', async (req, res) => {
-    console.log("Inside the Damn thing");
-    try {
-        const { query } = req.query;
-        console.log("Query: ", query );
-        if (!query) return res.json([]);
-
-        const results = await Set.find({
-            name: { $regex: query, $options: 'i' } // Case-insensitive match
-        }).limit(5); // Limit recommendations
-
-        res.json(results);
-    } catch (error) {
-        res.status(500).json({ error: 'Server error' });
     }
 });
 

@@ -46,7 +46,7 @@ export default function ProfilePage() {
     const [tempImage, setTempImage] = useState(null); // Temporary storage for preview before saving
     const [profileImage, setProfileImage] = useState(defaultImg); // Stores the displayed profile image
     const navigate = useNavigate();
-    const [newUsername, setNewUsername] = useState(''); // New username input
+    const [newUsername, setNewUsername] = useState(localStorage.getItem('username') || ''); // New username input
 
     // Save profile changes
     // const handleSaveChanges = () => {
@@ -153,8 +153,8 @@ export default function ProfilePage() {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter new username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                value={newUsername}
+                                onChange={(e) => setNewUsername(e.target.value)}
                             />
                         </Form.Group>
 
