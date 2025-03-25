@@ -29,7 +29,7 @@ function App() {
               <Routes>
                   <Route path="/" exact={true} element={<Login />} />
                   <Route path="/home" exact={true} element={<Home />} /> {/* This works because our root path (just the "/") is what appears when the page is opened*/}
-                  <Route path="/study-now" exact={true} element={<StudyNow />} />
+                  <Route path="/courses" exact={true} element={<StudyNow />} />
                   <Route path="/OS-flashcards" exact={true} element={<OSFlash />} />
                   <Route path="/module1" exact={true} element={<OSmod1 />} />
                   <Route path="/account-page" exact={true} element={<Account />} />

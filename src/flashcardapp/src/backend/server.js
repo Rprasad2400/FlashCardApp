@@ -30,6 +30,14 @@ app.use("/api/auth", require("./routes/auth"));
 
 app.use("/api/card", require("./routes/card"));
 
+// app.use((req, res, next) => {
+//     console.log(`Received request: ${req.method} ${req.url}`); // Log all incoming requests
+//     next(); // Continue to the next middleware or route
+// });
+
+app.use("/api/changeUsername", require("./routes/changeUsername"));
+
 app.use("/api/set", require("./routes/set"));
+
 // Start Server
 app.listen(5000);

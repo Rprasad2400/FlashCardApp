@@ -109,8 +109,8 @@ export default function Login() {
         alert("Login successful!");
 
         // set username and password (used later for retrieving information)
-        localStorage.setItem('username', form_Register_Data.user);
-        localStorage.setItem('password', form_Register_Data.pass);
+        localStorage.setItem('username', form_Data.user);
+        localStorage.setItem('password', form_Data.pass);
 
         set_Form_Data({
             user: "",
