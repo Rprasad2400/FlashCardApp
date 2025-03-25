@@ -16,6 +16,23 @@ const ViewSet = () => {
     const givenSet = data ? data.flashcards : []; // Use empty array if data is null 
     // Fetch the flashcard set details using the id
 
+    const moveToFlashDisplay = () => {
+        const savedFlashcards = localStorage.getItem('flashcards');
+        if (savedFlashcards=="undefined") {
+        localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
+        
+        navigate(`/FlashCardDisplay`); 
+
+        
+        }
+        else{
+            localStorage.removeItem('flashcards');
+            localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
+            navigate(`/FlashCardDisplay`); 
+
+        }
+    }
+
     useEffect(() => {
       async function fetchFlashcards() {
         console.log("entered");
@@ -101,7 +118,7 @@ const ViewSet = () => {
                     </div>
 
                 </div>
-                <Button onClick={() => { navigate ('/FlashCardDisplay', { state: { flashcards: givenSet } }) }} className={styles.startButton}>
+                <Button onClick={moveToFlashDisplay} className={styles.startButton}>
                     Start Studying!
                 </Button>
             </div>
