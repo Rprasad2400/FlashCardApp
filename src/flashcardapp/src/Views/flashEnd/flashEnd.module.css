@@ -1,0 +1,14 @@
+.endRow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+.endCol{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 25px;
+}

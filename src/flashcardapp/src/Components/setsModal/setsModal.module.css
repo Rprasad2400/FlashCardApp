@@ -17,36 +17,63 @@
 .modalBody {
     padding: 1.5rem;
     height: 60%;
-    width: 100%;
+    
+}
+
+.titleCol{
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+}
+
+.titleRow{
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
 }
 
 .row {
     display: flex;
     flex-wrap: wrap;
     margin-right: -15px;
+    align-items: center;
+    min-height: 100px;
     margin-left: -15px;
 }
 
 .col {
     flex: 1;
-    padding: 15px;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+    
 }
 
 .card {
+    margin: 0.5rem;
+    align-items: center;
     border: 1px solid #dee2e6;
     border-radius: 0.25rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card-body {
-    padding: 1.25rem;
-}
-
-.card-text {
     font-size: 1rem;
-    color: #495057;
+    font-weight: bold;
+    
+    min-height: 100px;
+    
 }
 
+.card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cardText{
+    text-align: end;
+    align-self: center;
+}
 .modal-footer {
     display: flex;
     justify-content: flex-end;

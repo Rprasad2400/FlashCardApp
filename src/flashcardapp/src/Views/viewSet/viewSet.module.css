@@ -1,0 +1,126 @@
+.title{
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px;
+}
+
+.content{
+    flex: 1;
+    padding: 10px;
+    padding-left: 50px;
+    align-items: stretch;
+    margin-bottom: 10px;
+}
+
+.flashcardContainer{
+    display: flex;
+    max-width: 50%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    border: 5px solid #000000;
+    border-radius: 0rem;
+    margin-bottom: 10px;
+}
+.flashcardRow {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: stretch; /* Ensures columns stretch to the tallest content */
+    margin: 0;
+    padding: 0;
+}
+
+.flashcardCol {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: stretch; /* Makes sure the column fills the row */
+    padding: 0;
+    margin: 0;
+}
+
+.titleCol{
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+}
+
+.titleRow{
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 5px;
+    border-bottom: #000000 3px solid;
+    margin: 0;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Ensures content inside is centered */
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%; /* Makes the card fill its column */
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 0rem;
+    background-color: #ffffff;
+}
+
+.descriptionContent{
+    font-size: 1rem;
+    justify-content: stretch;
+    margin-bottom: 10px;
+}
+.details{
+    font-size: 1rem;
+    padding: 10px;
+    justify-content: space-around;
+    margin-bottom: 20px;
+
+}
+
+.entry{
+    padding: auto;
+    margin: 10px;
+}
+
+.value{
+    min-height: 100px;
+    background-color: #dee2e6;
+    font-size: 1rem;
+    padding: 10px;
+    margin-top: 10px;
+
+}
+
+.flashcardColumn{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: stretch; /* Makes sure the column fills the row */
+    padding: 0;
+    margin: 0;
+}
+
+.flashcardList{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    border-radius: 0rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

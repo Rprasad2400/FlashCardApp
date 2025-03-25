@@ -10,12 +10,14 @@ import osImage from '../../assets/images/OS Image.png';
 import './home.css';
 import 'react-circular-progressbar/dist/styles.css';
 import ProgressRow from '../../Components/recentsets/recentSet';
+import CreateTaskModal from '../createTask/createTaskModal';
 function Home() {
     const [showModal, setShowModal] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState(false);
     const [date, setDate] = useState(new Date());
     const [weekStart, setWeekStart] = useState(getWeekStart(new Date()));
     const [goals, setGoals] = useState({});
+    const [openModal, setOpenModal] = useState(false);
     const [showGoalModal, setShowGoalModal] = useState(false);
     const [selectedDay, setSelectedDay] = useState(null);
     const [newGoal, setNewGoal] = useState("");
@@ -120,7 +122,9 @@ function Home() {
                     </Row>
 
                     <Row>
-                        <Col className="d-flex justify-content-center text-center">
+                        <Col className="d-flex justify-content-center text-center"> 
+                        <Button variant="primary" onClick={() => setOpenModal(true)}>add task</Button>
+
                             <Link>
                                 <Button onClick={() => setShowModal(true)}> Add A Course </Button>
                             </Link>
@@ -247,6 +251,7 @@ function Home() {
                     </Card>
                 </Col>
             </Row>
+         
             {/* Add Course Modal */}
             <Modal show={showModal} onHide={() => setShowModal(false)} centered>
                 <Modal.Header closeButton>
@@ -279,6 +284,11 @@ function Home() {
                     </Button>
                 </Modal.Footer>
             </Modal>
+            <CreateTaskModal 
+                show={openModal} 
+                handleClose={() => setOpenModal(false)} 
+                handleSave={console.log("Task saved")}
+            />
         </Container>
     );
 }

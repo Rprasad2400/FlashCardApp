@@ -11,9 +11,9 @@ import TileCard from '../../Components/tilecard/tilecard';
 import api from '../../scripts/set/SetService';
 import { useNavigate } from 'react-router-dom';
 import SetsModal from '../../Components/setsModal/setsModal';
-
 import FlashcardList from '../../Components/flashcardlist/FlashcardList';
 import { useEffect } from 'react';
+import CreateTaskModal from '../createTask/createTaskModal';
 
 const SAMPLE_FLASHCARDS = [
     {
@@ -74,8 +74,20 @@ export default function OSFlash() {
     if(!data){ 
       return <div>Loading...</div>;
     }
+    const onClick = () => {
+      const savedFlashcards = localStorage.getItem('flashcards');
+      if (savedFlashcards=="undefined") {
+        localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
+        
+       
 
-    console.log(data)
+
+    }
+   // navigate(`/FlashCardDisplay`); 
+   navigate(`/ViewSet/${accountID}`);
+    //console.log("clicked");')
+    console.log(data);
+  }
 
 
     
@@ -164,8 +176,8 @@ export default function OSFlash() {
               </div>
           </Col>
         </Row>
-
-        <SetsModal isOpen={showModal} closeModal={() => setShowModal(false)} />
+        {/* <CreateTaskModal show={showModal} handleClose={() => setShowModal(false)} handleSave={(task) => console.log(task)} /> */}
+         <SetsModal title={data.name} isOpen={showModal} closeModal={() => setShowModal(false)} givenSet={data.flashcards} onClick={onClick}/> 
       </Container>
 
     );
