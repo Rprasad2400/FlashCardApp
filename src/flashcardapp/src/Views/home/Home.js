@@ -109,7 +109,11 @@ function Home() {
                                 <h5 className="mt-2" style={{ fontSize: "2rem" }}>
                                     <span className="streak-number">5</span> Days
                                 </h5>
+
                                 </Col>
+                                <Button onClick={() => setShowModal(true)} className="btn btn-primary rounded-pill shadow-sm fw-bold" style={{ transition: "all 0.3s ease-in-out" }}>
+                                    Edit Goals
+                                </Button>
                             </Row>
                             </Card>
                         </Col>
@@ -140,6 +144,7 @@ function Home() {
                                             >
                                                 Continue →
                                             </Button>
+                                            
                                             </Col>
                                         </Row>
                                         {/* Use your existing ProgressRow component here */}
@@ -152,6 +157,17 @@ function Home() {
                     </Row>
                 </Col>
             </Row>
+            <CreateTaskModal 
+                show={showModal} 
+                onHide={() => setShowModal(false)} 
+                date={date} 
+                weekStart={weekStart} 
+                goals={goals} 
+                onGoalChange={(day, goal) => setGoals((prev) => ({ ...prev, [day]: goal }))} 
+                onAddGoal={handleAddGoal} 
+                newGoal={newGoal}
+                setNewGoal={setNewGoal}
+                />
         </Container>
     );
 }
