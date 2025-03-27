@@ -8,8 +8,8 @@ const ModuleSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    main: {
-        type: ObjectId,
+    mainSet: {
+        type: String,
         required: false,
     },
 }, { autoIndex: false });  // Disable automatic index creation

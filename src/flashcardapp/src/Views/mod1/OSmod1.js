@@ -14,7 +14,7 @@ import SetsModal from '../../Components/setsModal/setsModal';
 import FlashcardList from '../../Components/flashcardlist/FlashcardList';
 import { useEffect } from 'react';
 import CreateTaskModal from '../createTask/createTaskModal';
-
+import courseAPI from '../../scripts/course/CourseService';
 const SAMPLE_FLASHCARDS = [
     {
         id: 1,
@@ -47,12 +47,28 @@ export default function OSFlash() {
 
     //TODO: do a find to get the flashcard tied to the accountID
     //TODO: display that flashcard information?
+    //TODO: make it so that it displays it based on courseID
     const accountID ="67c1fb04b144d1276b668a06";
+    const courseID = "1"; // Assuming you have a courseID to filter by 
     const [flashcards, setFlashcards] = useState(SAMPLE_FLASHCARDS);
     const [showModal, setShowModal] = useState(false);
     const [data, setData] = useState(null);
     const navigate = useNavigate();
     useEffect(() => {
+
+      async function fetchCourse() {
+        try {
+          const response = await courseAPI.findCourse(courseID);
+          if (response) {
+            console.log(response);
+          } else {
+            console.error("No course found");
+          }
+        }
+        catch (error) {
+          console.error("Error fetching course:", error);
+        }
+      }
       async function fetchFlashcards() {
         try {
           const response = await api.findSet(accountID);
@@ -68,7 +84,7 @@ export default function OSFlash() {
           console.error("Error fetching flashcards:", error);
         }
       }
-
+      fetchCourse();
       fetchFlashcards();
     }, [accountID]);
     if(!data){ 
@@ -79,12 +95,15 @@ export default function OSFlash() {
       if (savedFlashcards=="undefined") {
         localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
         
-       
-
+  
 
     }
    // navigate(`/FlashCardDisplay`); 
    navigate(`/ViewSet/${accountID}`);
+   // Create course
+
+        // Assuming this is the ID of the main set
+
     //console.log("clicked");')
     console.log(data);
   }
