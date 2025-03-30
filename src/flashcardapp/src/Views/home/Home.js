@@ -159,7 +159,7 @@ function Home() {
             </Row>
             <CreateTaskModal 
                 show={showModal} 
-                onHide={() => setShowModal(false)} 
+                handleClose={() => setShowModal(false)} 
                 date={date} 
                 weekStart={weekStart} 
                 goals={goals} 
