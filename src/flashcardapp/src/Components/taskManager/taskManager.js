@@ -9,7 +9,6 @@ const TaskManager = () => {
     const [tasks, setTasks] = useState({ upcoming: [], completed: [], missed: [] });
 
     useEffect(() => {
-        alert("inside other use effect");
         console.error("Inside other useEffect:");
     
         fetch(`http://localhost:5000/api/task/get-tasks/${localStorage.getItem("username")}`)
@@ -55,12 +54,23 @@ const TaskManager = () => {
                 // ✅ Separate tasks into upcoming & completed
                 const upcomingTasks = [];
                 const completedTasks = [];
+                const missedTasks = [];
     
                 data.tasks.forEach(task => {
                     if (completedTaskIds.includes(task._id)) {
                         completedTasks.push(task);
                     } else {
-                        upcomingTasks.push(task);
+                        // Check if the task's due_date has passed and it's not completed
+                        const taskDueDate = new Date(task.due_date); // Convert due_date to Date object
+                        const currentDate = new Date(); // Get the current date and time
+                
+                        if (taskDueDate < currentDate) {
+                            // If the task's due date has passed and it's not completed, push to missedTasks
+                            missedTasks.push(task);
+                        } else {
+                            // Otherwise, it's an upcoming task
+                            upcomingTasks.push(task);
+                        }
                     }
                 });
     
@@ -68,10 +78,10 @@ const TaskManager = () => {
                 setTasks({
                     upcoming: upcomingTasks,
                     completed: completedTasks,
-                    missed: [], // Modify as needed
+                    missed: missedTasks, // Modify as needed
                 });
     
-                alert("Tasks successfully categorized!");
+                console.log("Tasks successfully categorized!");
             })
             .catch((error) => console.error("Error fetching tasks:", error));
     }, []);
