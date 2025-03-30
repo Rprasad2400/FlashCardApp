@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,9 +7,10 @@ import { Button, Card, Modal, Form } from 'react-bootstrap';
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import ListGroup from 'react-bootstrap/ListGroup';
 import osImage from '../../assets/images/OS Image.png';
+import TaskManager from '../../Components/taskManager/taskManager'
 import './home.css';
 import 'react-circular-progressbar/dist/styles.css';
-import ProgressRow from '../../Components/recentsets/recentSet';
+
 import { Bullseye } from "react-bootstrap-icons";
 import CreateTaskModal from '../createTask/createTaskModal';
 function Home() {
@@ -70,6 +71,26 @@ function Home() {
         setShowModal(false);
     };
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                //alert("I am trying!");
+                const response = await fetch(`http://localhost:5000/api/user/get-courses/${localStorage.getItem('username')}`);  
+                const data = await response.json();
+                if (data.success) {
+                    //alert("data.courses: " + JSON.stringify(data.user.courses)); 
+                    //alert("data: " + JSON.stringify(data));
+                    localStorage.setItem("courses",JSON.stringify(data.user.courses));
+                    localStorage.setItem("tasks-completed", JSON.stringify(data.user.tasksCompleted));
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
     return (
         <Container>
             <Row className='mt-4 justify-content-center' style={{width: "100%", margin: "0 auto"}}>
@@ -117,37 +138,7 @@ function Home() {
                     <Row className="justify-content-center">
                         <Col>
                             {/* <h6 style={{ marginLeft: "10px" }}>Recent Sets:</h6> */}
-                            <h5 className="fw-bold text-secondary ms-2">📚 Recent Sets:</h5>
-                            <div style={{ width: "80%", margin: "0 auto", maxHeight: "400px", overflowY: "auto", borderRadius: "5px", padding: "5px" }}>
-                                <ListGroup variant="flush">
-                                    {["Module 1 Flashcards", "Module 2 Flashcards", "Module 3 Flashcards"].map((module, index) => (
-                                        <ListGroup.Item key={index} className="p-3 rounded mb-3" style={{
-                                            border: "1px solid #888", // Dark border color
-                                            transition: "border-color 0.3s ease", // Smooth transition for border color change
-                                          }}>
-                                        <Row className="align-items-center">
-                                            <Col>
-                                            <b className="text-dark">{module}</b>
-                                            </Col>
-                                            <Col className="d-flex justify-content-end">
-                                            <Button
-                                                variant="primary"
-                                                className="rounded-pill shadow-sm fw-bold"
-                                                style={{ transition: "all 0.3s ease-in-out" }}
-                                                onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
-                                                onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
-                                                href="/module1"
-                                            >
-                                                Continue →
-                                            </Button>
-                                            </Col>
-                                        </Row>
-                                        {/* Use your existing ProgressRow component here */}
-                                        <ProgressRow />
-                                        </ListGroup.Item>
-                                    ))}
-                                </ListGroup>
-                            </div>
+                            <TaskManager/>
                         </Col>
                     </Row>
                 </Col>

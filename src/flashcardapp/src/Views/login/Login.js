@@ -143,6 +143,11 @@ export default function Login() {
         console.warn(result);
         if (result) {
             alert("Data saved succesfully");
+
+            // set username and password (used later for retrieving information)
+            localStorage.setItem('username', form_Register_Data.user);
+            localStorage.setItem('password', form_Register_Data.pass);
+            
             set_Register_Form_Data({
                 user: "",
                 pass: "",

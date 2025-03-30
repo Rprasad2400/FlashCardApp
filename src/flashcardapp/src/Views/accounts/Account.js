@@ -5,6 +5,7 @@ import defaultImg from '../../assets/images/default-profile.png';
 import osImg from '../../assets/images/OS Image.png';
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from '../../scripts/set/SetService';
+import ProgressRow from '../../Components/recentsets/recentSet';
 
 const SAMPLE_COURSES = [
     {
@@ -408,6 +409,37 @@ export default function ProfilePage() {
                             <Card.Body>
                                 <h2>Progress</h2>
                                 <p>Check your learning progress here.</p>
+                                <h5 className="fw-bold text-secondary ms-2">📚 Recent Sets:</h5>
+                                <div style={{ width: "80%", margin: "0 auto", maxHeight: "400px", overflowY: "auto", borderRadius: "5px", padding: "5px" }}>
+                                    <ListGroup variant="flush">
+                                        {["Module 1 Flashcards", "Module 2 Flashcards", "Module 3 Flashcards"].map((module, index) => (
+                                            <ListGroup.Item key={index} className="p-3 rounded mb-3" style={{
+                                                border: "1px solid #888", // Dark border color
+                                                transition: "border-color 0.3s ease", // Smooth transition for border color change
+                                            }}>
+                                            <Row className="align-items-center">
+                                                <Col>
+                                                <b className="text-dark">{module}</b>
+                                                </Col>
+                                                <Col className="d-flex justify-content-end">
+                                                <Button
+                                                    variant="primary"
+                                                    className="rounded-pill shadow-sm fw-bold"
+                                                    style={{ transition: "all 0.3s ease-in-out" }}
+                                                    onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
+                                                    onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+                                                    href="/module1"
+                                                >
+                                                    Continue →
+                                                </Button>
+                                                </Col>
+                                            </Row>
+                                            {/* Use your existing ProgressRow component here */}
+                                            <ProgressRow />
+                                            </ListGroup.Item>
+                                        ))}
+                                    </ListGroup>
+                                </div>
                             </Card.Body>
                         </Card>
                     )}

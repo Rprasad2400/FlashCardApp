@@ -20,7 +20,13 @@ const UserSchema = new mongoose.Schema({
     sets: {
         type: [String], // array of set names
         required: true,
-    }
+    },
+    tasksCompleted: [
+        {
+            task_id: { type: String }, // Changed from ObjectId to String
+            set_id: { type: String }   // Changed from ObjectId to String
+        }
+    ]
 }, { autoIndex: false });  // Disable automatic index creation
 
 module.exports = mongoose.model('users', UserSchema);
