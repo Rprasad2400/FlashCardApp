@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Link, Navigate, NavLink, Outlet } from "react-router-dom";
 import "./nav.css";
 
 const ProtectedRoute = ({ isAuthenticated }) => {
@@ -89,9 +89,12 @@ function NavbarDarkExample({ isAuthenticated }) {
             {showDropdown && suggestions.length > 0 && (
               <ul className="list-group search-dropdown">
                 {suggestions.map((set) => (
+                 <NavLink to={`/ViewSet/${set._id}`} key={set._id} className="nav-link">
                   <li key={set._id} className="list-group-item search-item">
                     {set.name}
                   </li>
+                  
+                  </NavLink>
                 ))}
               </ul>
             )}
