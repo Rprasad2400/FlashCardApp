@@ -11,12 +11,34 @@ import { useNavigate } from 'react-router-dom';
 export default function FlashCardDisplay() {
     const [flashcards, setFlashcards] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentCap, setCurrentCap] = useState(0);
     const [currentScore, setCurrentScore] = useState(0);
     const [currentMisses, setMissed] = useState(0);
     const [streak, setStreak] = useState(0);
     const navigate = useNavigate();
+    const calculateWeight = (flashcard) => {
+        const cooldown = Math.min(2**(flashcard.wrong),5);
+        const performance = (flashcard.wrong+1) / (flashcard.correct+1);
+        const time_factor = Math.log(flashcard.lastAnswered+2);
+        const gate =  Math.max(1, flashcard.lastAnswered -  cooldown)
+        console.log(gate);
+        console.log(flashcard.lastAnswered);
+        const weight = (flashcard.difficulty ** 1.5) * performance * time_factor* gate;
+        return weight;
+    }
 
+    const weightFlashcards = (flashcards) => {
+        setFlashcards(flashcards.map((flashcard) => ({
+            ...flashcard,
+            lastAnswered: flashcard.lastAnswered+1,
+            weight: calculateWeight(flashcard),
+        })));
+    };
 
+    const sortFlashcards = (flashcards) => {
+        setFlashcards([...flashcards].sort((a, b) => b.weight - a.weight));
+    };
+    
 
 
     useEffect(() => {
@@ -29,9 +51,11 @@ export default function FlashCardDisplay() {
                 lastAnswered: 0,
                 correct: 0,
                 wrong: 0,
-                difficulty: 1
+                difficulty: 1+ Math.random (3-1),
             }));
         }
+
+
 
         //TODO: Put this in a seperate function
         const getFlashcards = async () => {
@@ -48,7 +72,8 @@ export default function FlashCardDisplay() {
                 console.log('Fetching from API');
                 const data = await fetchFlashcards();
                 if (data) {  // Ensure data is not undefined/null
-                    setFlashcards(data.flashcards);
+                    setFlashcards(transformFlashcards(data.flashcards)); // Set state);
+                    console.log(flashcards);
                     localStorage.setItem('flashcards', JSON.stringify(transformFlashcards(data.flashcards))); // Save to localStorage
                 } else {
                     console.warn("Fetched data is empty or invalid");
@@ -62,38 +87,105 @@ export default function FlashCardDisplay() {
     }, []);
 
     
-    const SAMPLE_FLASHCARDS = flashcards;
     const currentFlashcard = flashcards[currentIndex];
     
 
 
-    if (currentIndex >= SAMPLE_FLASHCARDS.length) {
+    if (currentIndex >= flashcards.length) {
         navigate('/flashEnd', { state: { score: currentScore, misses: currentMisses } });
     }
     if (!currentFlashcard) {
         return <div>Loading...</div>;
     }
 
+    /*
     const onRedButtonClick = () => {
-        SAMPLE_FLASHCARDS[currentIndex].wrong += 1;
-        SAMPLE_FLASHCARDS[currentIndex].lastAnswered = prevIndex;
-        SAMPLE_FLASHCARDS[currentIndex].weight = SAMPLE_FLASHCARDS[currentIndex].weight + 1;
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % SAMPLE_FLASHCARDS.length);
+        setCurrentCap(Math.max(currentCap+1,flashcards.length*1.5));
+        flashcards[0].wrong += 1;
+        flashcards[0].lastAnswered = 0;
+        for(let i=0; i<flashcards.length; i++){
+
+            
+            flashcards[i].weight = calculateWeight(flashcards[i]);
+        }
+        console.log(flashcards);
+        // sort the flashcards by weight
+        flashcards.sort((a, b) => b.weight - a.weight);
+        console.log(flashcards);
+        
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
         setMissed((prevMissed) => (prevMissed + 1));
         setStreak(0);
 
     };
+*/
+const onRedButtonClick = () => {
+    setCurrentCap((prevCap) => Math.max(prevCap + 1, flashcards.length * 1.5));
 
-    const onGreenButtonClick = () => {
-        SAMPLE_FLASHCARDS[currentIndex].correct += 1;
-        SAMPLE_FLASHCARDS[currentIndex].lastAnswered = prevIndex;
+    // Create a new array and update values immutably
+    setFlashcards((prevFlashcards) => {
+        const updatedFlashcards = prevFlashcards.map((card, index) => {
+            if (index === 0) {
+                return {
+                    ...card,
+                    wrong: card.wrong + 1,
+                    lastAnswered: 0,
+                    weight: calculateWeight({ ...card, wrong: card.wrong + 1, lastAnswered: 0 }),
+                };
+            }
+            return { ...card, weight: calculateWeight(card) };
+        });
 
+            // Sort & Shift: Move the first card to the end
+            const [first, ...rest] = updatedFlashcards.sort((a, b) => b.weight - a.weight);
+            return [...rest, first]; // First card moves to the back
+            
+    });
+    
+
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+    setMissed((prevMissed) => prevMissed + 1);
+    setStreak(0);
+};
+
+    /*const onGreenButtonClick = () => {
+        console.log(flashcards);
+        flashcards[0].correct += 1;
+        flashcards[0].lastAnswered = 0;
+        weightFlashcards(flashcards);
+        sortFlashcards(flashcards);
+        console.log(flashcards);
+            
+        
         setCurrentIndex((prevIndex) => (prevIndex + 1) );
         setStreak((prevStreak) => prevStreak + 1);
         setCurrentScore((prevScore) => prevScore + (100* (streak+1)));
         console.log(currentScore);
         
+    };*/
+    const onGreenButtonClick = () => {
+        setFlashcards((prevFlashcards) => {
+            const updatedFlashcards = prevFlashcards.map((card, index) => {
+                if (index === 0) {
+                    return {
+                        ...card,
+                        correct: card.correct + 1,
+                        lastAnswered: 0,
+                        weight: calculateWeight({ ...card, correct: card.correct + 1, lastAnswered: 0 }),
+                    };
+                }
+                return { ...card, weight: calculateWeight(card) };
+            });
+    
+            // Sort flashcards
+            return [...updatedFlashcards].sort((a, b) => b.weight - a.weight);
+        });
+    
+        setCurrentIndex((prevIndex) => prevIndex + 1);
+        setStreak((prevStreak) => prevStreak + 1);
+        setCurrentScore((prevScore) => prevScore + 100 * (streak + 1));
     };
+    
 
     return (
         <Container className={styles.displayContainer}>
@@ -120,7 +212,7 @@ export default function FlashCardDisplay() {
                 {/* Middle Column (Flashcard & Buttons) */}
                 <Col className={styles.middleCol}>
                     <div className={styles.flashcardContainer}>
-                        <Flashcard width="550px" height="300px" flashcard={SAMPLE_FLASHCARDS[currentIndex]} resetFlip={currentIndex} />
+                        <Flashcard width="550px" height="300px" flashcard={flashcards[0]} resetFlip={currentIndex} />
                     </div>
                     <div className={styles.buttonRow}>
                         <Button variant="danger" onClick={onRedButtonClick}>Red Button</Button>
