@@ -17,7 +17,21 @@ export default function FlashCardDisplay() {
     const navigate = useNavigate();
 
 
+
+
     useEffect(() => {
+        const transformFlashcards = (flashcards) => {
+            return flashcards.map((flashcard) => ({
+                ...flashcard,
+                question: flashcard.question,
+                answer: flashcard.answer,
+                weight: 1,
+                lastAnswered: 0,
+                correct: 0,
+                wrong: 0,
+                difficulty: 1
+            }));
+        }
 
         //TODO: Put this in a seperate function
         const getFlashcards = async () => {
@@ -25,7 +39,7 @@ export default function FlashCardDisplay() {
             const savedFlashcards = localStorage.getItem('flashcards');
             if (savedFlashcards!=="undefined") {
                 console.log('Loading from local storage');
-                setFlashcards(JSON.parse(savedFlashcards));
+                setFlashcards(transformFlashcards(JSON.parse(savedFlashcards)));
                 return; // Stop API fetch if local data exists
             }
     
@@ -35,7 +49,7 @@ export default function FlashCardDisplay() {
                 const data = await fetchFlashcards();
                 if (data) {  // Ensure data is not undefined/null
                     setFlashcards(data.flashcards);
-                    localStorage.setItem('flashcards', JSON.stringify(data.flashcards)); // Save to localStorage
+                    localStorage.setItem('flashcards', JSON.stringify(transformFlashcards(data.flashcards))); // Save to localStorage
                 } else {
                     console.warn("Fetched data is empty or invalid");
                 }
@@ -46,7 +60,6 @@ export default function FlashCardDisplay() {
     
         getFlashcards();
     }, []);
-    
 
     
     const SAMPLE_FLASHCARDS = flashcards;
@@ -62,6 +75,9 @@ export default function FlashCardDisplay() {
     }
 
     const onRedButtonClick = () => {
+        SAMPLE_FLASHCARDS[currentIndex].wrong += 1;
+        SAMPLE_FLASHCARDS[currentIndex].lastAnswered = prevIndex;
+        SAMPLE_FLASHCARDS[currentIndex].weight = SAMPLE_FLASHCARDS[currentIndex].weight + 1;
         setCurrentIndex((prevIndex) => (prevIndex + 1) % SAMPLE_FLASHCARDS.length);
         setMissed((prevMissed) => (prevMissed + 1));
         setStreak(0);
@@ -69,6 +85,9 @@ export default function FlashCardDisplay() {
     };
 
     const onGreenButtonClick = () => {
+        SAMPLE_FLASHCARDS[currentIndex].correct += 1;
+        SAMPLE_FLASHCARDS[currentIndex].lastAnswered = prevIndex;
+
         setCurrentIndex((prevIndex) => (prevIndex + 1) );
         setStreak((prevStreak) => prevStreak + 1);
         setCurrentScore((prevScore) => prevScore + (100* (streak+1)));

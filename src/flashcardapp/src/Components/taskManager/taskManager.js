@@ -55,7 +55,14 @@ const TaskManager = () => {
                 const upcomingTasks = [];
                 const completedTasks = [];
                 const missedTasks = [];
-    
+                /*completedTaskIds.forEach(completedTask => {
+                    const task = data.tasks.find(task => task._id === taskId);
+
+                    if (completedTask.isCompleted) {
+                        completedTasks.push(task);
+                    }
+                });*/
+                
                 data.tasks.forEach(task => {
                     if (completedTaskIds.includes(task._id)) {
                         completedTasks.push(task);
