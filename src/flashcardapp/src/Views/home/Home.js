@@ -40,6 +40,78 @@ function Home() {
         });
     }
 
+    const getTotalGoalsForToday = () => {
+        // Retrieve stored tasks from localStorage
+        const storedTasks = localStorage.getItem("tasks-completed");
+    
+        if (!storedTasks) return 0; // No tasks stored
+    
+        try {
+            // Parse the stored JSON data
+            const tasks = JSON.parse(storedTasks);
+    
+            if (!Array.isArray(tasks)) {
+                console.error("Stored tasks are not an array");
+                return 0;
+            }
+    
+            // Get today's date in "YYYY-MM-DD" format
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const todayStr = today.toISOString().split("T")[0]; // Extract "YYYY-MM-DD"
+    
+            // Filter tasks due today & sum up their goals
+            const totalGoal = tasks
+                .filter(task => {
+                    const taskDate = new Date(task.due_date);
+                    taskDate.setHours(0, 0, 0, 0);
+                    return taskDate.getTime() === today.getTime();
+                })
+                .reduce((sum, task) => sum + Number(task.goal || 0), 0); // Sum up goals
+    
+            return totalGoal;
+        } catch (error) {
+            console.error("Error processing tasks:", error);
+            return 0;
+        }
+    };
+
+    const getTotalProgressForToday = () => {
+        // Retrieve stored tasks from localStorage
+        const storedTasks = localStorage.getItem("tasks-completed");
+    
+        if (!storedTasks) return 0; // No tasks stored
+    
+        try {
+            // Parse the stored JSON data
+            const tasks = JSON.parse(storedTasks);
+    
+            if (!Array.isArray(tasks)) {
+                console.error("Stored tasks are not an array");
+                return 0;
+            }
+    
+            // Get today's date in "YYYY-MM-DD" format
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const todayStr = today.toISOString().split("T")[0]; // Extract "YYYY-MM-DD"
+    
+            // Filter tasks due today & sum up their goals
+            const totalProgress = tasks
+                .filter(task => {
+                    const taskDate = new Date(task.due_date);
+                    taskDate.setHours(0, 0, 0, 0);
+                    return taskDate.getTime() === today.getTime();
+                })
+                .reduce((sum, task) => sum + Number(task.progress || 0), 0); // Sum up goals
+    
+            return totalProgress;
+        } catch (error) {
+            console.error("Error processing tasks:", error);
+            return 0;
+        }
+    };
+
     // Navigate to previous or next week
     const changeWeek = (direction) => {
         const newStart = new Date(weekStart);
@@ -66,10 +138,8 @@ function Home() {
             setNewGoal("");
         }
     };
-    // Save profile changes
-    const handleSaveChanges = () => {
-        setShowModal(false);
-    };
+    
+    
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -91,6 +161,8 @@ function Home() {
         fetchUserData();
     }, []);
 
+    const totalGoals = getTotalGoalsForToday();
+    const totalProgress = getTotalProgressForToday();
     return (
         <Container>
             <Row className='mt-4 justify-content-center' style={{width: "100%", margin: "0 auto"}}>
@@ -101,7 +173,7 @@ function Home() {
                             <h1 className="fw-bold text-primary d-flex align-items-center justify-content-center gap-2">
                                 <Bullseye size={25} color="red" /> Daily Goal
                             </h1>
-                            <h5 style={{marginTop: "10px"}}>4 Flashcards Left To Learn!</h5>
+                            <h5 style={{marginTop: "10px"}}> {totalGoals - totalProgress} Flashcards Left To Learn!</h5>
                         </Col>
                     </Row>
                     {/* Progress Circle */}
@@ -109,8 +181,8 @@ function Home() {
                         <Col className="d-flex justify-content-center align-items-center" xs="auto" sm={8}>
                         <div style={{ width: "150px" }}>
                             <CircularProgressbar
-                            value={60}
-                            text={`${60}%`}
+                            value={totalGoals > 0 ? (totalProgress / totalGoals) * 100 : 0}
+                            text={`${totalGoals > 0 ? ((totalProgress / totalGoals) * 100).toFixed(2) : 0}%`}
                             styles={buildStyles({
                                 textColor: "#000",
                                 pathColor: "#007bff",

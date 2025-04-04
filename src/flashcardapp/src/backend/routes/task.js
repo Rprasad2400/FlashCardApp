@@ -6,79 +6,28 @@ const Set = require('../models/Set'); // Assuming you have a Set model
 
 const router = express.Router();
 
-// In your backend, create an endpoint to get the user's completed tasks
-router.get("/:userId/completed-tasks", async (req, res) => {
+router.post('/add-personal-task/:userID', async (req, res) => {
     try {
-        const userId = req.params.userId;
-        const user = await User.findById(userId).populate("tasksCompleted.task_id"); // Populate task details
-
+        const user = await User.findById(req.params.userID);
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        // Extract only completed tasks
-        const completedTasks = user.tasksCompleted;
-        if (completedTasks && completedTasks.length > 0) {
-            console.log("Completed tasks are available:", completedTasks);
-        } else {
-            console.log("No completed tasks available.");
-        }
-        res.json(completedTasks); // Return only the completed tasks
-    } catch (error) {
-        console.error("Error fetching completed tasks:", error);
-        res.status(500).json({ message: error.message });
-    }
-});
+        const { name, date, amount, setId } = req.body;
 
-router.get("/tasks/:taskId", async (req, res) => {
-    try {
-        const taskId = req.params.taskId;
-        const task = await Task.findOne({ task_id: taskId });
+        const newTask = {
+            task_id: "0", // personal
+            set_id: setId || "0",
+            name,
+            due_date: date,
+            progress: "0",
+            goal: amount
+        };
 
-        if (!task) {
-            return res.status(404).json({ message: "Task not found" });
-        }
+        user.tasksCompleted.push(newTask);
+        await user.save();
 
-        res.json(task); // Send task details back to the frontend
-    } catch (error) {
-        console.error("Error fetching task details:", error);
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Add a completed task for a user
-router.post("/:userId/complete-task", async (req, res) => {
-    console.log("Inside complete-task");
-
-    const { task_id, set_id } = req.body; // Get task_id and set_id from request body
-    console.log("Request Body:", req.body);
-    console.log("Params:", req.params);
-
-    const userId = req.params.userId;
-
-    // Check if task_id and set_id are valid
-    if (!task_id || !set_id) {
-        return res.status(400).json({ message: "task_id and set_id are required." });
-    }
-
-    try {
-        // Find the user by userId
-        const existingUser = await User.findById(userId);
-
-        if (!existingUser) {
-            return res.json({ success: false, message: "User not found." });
-        }
-
-        // Only update tasksCompleted array
-        const updatedUser = await User.findOneAndUpdate(
-            { _id: userId }, // Find the user by userId
-            { $push: { tasksCompleted: { task_id, set_id } } }, // Push task into tasksCompleted
-            { new: true, fields: { email: 1, tasksCompleted: 1, sets: 1, courses: 1 } } // Don't touch required fields
-        );
-
-        console.log("Task added successfully:", updatedUser);
-
-        res.json({ success: true, message: "Task marked as completed!", user: updatedUser });
+        res.json({ success: true, user });
     } catch (error) {
         console.error("Error in backend:", error);
         res.status(500).json({ message: error.message });
@@ -86,15 +35,17 @@ router.post("/:userId/complete-task", async (req, res) => {
 });
 
 
-
-router.get("/tasks", async (req, res) => {
-    //console.log("inside tasks");
+router.get('/get-user-sets/:userId', async (req, res) => {
+    console.log("Inside user-sets");
     try {
-        const tasks = await Task.find();
-        res.json(tasks);
-        //console.log("Tasks: ", tasks);
+        const user = await User.findById(req.params.userId);
+        if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+
+        const sets = await Set.find({ course: { $in: user.courses } });
+        res.json({ success: true, sets });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Server error' });
     }
 });
 
@@ -103,12 +54,21 @@ router.get('/get-tasks/:userID', async (req, res) => {
     console.log("I am trying again!");
     try {
         // Fetch the user by ID and get the courses
-        const user = await User.findById(req.params.userID, 'courses');
+        const user = await User.findById(req.params.userID, 'courses tasksCompleted');
         if (!user) {
             console.log("User not found");
             return res.status(404).json({ success: false, message: 'User not found' });
         }
         console.log("User Found! User: ", user);
+
+          // ✅ If user already has tasks, return them to prevent resetting progress
+        if (user.tasksCompleted && user.tasksCompleted.length > 0) {
+            console.log("User already has tasks, returning existing tasks.");
+            return res.json({ success: true, tasks: user.tasksCompleted });
+        }
+        else{
+            console.log("NOTHING IN TASKS COMPLETED");
+        }
 
         // Step 1: Search for sets belonging to the user's courses
         const sets = await Set.find({ course: { $in: user.courses } }); // Match sets whose 'course' field is in the user's courses
@@ -117,9 +77,22 @@ router.get('/get-tasks/:userID', async (req, res) => {
         console.log("Sets: ", setIds);
 
         // Step 2: Fetch tasks that belong to those sets
-        const tasks = await Task.find({ set_id: { $in: setIds } }); // Match tasks whose 'setId' is in the setIds array
+        let tasks = await Task.find({ set_id: { $in: setIds } }); // Match tasks whose 'setId' is in the setIds array
+
+        tasks = tasks.map(task => ({
+            ...task.toObject(), // Convert Mongoose object to plain JSON
+            task_id: task._id,  // change it to the object Id so user can reference it
+            progress: "0",
+            goal: "5"
+        }));
+
+        user.tasksCompleted = tasks; // Store modified tasks directly in the user's document
+        await user.save();  // Save changes
+
+        console.log("Updated user with modified tasks:", user);
 
         console.log("Tasks: ", tasks);
+        console.log("END OF STUFF");
         // Return the tasks
         res.json({ success: true, tasks });
     } catch (error) {

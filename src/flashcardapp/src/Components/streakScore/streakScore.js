@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./streakScore.css"
 
 function StreakScore({ streak, currentScore, misses }) {
   const [scoreDisplay, setScoreDisplay] = useState(`${currentScore}`);
@@ -22,12 +23,35 @@ function StreakScore({ streak, currentScore, misses }) {
     return () => clearTimeout(timer); // Cleanup on re-renders
   }, [streak, currentScore]); // Run effect when parameters change
 
-  return  <div> 
-    <p>Total Score: {scoreDisplay}</p>
-    <p>Round Score: {pointsEarned}</p>
-    <p>Streak: {streak}</p>
-    <p>Missed: {misses}</p>
-  </div>;
+  return(
+    // <div> 
+    //   <p>Total Score: {scoreDisplay}</p>
+    //   <p>Round Score: {pointsEarned}</p>
+    //   <p>Streak: {streak}</p>
+    //   <p>Missed: {misses}</p>
+    // </div>
+    <div className="streak">
+      <div className="container"> 
+            <div className="section"> 
+                <h2 className="title">Total Score</h2> 
+                <p className="value">{scoreDisplay}</p> 
+            </div>
+            <div className="section"> 
+                <h2 className="title">Round Score</h2> 
+                <p className="value">{pointsEarned}</p> 
+            </div>
+            <div className="section"> 
+                <h2 className="title">Streak</h2> 
+                <p className="value">{streak}</p> 
+            </div>
+            <div className="section"> 
+                <h2 className="title">Missed</h2> 
+                <p className="value">{misses}</p> 
+            </div>
+        </div>
+    </div>
+  );
+  
 }
 
 export default StreakScore;

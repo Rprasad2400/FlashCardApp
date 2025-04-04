@@ -24,7 +24,12 @@ const UserSchema = new mongoose.Schema({
     tasksCompleted: [
         {
             task_id: { type: String }, // Changed from ObjectId to String
-            set_id: { type: String }   // Changed from ObjectId to String
+            set_id: { type: String },   // Changed from ObjectId to String
+            progress: {type: String},
+            goal: {type: String},
+            due_date: {type: String},
+            name:{type: String},
+            course_id:{type: String},
         }
     ]
 }, { autoIndex: false });  // Disable automatic index creation
