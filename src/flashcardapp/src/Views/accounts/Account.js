@@ -19,6 +19,7 @@ const SAMPLE_COURSES = [
     {
         id: 2,
         course: "Computer Network Fundamentals",
+        image: "https://ufl.instructure.com/courses/526699/files/93740995/download",
         options: [
             'Teacher', 'Flashcards', 'People'
         ]

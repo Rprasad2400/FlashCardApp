@@ -20,7 +20,7 @@ const courses = [
   {
     title: "CEN 3031: Software Engineering",
     description: "An introduction to software engineering principles, methodologies, and project management.",
-    image: "https://via.placeholder.com/300", // Replace with actual image
+    image: "https://ufl.instructure.com/courses/526699/files/93740995/download", // Replace with actual image
     modules: ["Module 1", "Module 2", "Module 3", "Module 4"],
     link: "/SE-flashcards",
   },

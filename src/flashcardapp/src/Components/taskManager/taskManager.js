@@ -62,7 +62,14 @@ const TaskManager = () => {
                 const upcomingTasks = [];
                 const completedTasks = [];
                 const missedTasks = [];
-    
+                /*completedTaskIds.forEach(completedTask => {
+                    const task = data.tasks.find(task => task._id === taskId);
+
+                    if (completedTask.isCompleted) {
+                        completedTasks.push(task);
+                    }
+                });*/
+                
                 data.tasks.forEach(task => {
                     // Find the completed task data
                     let completedTask = completedTasksData.find(t => t.id === task._id);
