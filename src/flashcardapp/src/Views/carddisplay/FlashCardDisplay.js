@@ -75,23 +75,46 @@ export default function FlashCardDisplay() {
     }
 
     const onRedButtonClick = () => {
-        SAMPLE_FLASHCARDS[currentIndex].wrong += 1;
-        SAMPLE_FLASHCARDS[currentIndex].lastAnswered = prevIndex;
-        SAMPLE_FLASHCARDS[currentIndex].weight = SAMPLE_FLASHCARDS[currentIndex].weight + 1;
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % SAMPLE_FLASHCARDS.length);
-        setMissed((prevMissed) => (prevMissed + 1));
-        setStreak(0);
+        // SAMPLE_FLASHCARDS[currentIndex].wrong += 1;
+        // SAMPLE_FLASHCARDS[currentIndex].lastAnswered = prevIndex;
+        // SAMPLE_FLASHCARDS[currentIndex].weight = SAMPLE_FLASHCARDS[currentIndex].weight + 1;
+        // setCurrentIndex((prevIndex) => (prevIndex + 1) % SAMPLE_FLASHCARDS.length);
+        // setMissed((prevMissed) => (prevMissed + 1));
+        // setStreak(0);
+
+        setCurrentIndex((prevIndex) => {
+            // Update SAMPLE_FLASHCARDS with the new prevIndex inside this scope
+            SAMPLE_FLASHCARDS[prevIndex].wrong += 1;
+            SAMPLE_FLASHCARDS[prevIndex].lastAnswered = prevIndex;
+            SAMPLE_FLASHCARDS[prevIndex].weight = SAMPLE_FLASHCARDS[prevIndex].weight + 1;
+    
+            setMissed((prevMissed) => (prevMissed + 1));
+            setStreak(0);
+    
+            return (prevIndex + 1) % SAMPLE_FLASHCARDS.length; // Return the new index to update the state
+        });
 
     };
 
     const onGreenButtonClick = () => {
-        SAMPLE_FLASHCARDS[currentIndex].correct += 1;
-        SAMPLE_FLASHCARDS[currentIndex].lastAnswered = prevIndex;
+        // SAMPLE_FLASHCARDS[currentIndex].correct += 1;
+        // SAMPLE_FLASHCARDS[currentIndex].lastAnswered = prevIndex;
 
-        setCurrentIndex((prevIndex) => (prevIndex + 1) );
-        setStreak((prevStreak) => prevStreak + 1);
-        setCurrentScore((prevScore) => prevScore + (100* (streak+1)));
-        console.log(currentScore);
+        // setCurrentIndex((prevIndex) => (prevIndex + 1) );
+        // setStreak((prevStreak) => prevStreak + 1);
+        // setCurrentScore((prevScore) => prevScore + (100* (streak+1)));
+        // console.log(currentScore);
+
+        setCurrentIndex((prevIndex) => {
+            // Update SAMPLE_FLASHCARDS with the new prevIndex inside this scope
+            SAMPLE_FLASHCARDS[prevIndex].correct += 1;
+            SAMPLE_FLASHCARDS[prevIndex].lastAnswered = prevIndex;
+    
+            setStreak((prevStreak) => prevStreak + 1);
+            setCurrentScore((prevScore) => prevScore + (100 * (streak + 1)));
+    
+            return prevIndex + 1; // Return the new index to update the state
+        });
         
     };
 
