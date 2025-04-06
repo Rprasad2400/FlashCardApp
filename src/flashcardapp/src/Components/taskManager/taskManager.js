@@ -83,11 +83,13 @@ const TaskManager = () => {
                         completedTasks.push(task);
                     } else {
                         // Check if the task's due_date has passed and it's not completed
-                        const taskDueDate = new Date(task.due_date); // Convert due_date to Date object
+                        const taskDueDate = parseLocalDate(task.due_date); // Convert due_date to Date object
                         const currentDate = new Date(); // Get the current date and time
                         currentDate.setHours(0, 0, 0, 0); // so stuff due today are not put into missed
                         if (taskDueDate < currentDate) {
                             // If the task's due date has passed and it's not completed, push to missedTasks
+                            console.log("taskDueDate: ", taskDueDate);
+                            console.log("currentDate: ", currentDate);
                             missedTasks.push(task);
                         } else {
                             // Otherwise, it's an upcoming task
@@ -109,7 +111,21 @@ const TaskManager = () => {
     }, []);
     
     
+    function parseLocalDate(dateStr) {
+        if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+            // ISO-like date: '2025-04-06'
+            const [year, month, day] = dateStr.split('-').map(Number);
+            return new Date(year, month - 1, day); // month is 0-indexed
+        }
     
+        if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+            // US-style: '04/06/2025'
+            const [month, day, year] = dateStr.split('/').map(Number);
+            return new Date(year, month - 1, day);
+        }
+    
+        return new Date(dateStr); // fallback
+    }
     
 
     // Group tasks by their due_date

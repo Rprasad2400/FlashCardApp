@@ -63,7 +63,7 @@ function Home() {
             // Filter tasks due today & sum up their goals
             const totalGoal = tasks
                 .filter(task => {
-                    const taskDate = new Date(task.due_date);
+                    const taskDate = parseLocalDate(task.due_date);
                     taskDate.setHours(0, 0, 0, 0);
                     return taskDate.getTime() === today.getTime();
                 })
@@ -76,6 +76,22 @@ function Home() {
         }
     };
 
+    function parseLocalDate(dateStr) {
+        if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+            // ISO-like date: '2025-04-06'
+            const [year, month, day] = dateStr.split('-').map(Number);
+            return new Date(year, month - 1, day); // month is 0-indexed
+        }
+    
+        if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+            // US-style: '04/06/2025'
+            const [month, day, year] = dateStr.split('/').map(Number);
+            return new Date(year, month - 1, day);
+        }
+    
+        return new Date(dateStr); // fallback
+    }
+
     const getTotalProgressForToday = () => {
         // Retrieve stored tasks from localStorage
         const storedTasks = localStorage.getItem("tasks-completed");
@@ -85,6 +101,7 @@ function Home() {
         try {
             // Parse the stored JSON data
             const tasks = JSON.parse(storedTasks);
+            console.log(tasks);
     
             if (!Array.isArray(tasks)) {
                 console.error("Stored tasks are not an array");
@@ -99,7 +116,7 @@ function Home() {
             // Filter tasks due today & sum up their goals
             const totalProgress = tasks
                 .filter(task => {
-                    const taskDate = new Date(task.due_date);
+                    const taskDate = parseLocalDate(task.due_date);
                     taskDate.setHours(0, 0, 0, 0);
                     return taskDate.getTime() === today.getTime();
                 })

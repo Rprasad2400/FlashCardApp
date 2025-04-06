@@ -15,6 +15,7 @@ import OSmod1 from './Views/mod1/OSmod1';
 import Account from './Views/accounts/Account';
 import Login from './Views/login/Login'
 import Nav from './Components/navbar/nav';
+import Footer from './Components/footer/footer'
 import FlashCardDisplay from './Views/carddisplay/FlashCardDisplay';
 import FlashEnd from './Views/flashEnd/flashEnd';
 import ViewSet from './Views/viewSet/viewSet';
@@ -39,6 +40,7 @@ function App() {
                   <Route path="*" element={<div>Page Not Found</div>} />
 
             </Routes>
+            <Footer/>
         </Router>
     </div>
   );
