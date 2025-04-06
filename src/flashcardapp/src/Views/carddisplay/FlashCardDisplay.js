@@ -14,18 +14,18 @@ export default function FlashCardDisplay() {
     const [currentCap, setCurrentCap] = useState(0);
     const [currentScore, setCurrentScore] = useState(0);
     const [currentMisses, setMissed] = useState(0);
+    const [stars, setStars] = useState("⭐");
     const [streak, setStreak] = useState(0);
     const navigate = useNavigate();
     const calculateWeight = (flashcard) => {
-        const cooldown = Math.min(2**(flashcard.wrong),5);
-        const performance = (flashcard.wrong+1) / (flashcard.correct+1);
-        const time_factor = Math.log(flashcard.lastAnswered+2);
-        const gate =  Math.max(1, flashcard.lastAnswered -  cooldown)
-        console.log(gate);
-        console.log(flashcard.lastAnswered);
-        const weight = (flashcard.difficulty ** 1.5) * performance * time_factor* gate;
+        const cooldown = Math.min(2 ** flashcard.wrong, 5); // Ensures higher cooldown for incorrect answers
+        const performance = (flashcard.wrong + 1) / (flashcard.correct + 1); // Higher weight for lower accuracy
+        const time_factor = Math.exp(flashcard.lastAnswered / 5); // Exponential growth to prioritize spaced repetition
+        const gate = 1 / (1 + Math.exp(-0.5 * (flashcard.lastAnswered - cooldown))); // Sigmoid function for smooth control
+    
+        const weight = (flashcard.difficulty ** 1.5) * performance * time_factor * gate;
         return weight;
-    }
+    };
 
     const weightFlashcards = (flashcards) => {
         setFlashcards(flashcards.map((flashcard) => ({
@@ -38,7 +38,7 @@ export default function FlashCardDisplay() {
     const sortFlashcards = (flashcards) => {
         setFlashcards([...flashcards].sort((a, b) => b.weight - a.weight));
     };
-    
+
 
 
     useEffect(() => {
@@ -51,7 +51,7 @@ export default function FlashCardDisplay() {
                 lastAnswered: 0,
                 correct: 0,
                 wrong: 0,
-                difficulty: 1+ Math.random (3-1),
+                difficulty: Math.round(1+ Math.random (3-1)),
             }));
         }
 
@@ -64,6 +64,8 @@ export default function FlashCardDisplay() {
             if (savedFlashcards!=="undefined") {
                 console.log('Loading from local storage');
                 setFlashcards(transformFlashcards(JSON.parse(savedFlashcards)));
+                setCurrentCap(JSON.parse(savedFlashcards).length); // Set currentCap to the number of flashcards loaded
+                console.log("Loaded flashcards from localStorage: ", JSON.parse(savedFlashcards));
                 return; // Stop API fetch if local data exists
             }
     
@@ -73,6 +75,9 @@ export default function FlashCardDisplay() {
                 const data = await fetchFlashcards();
                 if (data) {  // Ensure data is not undefined/null
                     setFlashcards(transformFlashcards(data.flashcards)); // Set state);
+
+                    setCurrentCap(data.flashcards.length); // Set currentCap to the number of flashcards fetched
+                    console.log( "Current Cap set to: ", currentCap);
                     console.log(flashcards);
                     localStorage.setItem('flashcards', JSON.stringify(transformFlashcards(data.flashcards))); // Save to localStorage
                 } else {
@@ -84,16 +89,32 @@ export default function FlashCardDisplay() {
         };
     
         getFlashcards();
+        
     }, []);
 
-    
-    const currentFlashcard = flashcards[currentIndex];
-    
+    // Handle navigation when currentCap reaches the limit
+useEffect(() => {
 
-
-    if (currentIndex >= flashcards.length) {
+    if (currentIndex >= flashcards.length && flashcards.length > 0) {
         navigate('/flashEnd', { state: { score: currentScore, misses: currentMisses } });
     }
+}, [currentCap, flashcards, navigate]);
+    const currentFlashcard = flashcards[currentIndex];
+
+ 
+    useEffect(() => {
+        if (currentFlashcard) {
+            const difficulty = currentFlashcard.difficulty;
+            const numStars = Math.min(Math.max(difficulty, 1), 3); // Ensure difficulty is between 1 and 3
+            setStars("⭐".repeat(numStars));
+        }
+    }, [currentFlashcard]);
+    
+    
+     
+
+
+
     if (!currentFlashcard) {
         return <div>Loading...</div>;
     }
@@ -133,16 +154,18 @@ const onRedButtonClick = () => {
                     weight: calculateWeight({ ...card, wrong: card.wrong + 1, lastAnswered: 0 }),
                 };
             }
-            return { ...card, weight: calculateWeight(card) };
+            return { ...card, 
+                lastAnswered: card.lastAnswered + 1, // Increment lastAnswered for all cards
+                weight: calculateWeight(card) };
         });
 
             // Sort & Shift: Move the first card to the end
-            const [first, ...rest] = updatedFlashcards.sort((a, b) => b.weight - a.weight);
-            return [...rest, first]; // First card moves to the back
-            
-    });
-    
+            console.log("Sorting and updating flashcards after red button click...");
+            console.log(updatedFlashcards);
+            return [...updatedFlashcards].sort((a, b) => b.weight - a.weight);
 
+    });
+    setCurrentCap(I => Math.max(I + 1, flashcards.length * 1.5));
     setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
     setMissed((prevMissed) => prevMissed + 1);
     setStreak(0);
@@ -174,10 +197,14 @@ const onRedButtonClick = () => {
                         weight: calculateWeight({ ...card, correct: card.correct + 1, lastAnswered: 0 }),
                     };
                 }
-                return { ...card, weight: calculateWeight(card) };
+                return { ...card, 
+                    lastAnswered: card.lastAnswered + 1, // Increment lastAnswered for all cards
+                    weight: calculateWeight(card) };
             });
     
             // Sort flashcards
+            console.log("Runs twice");
+            console.log(updatedFlashcards);
             return [...updatedFlashcards].sort((a, b) => b.weight - a.weight);
         });
     
@@ -195,7 +222,9 @@ const onRedButtonClick = () => {
                     <h1 className={styles.title}>Flashcard Display</h1>
                 </Col>
                 <Col className={styles.starsCol}>
-                    <span className={styles.stars}>⭐ ⭐ ⭐</span>
+                    <span className={styles.stars}>{stars}
+                        
+                    </span>
                 </Col>
             </Row>
 

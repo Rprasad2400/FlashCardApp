@@ -1,14 +1,62 @@
-.endRow{
+.scoreContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 25px;
-}
-.endCol{
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+    /*background-color: #111; */ /* Dark background */
+  }
+  
+  .scoreContent {
+    background: white;
+    padding: 100px;
+    border-radius: 10px;
     text-align: center;
-    padding: 25px;
-}
+  
+    position: relative;
+  }
+  
+  .score {
+    font-size: 80px;
+    font-weight: bold;
+  }
+  .statsRow {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+  }
+  
+  .buttonContainer {
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .leaderboardContainer {
+    margin-top: 2rem;
+    padding: 10;
+  }
+  
+  .place {
+    font-size: 18px;
+    margin-top: -10px;
+  }
+  
+  .stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+  
+  .statLeft,
+  .statRight {
+    text-align: left;
+  }
+  
+  .nextButton {
+    background: #ccc;
+    border: none;
+    padding: 10px 20px;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

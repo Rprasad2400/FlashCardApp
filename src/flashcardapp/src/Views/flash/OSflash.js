@@ -10,7 +10,7 @@ import LeftNavBar from '../../Components/sidebar/OSsidebar';
 import courseAPI from '../../scripts/course/CourseService';
 function OSFlash() {
   const [course, setCourse] = React.useState(null);
- const modules = [
+ /*const modules = [
     { name: "Module 1: OS Fundamentals", link: "/module1" },
     { name: "Module 2: Process Fundamentals", link: "/module2" },
     { name: "Module 3: Interprocess Communication", link: "/module3" },
@@ -18,7 +18,7 @@ function OSFlash() {
     { name: "Module 5: Memory Management Fundamentals", link: "/module5" },
     { name: "Module 6: Paging and Segmentation", link: "/module6" }
   ];
-  
+  */
   const courseID = "67e5929e0d708b0cd1320931"; // Example course ID, replace with actual if needed
   useEffect(() => {
 
@@ -38,7 +38,7 @@ function OSFlash() {
   if (!course) {
     return <div>Loading...</div>; // Show loading state while fetching course
   }
-  //modules = course.modules || []; // Ensure modules is defined
+  const modules = course.modules || []; // Ensure modules is defined
     return (
       
       <Container fluid>
@@ -54,7 +54,7 @@ function OSFlash() {
             <p>{course.description || " "}
             </p>
             {modules.map((module, index) => (
-              <TileCard key={index} targetUrl={module.link} name={module.name} imageUrl={`https://picsum.photos/id/237/200/300`} />
+              <TileCard key={index} index={index} module={module} imageUrl={`https://picsum.photos/id/237/200/300`} />
             ))}
           </Col>
         </Row>
