@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Button, Row, Col } from 'react-bootstrap';
+import React, { useState, useEffect, use } from 'react';
+import { Container, Button, Row, Col, ProgressBar } from 'react-bootstrap';
 import Flashcard from '../../Components/flashcard/Flashcard';
 import styles from './carddisplay.module.css';
 import fetchFlashcards from '../../scripts/card/FlashcardService';
@@ -8,9 +8,12 @@ import loop from '../../assets/images/loop.jpg';
 import shuffle from '../../assets/images/shuffle.png';
 import StreakScore from '../../Components/streakScore/streakScore';
 import { useNavigate } from 'react-router-dom';
+
 export default function FlashCardDisplay() {
     const [flashcards, setFlashcards] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [repeat, setRepeat] = useState(false); // Set to true if you want to repeat the flashcards
+    const [shuff, setShuffle] = useState(false); // Set to true if you want to shuffle the flashcards
     const [currentCap, setCurrentCap] = useState(0);
     const [currentScore, setCurrentScore] = useState(0);
     const [currentMisses, setMissed] = useState(0);
@@ -22,10 +25,12 @@ export default function FlashCardDisplay() {
         const performance = (flashcard.wrong + 1) / (flashcard.correct + 1); // Higher weight for lower accuracy
         const time_factor = Math.exp(flashcard.lastAnswered / 5); // Exponential growth to prioritize spaced repetition
         const gate = 1 / (1 + Math.exp(-0.5 * (flashcard.lastAnswered - cooldown))); // Sigmoid function for smooth control
+        console.log("Current Cap: ", currentCap);
     
         const weight = (flashcard.difficulty ** 1.5) * performance * time_factor * gate;
         return weight;
     };
+
 
     const weightFlashcards = (flashcards) => {
         setFlashcards(flashcards.map((flashcard) => ({
@@ -38,9 +43,11 @@ export default function FlashCardDisplay() {
     const sortFlashcards = (flashcards) => {
         setFlashcards([...flashcards].sort((a, b) => b.weight - a.weight));
     };
-
-
-
+    useEffect(() => {
+        if (!flashcards || flashcards.length === 0) {
+          console.warn("Flashcards became undefined or empty");
+        }
+      }, [flashcards]);
     useEffect(() => {
         const transformFlashcards = (flashcards) => {
             return flashcards.map((flashcard) => ({
@@ -50,6 +57,7 @@ export default function FlashCardDisplay() {
                 weight: 1,
                 lastAnswered: 0,
                 correct: 0,
+                isAnswered: false,
                 wrong: 0,
                 difficulty: Math.round(1+ Math.random (3-1)),
             }));
@@ -93,13 +101,38 @@ export default function FlashCardDisplay() {
     }, []);
 
     // Handle navigation when currentCap reaches the limit
-useEffect(() => {
 
-    if (currentIndex >= flashcards.length && flashcards.length > 0) {
+
+    useEffect(() => {
+    if(repeat){
+        console.log("Repeat is true, currentIndex: ", currentIndex);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+    }
+    }, [repeat, flashcards.length]);
+
+    useEffect(() => {
+        if(shuff){
+            setFlashcards((prevFlashcards) => {
+                const shuffledFlashcards = [...prevFlashcards].sort(() => Math.random() - 0.5);
+                return shuffledFlashcards;
+            }
+            );
+            setShuffle(false); // Reset shuffle state after shuffling
+        }
+    }, [shuff]);
+useEffect(() => {
+    console.log("Current Cap: ", currentCap);
+    console.log("Current Index: ", currentIndex);
+    console.log("Current Score: ", flashcards);
+    console.log("Flashcards: ", currentFlashcard);
+    
+
+    if (currentIndex >= currentCap && flashcards.length > 0) {
         navigate('/flashEnd', { state: { score: currentScore, misses: currentMisses } });
     }
-}, [currentCap, flashcards, navigate]);
-    const currentFlashcard = flashcards[currentIndex];
+}, [currentCap, currentIndex,flashcards, navigate]);
+
+    const currentFlashcard = flashcards[currentIndex % flashcards.length]; // Use modulo to loop through flashcards
 
  
     useEffect(() => {
@@ -109,11 +142,8 @@ useEffect(() => {
             setStars("⭐".repeat(numStars));
         }
     }, [currentFlashcard]);
-    
-    
-     
 
-
+    
 
     if (!currentFlashcard) {
         return <div>Loading...</div>;
@@ -141,7 +171,7 @@ useEffect(() => {
     };
 */
 const onRedButtonClick = () => {
-    setCurrentCap((prevCap) => Math.max(prevCap + 1, flashcards.length * 1.5));
+    setCurrentCap((prevCap) => Math.min(prevCap + 1, flashcards.length * 1.5));
 
     // Create a new array and update values immutably
     setFlashcards((prevFlashcards) => {
@@ -165,8 +195,7 @@ const onRedButtonClick = () => {
             return [...updatedFlashcards].sort((a, b) => b.weight - a.weight);
 
     });
-    setCurrentCap(I => Math.max(I + 1, flashcards.length * 1.5));
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) );
     setMissed((prevMissed) => prevMissed + 1);
     setStreak(0);
 };
@@ -233,8 +262,10 @@ const onRedButtonClick = () => {
                 {/* Left Column (Buttons) */}
                 <Col className={styles.leftCol} xs="auto">
                     <div className={styles.buttonContainer}>
-                        <CircularButton imageSrc={loop}/>
-                        <CircularButton imageSrc={shuffle}/>
+                        <CircularButton imageSrc={loop} onClick = {() => setRepeat(!repeat)}  />
+                         
+                        <CircularButton imageSrc={shuffle} onClick = {() => setShuffle(!shuff)}  />
+                        
                     </div>
                 </Col>
 
@@ -243,7 +274,13 @@ const onRedButtonClick = () => {
                     <div className={styles.flashcardContainer}>
                         <Flashcard width="550px" height="300px" flashcard={flashcards[0]} resetFlip={currentIndex} />
                     </div>
+                    <div className={styles.progressBarContainer}>
+                        
+                    <ProgressBar    min={1} now={currentIndex} max={currentCap}  animated variant="success" className={styles.progressBar} />
+                        </div>
+                        
                     <div className={styles.buttonRow}>
+                    
                         <Button variant="danger" onClick={onRedButtonClick}>Red Button</Button>
                         <Button variant="success" onClick={onGreenButtonClick}>Green Button</Button>
                     </div>
