@@ -17,6 +17,7 @@ import CreateTaskModal from '../createTask/createTaskModal';
 import courseAPI from '../../scripts/course/CourseService';
 import { useLocation } from 'react-router-dom';
 import LeftNavBar from '../../Components/sidebar/OSsidebar';
+import styles from './OSmod1.module.css';
 
 const SAMPLE_FLASHCARDS = [
     {
@@ -145,99 +146,52 @@ export default function OSFlash() {
   console.log("Flashcards loaded:", course); // Debugging line to check flashcards
   const modules = course ? course.modules : []; // Ensure modules is defined
     return (
-      <Container fluid>
-        <Row>
-          {/* Sidebar Column */}
-          {/*}
-          <Col md={3} className="bg-light vh-100">
-            <Nav className="flex-column p-3">
-              <h5 className="mb-4">Operating Systems</h5>
-              <Nav.Item>
-                <Nav.Link href="/module1" activeClassName="active">Module 1: OS Fundamentals</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module2">Module 2: Process Fundamentals</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module3">Module 3: Interprocess Communication</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module4">Module 4: Process Scheduling</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module5">Module 5: Memory Management Fundamentals</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module6">Module 6: Paging and Segmentation</Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
-          */}
-          <Col md={3} className="bg-light vh-100 sidebar-col">
-          <LeftNavBar modules={modules} /> {/* Pass the modules from the course state */}
-          </Col>
-          {/* Ensure course is loaded before rendering the sidebar */}
-  
-          {/* Main Content Column */}
-          <Col md={9} className="p-4 col-debug">
-            <h1>{module.name}</h1>
-            <div className="mt-5">
-              <div className="button-container">
-                <h2>Official Module Flashcards</h2>
-                <Button  as={Link} to="/FlashCardDisplay" variant="primary">
-                → Most Recent
-                  </Button>
-                </div>
-                {/*
-                <div className="flashcard-container">
-                    <FlashcardList flashcards={flashcards} />
-                </div> */}
-                <div 
-    className="card" 
-    onClick={() => {
-        /*const savedFlashcards = localStorage.getItem('flashcards');
-        if (savedFlashcards=="undefined") {
-        localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
-        
-        //navigate(`/FlashCardDisplay`); 
+      <Container fluid className={styles.pageWrapper}>
+      <Row className="gx-0">
+        {/* Sidebar */}
+        <Col md={3} className={`bg-light vh-100 ${styles.sidebarCol}`}>
+          <LeftNavBar modules={modules} />
+        </Col>
 
-        
-        }
-        else{
-            localStorage.removeItem('flashcards');
-            localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
-            //navigate(`/FlashCardDisplay`); 
-        }
-            */
-           console.log("clicked");
-        setShowModal(true);
+        {/* Main Content */}
+        <Col md={9} className={`p-4 ${styles.mainContent}`}>
+          <h1 className={styles.moduleTitle}>{module.name}</h1>
 
-    }}
-    style={{
-        borderRadius: '15px', 
-        minHeight: '30vh', 
-        padding: '20px', 
-        margin: '10px', 
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
-    }}
+          <div className={styles.section}>
+            <div className={styles.headerRow}>
+              <h2>Official Module Flashcards</h2>
+              <Button as={Link} to="/FlashCardDisplay" className={styles.enhancedButton}>
+                <span className={styles.arrow}>→</span> Most Recent
+              </Button>
+            </div>
+
+            <div
+  className={styles.flashcardPreview}
+  onClick={() => {
+    console.log('clicked');
+    setShowModal(true);
+  }}
 >
+  <div className={styles.flashcardContent}>
     <h3>{data.name}</h3>
     <p>{data.description}</p>
-    <p>Total Flashcards: {data.flashcards.length}</p>
+  </div>
+  <div className={styles.flashcardCount}>
+    <span>{data.flashcards.length}</span>
+  </div>
 </div>
 
-                
-                
-            </div>
-            <div className="mt-5">
-           
+          </div>
+        </Col>
+      </Row>
 
-              </div>
-          </Col>
-        </Row>
-        {/* <CreateTaskModal show={showModal} handleClose={() => setShowModal(false)} handleSave={(task) => console.log(task)} /> */}
-         <SetsModal title={data.name} isOpen={showModal} closeModal={() => setShowModal(false)} givenSet={data.flashcards} onClick={onClick}/> 
-      </Container>
-
+      <SetsModal
+        title={data.name}
+        isOpen={showModal}
+        closeModal={() => setShowModal(false)}
+        givenSet={data.flashcards}
+        onClick={onClick}
+      />
+    </Container>
     );
   }

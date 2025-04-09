@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import TileCard from '../../Components/tilecard/tilecard';
 import LeftNavBar from '../../Components/sidebar/OSsidebar';
 import courseAPI from '../../scripts/course/CourseService';
+import styles from './OSflash.module.css';
 function OSFlash() {
   const [course, setCourse] = React.useState(null);
  /*const modules = [
@@ -41,26 +42,26 @@ function OSFlash() {
   const modules = course.modules || []; // Ensure modules is defined
     return (
       
-      <Container fluid>
-        <Row>
-          {/* Sidebar Column */}
-          <Col md={3} className="bg-light vh-100">
-            <LeftNavBar modules={modules} />
-          </Col>
-  
-          {/* Main Content Column */}
-          <Col md={9} className="p-4">
-            <h1>Welcome to {course.name}</h1>
-            <p>{course.description || " "}
-            </p>
-            {modules.map((module, index) => (
-              <TileCard key={index} index={index} module={module} imageUrl={`https://picsum.photos/id/237/200/300`} />
-            ))}
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
+      <div className={styles.pageWrapper}>
+      <div className={styles.sidebar}>
+        <LeftNavBar modules={modules} />
+      </div>
+
+      <div className={styles.mainContent}>
+        <h1 className={styles.heading}>Welcome to {course.name}</h1>
+        <p className={styles.description}>
+          {course.description || " "}
+        </p>
+
+        <div className={styles.cardList}>
+          {modules.map((module, index) => (
+            <TileCard key={index} index={index} module={module} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // function OSFlash() {
 //     return (

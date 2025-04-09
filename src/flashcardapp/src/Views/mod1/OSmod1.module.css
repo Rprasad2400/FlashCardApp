@@ -1,0 +1,133 @@
+.pageWrapper {
+    background-color: #f8f9fa;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .sidebarCol {
+    border-right: 1px solid #dee2e6;
+    padding: 1rem;
+  }
+  
+  .mainContent {
+    height: 100vh;
+    overflow-y: auto;
+    background-color: #ffffff;
+  }
+  
+  .moduleTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 2rem;
+  }
+  
+  .section {
+    margin-top: 2rem;
+  }
+  
+  .headerRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  
+  .enhancedButton {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    font-size: 1.125rem; /* slightly larger font */
+    font-weight: 600;
+    background-color: #007bff; /* primary color */
+    border: none;
+    border-radius: 50px;
+    color: white;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .enhancedButton:hover {
+    background-color: #0056b3; /* darken the button on hover */
+    transform: translateY(-2px); /* subtle lift effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .enhancedButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5); /* focus ring */
+  }
+  
+  .arrow {
+    margin-right: 8px; /* space between icon and text */
+    font-size: 1.25rem; /* size of the arrow */
+    transition: transform 0.3s ease;
+  }
+  
+  .enhancedButton:hover .arrow {
+    transform: translateX(4px); /* arrow moves slightly on hover */
+  }
+  
+
+  .flashcardPreview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fefefe;
+    border-radius: 16px;
+    min-height: 30vh;
+    padding: 24px 32px;
+    margin: 16px auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .flashcardPreview:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  }
+  
+  .flashcardContent {
+    flex: 1;
+    padding-right: 1rem;
+  }
+  
+  .flashcardContent h3 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 0.75rem;
+  }
+  
+  .flashcardContent p {
+    font-size: 1.1rem;
+    color: #444;
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  .flashcardCount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    font-weight: bold;
+    flex-shrink: 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .flashcardPreview:hover .flashcardCount {
+    background-color: #218838;
+    transform: scale(1.1);
+  }
+  
