@@ -168,6 +168,7 @@ function Home() {
                     //alert("data.courses: " + JSON.stringify(data.user.courses)); 
                     //alert("data: " + JSON.stringify(data));
                     localStorage.setItem("courses",JSON.stringify(data.user.courses));
+                    localStorage.setItem("badges",JSON.stringify(data.user.badges));
                     localStorage.setItem("tasks-completed", JSON.stringify(data.user.tasksCompleted));
                 }
             } catch (error) {

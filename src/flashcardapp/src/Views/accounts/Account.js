@@ -49,6 +49,8 @@ export default function ProfilePage() {
     const [profileImage, setProfileImage] = useState(defaultImg); // Stores the displayed profile image
     const navigate = useNavigate();
     const [newUsername, setNewUsername] = useState(localStorage.getItem('username') || ''); // New username input
+    const courses = JSON.parse(localStorage.getItem("courses"));
+    const badges = JSON.parse(localStorage.getItem("badges"));
 
     // Save profile changes
     // const handleSaveChanges = () => {
@@ -366,7 +368,7 @@ export default function ProfilePage() {
                                             {BADGES.map((badge, i) => (
                                                 <Col key={i} xs={2} className="text-center">
                                                     <span style={{ fontSize: "2rem" }}>{badge}</span>
-                                                    <p>0</p>
+                                                    <p>{badges[i]}</p>
                                                 </Col>
                                             ))}
                                         </Row>

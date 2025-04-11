@@ -38,7 +38,7 @@ router.post("/login", async (req, res) => {
     try {
         //console.log("Received Login request:", req.body);
         const { user, pass } = req.body;
-        const foundUser = await User.findOne({ _id: user });
+        const foundUser = await User.findOne({ _id: user, pass: pass});
         if (!foundUser) {
             return res.status(400).json({ message: "User not found" });
         }

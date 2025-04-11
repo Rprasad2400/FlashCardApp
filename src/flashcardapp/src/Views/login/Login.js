@@ -1,58 +1,13 @@
-// Frontend code 
-// Filename - App.js
-// Filename - App.js
-
-// import { useState } from 'react'
-// function Login() {
-//     const [name, setName] = useState("");
-//     const [email, setEmail] = useState("");
-    // const handleOnSubmit = async (e) => {
-    //     e.preventDefault();
-    //     let result = await fetch(
-    //     'http://localhost:5000/register', {
-    //         method: "post",
-    //         body: JSON.stringify({ name, email }),
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     })
-    //     result = await result.json();
-    //     console.warn(result);
-    //     if (result) {
-    //         alert("Data saved succesfully");
-    //         setEmail("");
-    //         setName("");
-    //     }
-    // }
-//     return (
-//         <>
-//             <h1>This is React WebApp </h1>
-//             <form action="">
-//                 <input type="text" placeholder="name" 
-//                 value={name} onChange={(e) => setName(e.target.value)} />
-//                 <input type="email" placeholder="email" 
-//                 value={email} onChange={(e) => setEmail(e.target.value)} />
-//                 <button type="submit" 
-//                 onClick={handleOnSubmit}>submit</button>
-//             </form>
-
-//         </>
-//     );
-// }
-
-// export default Login;
-
-
-// JavaScript source code
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button, Image, Form, Card } from 'react-bootstrap';
 import './Login.css';
 import loginImage from '../../assets/images/Login Image.jpg';
 
-export default function Login() {
+export default function Login({setIsAuthenticated}) {
     const [validated, setValidated] = useState(false);
     const [excludeValidation, setExcludeValidation] = useState(false);
+    const [loginFailed, setLoginFailed] = useState(false);
     const navigate = useNavigate(); // Initialize navigation
     const [form_Data, set_Form_Data] = useState({
         user: "",
@@ -88,7 +43,7 @@ export default function Login() {
             event.stopPropagation();
         }
         setValidated(true);
-
+        setLoginFailed(false);
         //event.preventDefault();
         let result = await fetch(
         'http://localhost:5000/api/auth/login', {
@@ -101,11 +56,13 @@ export default function Login() {
 
         if (!result.ok) {
             alert("Login failed.");
+            setLoginFailed(true);
             return;
         }
 
         result = await result.json();
         console.warn(result);
+        setIsAuthenticated(true);
         alert("Login successful!");
 
         // set username and password (used later for retrieving information)
@@ -129,7 +86,7 @@ export default function Login() {
             event.stopPropagation();
         }
         setValidated(true);
-
+        setLoginFailed(false);
         event.preventDefault();
         let result = await fetch(
         'http://localhost:5000/api/auth/register', {
@@ -143,6 +100,7 @@ export default function Login() {
         console.warn(result);
         if (result) {
             alert("Data saved succesfully");
+            setIsAuthenticated(true);
 
             // set username and password (used later for retrieving information)
             localStorage.setItem('username', form_Register_Data.user);
@@ -156,6 +114,7 @@ export default function Login() {
         }
         else {
             alert("Registration failed.");
+            setLoginFailed(true);
         }
 
         // Redirect to another page (e.g., home)
@@ -195,7 +154,8 @@ export default function Login() {
                                     onChange={updateData}
                                     pattern="^[a-zA-Z0-9]+$"
                                     required
-                                    isInvalid={validated && !/^[a-zA-Z0-9]+$/.test(form_Data.user)}
+                                    isInvalid={validated && (!/^[a-zA-Z0-9]+$/.test(form_Data.user) || loginFailed)}
+                                    isValid={validated && /^[a-zA-Z0-9]+$/.test(form_Data.user) && !loginFailed}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Please enter a valid username (alphanumeric characters only).
@@ -212,7 +172,8 @@ export default function Login() {
                                     onChange={updateData}
                                     pattern="^[a-zA-Z0-9]+$"
                                     required
-                                    isInvalid={validated && !/^[a-zA-Z0-9]+$/.test(form_Data.pass)}
+                                    isInvalid={validated && (!/^[a-zA-Z0-9]+$/.test(form_Data.pass) || loginFailed)}
+                                    isValid={validated && /^[a-zA-Z0-9]+$/.test(form_Data.pass) && !loginFailed}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Please enter a valid password (alphanumeric only).
@@ -264,7 +225,8 @@ export default function Login() {
                                         onChange={updateRegisterData}
                                         pattern="^[a-zA-Z0-9]+$"
                                         required
-                                        isInvalid={validated && !/^[a-zA-Z0-9]+$/.test(form_Register_Data.user)}
+                                        isInvalid={validated && (!/^[a-zA-Z0-9]+$/.test(form_Register_Data.user) || loginFailed)}
+                                        isValid={validated && /^[a-zA-Z0-9]+$/.test(form_Register_Data.user) && !loginFailed}
                                     />
                                     <Form.Control.Feedback type="invalid">
                                         Please enter a valid username (alphanumeric characters only).
@@ -280,7 +242,8 @@ export default function Login() {
                                         onChange={updateRegisterData}
                                         pattern="^[a-zA-Z0-9]+$"
                                         required
-                                        isInvalid={validated && !/^[a-zA-Z0-9]+$/.test(form_Register_Data.user)}
+                                        isInvalid={validated && (!/^[a-zA-Z0-9]+$/.test(form_Register_Data.user) || loginFailed)}
+                                        isValid={validated && /^[a-zA-Z0-9]+$/.test(form_Register_Data.user) && !loginFailed}
                                     />
                                     <Form.Control.Feedback type="invalid">
                                         Please enter a valid username (alphanumeric characters only).
@@ -297,7 +260,8 @@ export default function Login() {
                                         onChange={updateRegisterData}
                                         pattern="^[a-zA-Z0-9]+$"
                                         required
-                                        isInvalid={validated && !/^[a-zA-Z0-9]+$/.test(form_Register_Data.pass)}
+                                        isInvalid={validated && (!/^[a-zA-Z0-9]+$/.test(form_Register_Data.pass) || loginFailed)}
+                                        isValid={validated && /^[a-zA-Z0-9]+$/.test(form_Register_Data.pass) && !loginFailed}
                                     />
                                     <Form.Control.Feedback type="invalid">
                                         Please enter a valid password (alphanumeric only).

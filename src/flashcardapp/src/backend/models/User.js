@@ -31,7 +31,11 @@ const UserSchema = new mongoose.Schema({
             name:{type: String},
             course_id:{type: String},
         }
-    ]
+    ],
+    badges: {
+        type: [String],
+        default: [0, 0, 0, 0, 0, 0]
+    }
 }, { autoIndex: false });  // Disable automatic index creation
 
 module.exports = mongoose.model('users', UserSchema);
