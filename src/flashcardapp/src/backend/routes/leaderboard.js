@@ -43,7 +43,17 @@ router.post('/:setId', async (req, res) => {
                 // Add a new user if they don't exist in the rankings
                 console.log("Not Existing User:", userId);
                  console.log("Adding new user to leaderboard:", userId);
+
+                 //if the the leaderboard has 10 users, remove the last one
+            if (leaderboardEntry.rankings.length == 10) {
+                //if the last entry's score is less than the new score, remove the last entry
+                if (leaderboardEntry.rankings[leaderboardEntry.rankings.length - 1].score < score){
+                    leaderboardEntry.rankings.pop();
+                }
+            }
+            if (leaderboardEntry.rankings.length < 10) {
                 leaderboardEntry.rankings.push({ _id: userId, name, score });
+            }
             }
     
             // Sort the rankings after adding the new score

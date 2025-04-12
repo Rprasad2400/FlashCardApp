@@ -17,6 +17,11 @@ const RankingSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+
+    date: {
+        type: Date,
+        default: Date.now,
+    }
 }, { autoIndex: false });  // Disable automatic index creation
 
 

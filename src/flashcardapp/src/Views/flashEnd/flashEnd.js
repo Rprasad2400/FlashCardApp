@@ -9,21 +9,25 @@ import Leaderboard from '../../Components/leaderboard/leaderboard';
 
 const FlashEnd = () => {
     const [leaderboardData, setLeaderboardData] = useState(null);
+    const [userID, setUserID] = useState(localStorage.getItem('username') || ''); // State for username input
+    const [setID, setSetID] = useState(localStorage.getItem('currentSetID') || ''); // State for current set ID
+
     const location = useLocation();
     const score = location.state?.score;  // Accessing the passed state
-    const place = "15"; // Example place
-    const streak = 1;  // Example streak
+    const totalLength = location.state?.length;
     const misses = location.state?.misses;
     const navigate = useNavigate();
-    const setID = "67c1fb04b144d1276b668a06"; // Example set ID
-    const userID = "userId"; // Example user ID
-    const name = "User Name"; // Example user name
+    const name = userID; // Assuming name is the same as userID
 
     // Fetch the leaderboard data
     useEffect(() => {
+      
+
       const updateLeaderboard = async () => {
         try {
-            const response = await api.updateLeaderboard(setID, userID, name, 1400);
+          console.log('Updating leaderboard...');
+          console.log(setID, userID, name, score);
+            const response = await api.updateLeaderboard(setID, userID, name, score);
             console.log('Leaderboard updated:', response.data);
         } catch (error) {
             console.error('Error updating leaderboard:', error);
@@ -32,6 +36,8 @@ const FlashEnd = () => {
 
         const fetchLeaderboard = async () => {
             try {
+              console.log('Fetching leaderboard...');
+              console.log(setID);
               const data = await api.fetchLeaderboard(setID);
               setLeaderboardData(data);
 
@@ -41,8 +47,11 @@ const FlashEnd = () => {
         };
       const updateInfo = async () => {
         console.log('Updating leaderboard info...');
-        await fetchLeaderboard();
-        updateLeaderboard();
+        await updateLeaderboard();
+        
+        fetchLeaderboard();
+        console.log('Leaderboard info updated');
+        console.log(leaderboardData);
       };
       updateInfo();
 
@@ -51,15 +60,6 @@ const FlashEnd = () => {
     useEffect(() => {
         console.log('Leaderboard data updated:', leaderboardData);
     }, [leaderboardData]);
-
-    const updateLeaderboard = async () => {
-        try {
-            const response = await api.updateLeaderboard(setID, userID, name, 1400);
-            console.log('Leaderboard updated:', response.data);
-        } catch (error) {
-            console.error('Error updating leaderboard:', error);
-        }
-    };
 
     if (!leaderboardData) {
         return <div>Loading...</div>;
@@ -72,11 +72,10 @@ const FlashEnd = () => {
                 <h1 className={styles.score}>
                     <Counter to={score} duration={1} tag="h1" className='styles.score' />
                 </h1>
-                <p className={styles.place}>Place: {place}th Place</p>
 
                 {/* Streak and Misses in a single row */}
                 <div className={styles.statsRow}>
-                    <p><strong>Highest Streak: {streak}</strong></p>
+                    <p><strong>Total Length: {totalLength}</strong></p>
                     <p><strong>Total Misses: {misses}</strong></p>
                 </div>
 

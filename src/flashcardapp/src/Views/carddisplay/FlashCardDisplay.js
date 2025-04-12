@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 export default function FlashCardDisplay() {
     const [flashcards, setFlashcards] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    
     const [repeat, setRepeat] = useState(false); // Set to true if you want to repeat the flashcards
     const [shuff, setShuffle] = useState(false); // Set to true if you want to shuffle the flashcards
     const [currentCap, setCurrentCap] = useState(0);
@@ -128,7 +129,7 @@ useEffect(() => {
     
 
     if (currentIndex >= currentCap && flashcards.length > 0) {
-        navigate('/flashEnd', { state: { score: currentScore, misses: currentMisses } });
+        navigate('/flashEnd', { state: {  setID: flashcards._id,  length:flashcards.length, score: currentScore, misses: currentMisses } });
     }
 }, [currentCap, currentIndex,flashcards, navigate]);
 
@@ -148,46 +149,6 @@ useEffect(() => {
     if (!currentFlashcard) {
         return <div>Loading...</div>;
     }
-
-    /*
-    const onRedButtonClick = () => {
-        setCurrentCap(Math.max(currentCap+1,flashcards.length*1.5));
-        flashcards[0].wrong += 1;
-        flashcards[0].lastAnswered = 0;
-        for(let i=0; i<flashcards.length; i++){
-
-            
-            flashcards[i].weight = calculateWeight(flashcards[i]);
-        }
-        console.log(flashcards);
-        // sort the flashcards by weight
-        flashcards.sort((a, b) => b.weight - a.weight);
-        console.log(flashcards);
-        
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
-        setMissed((prevMissed) => (prevMissed + 1));
-        setStreak(0);
-        // SAMPLE_FLASHCARDS[currentIndex].wrong += 1;
-        // SAMPLE_FLASHCARDS[currentIndex].lastAnswered = prevIndex;
-        // SAMPLE_FLASHCARDS[currentIndex].weight = SAMPLE_FLASHCARDS[currentIndex].weight + 1;
-        // setCurrentIndex((prevIndex) => (prevIndex + 1) % SAMPLE_FLASHCARDS.length);
-        // setMissed((prevMissed) => (prevMissed + 1));
-        // setStreak(0);
-
-        setCurrentIndex((prevIndex) => {
-            // Update SAMPLE_FLASHCARDS with the new prevIndex inside this scope
-            SAMPLE_FLASHCARDS[prevIndex].wrong += 1;
-            SAMPLE_FLASHCARDS[prevIndex].lastAnswered = prevIndex;
-            SAMPLE_FLASHCARDS[prevIndex].weight = SAMPLE_FLASHCARDS[prevIndex].weight + 1;
-    
-            setMissed((prevMissed) => (prevMissed + 1));
-            setStreak(0);
-    
-            return (prevIndex + 1) % SAMPLE_FLASHCARDS.length; // Return the new index to update the state
-        });
-
-    };
-*/
 const onRedButtonClick = () => {
     setCurrentCap((prevCap) => Math.min(prevCap + 1, flashcards.length * 1.5));
 
@@ -213,46 +174,19 @@ const onRedButtonClick = () => {
             return [...updatedFlashcards].sort((a, b) => b.weight - a.weight);
 
     });
-    setCurrentIndex((prevIndex) => (prevIndex + 1) );
-    setMissed((prevMissed) => prevMissed + 1);
-    setStreak(0);
+
+    if(repeat){
+        setCurrentIndex((prevIndex) => (prevIndex + 1) );
+        setMissed((prevMissed) => prevMissed + 1);
+        setStreak(0);
+    }
+    else{
+        setStreak(0);
+        setMissed((prevMissed) => prevMissed + 1);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+    }
 };
 
-    /*const onGreenButtonClick = () => {
-        console.log(flashcards);
-        flashcards[0].correct += 1;
-        flashcards[0].lastAnswered = 0;
-        weightFlashcards(flashcards);
-        sortFlashcards(flashcards);
-        console.log(flashcards);
-            
-        
-        setCurrentIndex((prevIndex) => (prevIndex + 1) );
-        setStreak((prevStreak) => prevStreak + 1);
-        setCurrentScore((prevScore) => prevScore + (100* (streak+1)));
-        console.log(currentScore);
-
-    const onGreenButtonClick = () => {
-        // SAMPLE_FLASHCARDS[currentIndex].correct += 1;
-        // SAMPLE_FLASHCARDS[currentIndex].lastAnswered = prevIndex;
-
-        // setCurrentIndex((prevIndex) => (prevIndex + 1) );
-        // setStreak((prevStreak) => prevStreak + 1);
-        // setCurrentScore((prevScore) => prevScore + (100* (streak+1)));
-        // console.log(currentScore);
-
-        setCurrentIndex((prevIndex) => {
-            // Update SAMPLE_FLASHCARDS with the new prevIndex inside this scope
-            SAMPLE_FLASHCARDS[prevIndex].correct += 1;
-            SAMPLE_FLASHCARDS[prevIndex].lastAnswered = prevIndex;
-    
-            setStreak((prevStreak) => prevStreak + 1);
-            setCurrentScore((prevScore) => prevScore + (100 * (streak + 1)));
-    
-            return prevIndex + 1; // Return the new index to update the state
-        });
-        
-    };*/
     const onGreenButtonClick = () => {
         setFlashcards((prevFlashcards) => {
             const updatedFlashcards = prevFlashcards.map((card, index) => {
@@ -275,9 +209,18 @@ const onRedButtonClick = () => {
             return [...updatedFlashcards].sort((a, b) => b.weight - a.weight);
         });
     
-        setCurrentIndex((prevIndex) => prevIndex + 1);
-        setStreak((prevStreak) => prevStreak + 1);
-        setCurrentScore((prevScore) => prevScore + 100 * (streak + 1));
+        if(repeat==false){
+            console.log("Repeat is false, currentIndex: ", currentIndex);
+            console.log("Repeat", repeat);
+            setCurrentScore((prevScore) => prevScore + 100 * (streak + 1));
+            setStreak((prevStreak) => prevStreak + 1);
+            setCurrentIndex((prevIndex) => prevIndex + 1);
+        }
+        else{
+            console.log("Repeat is true, currentIndex: ", currentIndex);
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+        }
+
     };
     
 
@@ -300,8 +243,8 @@ const onRedButtonClick = () => {
                 {/* Left Column (Buttons) */}
                 <Col className={styles.leftCol} xs="auto">
                     <div className={styles.buttonContainer}>
-                        <CircularButton imageSrc={loop} onClick = {() => setRepeat(!repeat)}  />
-                         
+                        <CircularButton imageSrc={loop} onClick = {() => { setRepeat(!repeat)} } />
+                        
                         <CircularButton imageSrc={shuffle} onClick = {() => setShuffle(!shuff)}  />
                         
                     </div>

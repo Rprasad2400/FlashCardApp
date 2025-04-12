@@ -21,6 +21,7 @@ const ViewSet = () => {
         const savedFlashcards = localStorage.getItem('flashcards');
         if (savedFlashcards=="undefined") {
         localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
+        localStorage.setItem('currentSetID', accountID);
         
         navigate(`/FlashCardDisplay`); 
 
@@ -28,7 +29,9 @@ const ViewSet = () => {
         }
         else{
             localStorage.removeItem('flashcards');
+            localStorage.removeItem('currentSetID');
             localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
+            localStorage.setItem('currentSetID', accountID);
             navigate(`/FlashCardDisplay`); 
 
         }
