@@ -89,7 +89,7 @@ const FlashEnd = () => {
                 <div className={styles.buttonContainer}>
                     <Button onClick={() => {
                         console.log('Done button clicked');
-                        updateLeaderboard();
+                        navigate('/home');
                     
                     }
                     

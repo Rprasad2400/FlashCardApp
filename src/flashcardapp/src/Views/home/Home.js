@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import { Button, Card, Modal, Form } from 'react-bootstrap';
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import ListGroup from 'react-bootstrap/ListGroup';
-import osImage from '../../assets/images/OS Image.png';
+
 import TaskManager from '../../Components/taskManager/taskManager'
 import './home.css';
 import 'react-circular-progressbar/dist/styles.css';
