@@ -19,6 +19,37 @@
     align-items: stretch;
     margin-bottom: 10px;
 }
+.flashcardTable{
+    width: 100%;
+    align-self: stretch; /* Ensures the table takes the full width of its container */
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #f8f9fa; /* Light background for the table */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+.answerColumn {
+    width: 50%; /* Adjusted to take half of the table width */
+    padding: 10px;
+    border: 1px solid #dee2e6; /* Light border for separation */
+    background-color: #ffffff; /* White background for answer column */
+}
+.questionColumn {
+    width: 50%; /* Adjusted to take half of the table width */
+    padding: 10px;
+    border: 1px solid #dee2e6; /* Light border for separation */
+    background-color: #ffffff; /* White background for question column */
+
+}
+.tableHeader{
+
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    background-color: #1a4c7d;
+    border: 2px solid #dee2e6;
+    padding: 10px;
+    margin-bottom: 5px;
+}
 
 .flashcardContainer{
     display: flex;

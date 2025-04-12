@@ -1,14 +1,120 @@
-.endRow{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 25px;
+/* Score Container */
+.scoreContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #ffffff; /* Light gray background for contrast */
+  padding: 20px;
 }
-.endCol{
-    flex: 1;
-    display: flex;
-    justify-content: center;
+
+.scoreContainer h1 {
+  font-size: 5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Score Content */
+.scoreContent {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  width: 100%;
+  max-width: 1000px;
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Main Score */
+.score {
+  font-size: 80px;
+  font-weight: bold;
+  color: #000000; /* Fresh green color */
+  margin-bottom: 10px;
+}
+
+/* Place text */
+.place {
+  font-size: 22px;
+  color: #555;
+  margin-top: 0;
+}
+
+/* Stats Row (Streak and Misses) */
+.statsRow {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem 0;
+  
+  padding: 0 20px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #444;
+}
+
+.statsRow p {
+  margin: 0;
+}
+
+.statsRow strong {
+  font-weight: 600;
+}
+
+/* Leaderboard Container */
+.leaderboardContainer {
+  margin-top: 2rem;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* Done Button */
+.doneButton {
+  padding: 12px 24px;
+  background-color: #4CAF50; /* Green button */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 200px;
+  margin: 20px auto;
+}
+
+/* Button Hover Effect */
+.doneButton:hover {
+  background-color: #45a049;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+  transform: scale(1.05); /* Slight scale up for hover effect */
+}
+
+/* Loading Text */
+.loadingText {
+  font-size: 18px;
+  color: #777;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .scoreContent {
+    padding: 20px;
+  }
+
+  .score {
+    font-size: 60px;
+  }
+
+  .statsRow {
+    flex-direction: column;
     align-items: center;
-    text-align: center;
-    padding: 25px;
+  }
+
+  .doneButton {
+    width: 100%;
+  }
 }

@@ -1,0 +1,94 @@
+/* Container for the leaderboard */
+.leaderboard {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A clean, modern font */
+    margin: 30px auto;
+    max-width: 1000px;
+    text-align: center;
+    border-radius: 12px; /* Slightly rounded corners for a smooth look */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Soft, refined shadow */
+    background-color: #ffffff; /* White background */
+    padding: 30px;
+    border: 1px solid #ddd;
+}
+
+/* Header styling */
+.leaderboard h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600; /* Slightly bolder font for a cleaner header */
+    letter-spacing: 1px; /* Letter spacing for a more refined look */
+    text-transform: uppercase; /* Adds emphasis to the title */
+}
+
+/* Table container styling */
+.leaderboard table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Table cell styling */
+.leaderboard th, .leaderboard td {
+    padding: 15px;
+    border: 1px solid #f1f1f1; /* Light gray border for a soft look */
+    text-align: center;
+    height: 80px;  /* Slightly taller cells for better spacing */
+    width: 100px;
+    font-size: 16px; /* Readable font size */
+    color: #555;  /* Slightly dark text for contrast */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Header styling */
+.leaderboard th {
+    background-color: #4CAF50;  /* A fresh, modern green */
+    color: #fff;
+    font-weight: 600; /* Bold text for the headers */
+    text-transform: uppercase; /* Uppercase for better clarity */
+}
+
+/* Table row hover effect */
+.leaderboard tr:nth-child(even) {
+    background-color: #fafafa; /* Light gray for alternating rows */
+}
+
+.leaderboard tr:hover {
+    background-color: #f0f0f0; /* Subtle hover effect */
+    transform: translateY(-2px); /* Slightly lift row on hover */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add slight shadow for depth */
+}
+
+/* Table data cell content trimming */
+.leaderboard td {
+    text-overflow: ellipsis;  /* Add ellipsis for overflowed text */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden;  /* Hide text that exceeds the cell width */
+}
+
+
+
+
+/* Subtle effect on the "Done" button */
+.leaderboard .done-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;  /* Matching green button */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.leaderboard .done-button:hover {
+    background-color: #45a049;  /* Slightly darker green on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+/* Loading state styling */
+.leaderboard .loading {
+    font-size: 18px;
+    color: #888;
+}

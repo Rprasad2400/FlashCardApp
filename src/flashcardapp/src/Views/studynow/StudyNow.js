@@ -7,13 +7,13 @@ import Col from 'react-bootstrap/Col';
 import { Button, Modal, Form } from 'react-bootstrap';
 import '../../App.css';
 import CourseCardList from "../../Components/coursesList/coursesList";
-import osImage from '../../assets/images/OS Image.png';
+
 
 const courses = [
   {
     title: "COP 4600: Operating Systems",
     description: "This course explores the design and implementation of various components of a modern operating system.",
-    image: osImage,
+    image: 'https://ufl.instructure.com/courses/525691/files/93715075/download',
     modules: ["Module 1", "Module 2", "Module 3"],
     link: "/OS-flashcards",
   },

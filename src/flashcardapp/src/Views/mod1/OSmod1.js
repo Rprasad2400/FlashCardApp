@@ -14,6 +14,10 @@ import SetsModal from '../../Components/setsModal/setsModal';
 import FlashcardList from '../../Components/flashcardlist/FlashcardList';
 import { useEffect } from 'react';
 import CreateTaskModal from '../createTask/createTaskModal';
+import courseAPI from '../../scripts/course/CourseService';
+import { useLocation } from 'react-router-dom';
+import LeftNavBar from '../../Components/sidebar/OSsidebar';
+import styles from './OSmod1.module.css';
 
 const SAMPLE_FLASHCARDS = [
     {
@@ -45,17 +49,60 @@ const SAMPLE_FLASHCARDS = [
 
 export default function OSFlash() {
 
-    //TODO: do a find to get the flashcard tied to the accountID
+    //TODO: do a find to get the flashcard tied to the mainSet
     //TODO: display that flashcard information?
-    const accountID ="67c1fb04b144d1276b668a06";
+    //TODO: make it so that it displays it based on courseID
+    //const mainSet ="67c1fb04b144d1276b668a06";
+    const courseID = "67e5929e0d708b0cd1320931"; // Assuming you have a courseID to filter by 
     const [flashcards, setFlashcards] = useState(SAMPLE_FLASHCARDS);
+    const [course, setCourse] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [data, setData] = useState(null);
+    const location = useLocation();
     const navigate = useNavigate();
+  
+    // Use optional chaining to avoid crashes
+    const state = location.state;
+    const module = state?.module; // Get the module from state if it exists
+    console.log("Module data:", module); // Is this null?
+
+
+    
     useEffect(() => {
+      if( !state || !state.module ) {
+        console.error("Module state is not available. Redirecting to home.");
+      }
+      else {
+        console.log("Module state is available:", state.module);
+      }
+    }, [state]); // Only run this effect when state changes
+
+    useEffect(() => {
+    
+      async function fetchCourse() {
+        try {
+          const response = await courseAPI.findCourse(courseID);
+          console.log("Fetched course:", response);
+          setCourse(response);
+        } catch (error) {
+          console.error("Error fetching course:", error);
+          return null;
+        }
+      }
+        fetchCourse();
+    }
+    , [courseID]);
+
+  
+  
+    useEffect(() => {
+
+
       async function fetchFlashcards() {
         try {
-          const response = await api.findSet(accountID);
+          console.log("NAME:" , module ? module.name : "No module name available");
+          console.log("Fetching flashcards for mainSet:", module.mainSet);
+          const response = await api.findSet(module.mainSet);
           setData(response.data);
           if (response) {
             setData(response);
@@ -68,10 +115,13 @@ export default function OSFlash() {
           console.error("Error fetching flashcards:", error);
         }
       }
-
       fetchFlashcards();
-    }, [accountID]);
-    if(!data){ 
+    }, [module.mainSet]);
+    if(!data || !state || !course ){ 
+
+      console.log("Loading data or state failed.");
+      console.log("data:", data);
+      console.log("state:", state);
       return <div>Loading...</div>;
     }
     const onClick = () => {
@@ -79,106 +129,69 @@ export default function OSFlash() {
       if (savedFlashcards=="undefined") {
         localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
         
-       
-
+  
 
     }
    // navigate(`/FlashCardDisplay`); 
-   navigate(`/ViewSet/${accountID}`);
+   navigate(`/ViewSet/${module.mainSet}`);
+   // Create course
+
+        // Assuming this is the ID of the main set
+
     //console.log("clicked");')
     console.log(data);
+    
   }
 
-
-    
+  console.log("Flashcards loaded:", course); // Debugging line to check flashcards
+  const modules = course ? course.modules : []; // Ensure modules is defined
     return (
-      <Container fluid>
-        <Row>
-          {/* Sidebar Column */}
-          <Col md={3} className="bg-light vh-100">
-            <Nav className="flex-column p-3">
-              <h5 className="mb-4">Operating Systems</h5>
-              <Nav.Item>
-                <Nav.Link href="/module1" activeClassName="active">Module 1: OS Fundamentals</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module2">Module 2: Process Fundamentals</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module3">Module 3: Interprocess Communication</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module4">Module 4: Process Scheduling</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module5">Module 5: Memory Management Fundamentals</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module6">Module 6: Paging and Segmentation</Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
-  
-          {/* Main Content Column */}
-          <Col md={9} className="p-4 col-debug">
-            <h1>Module 1: OS Fundamentals</h1>
-            <div className="mt-5">
-              <div className="button-container">
-                <h2>Official Module Flashcards</h2>
-                <Button  as={Link} to="/FlashCardDisplay" variant="primary">
-                → Most Recent
-                  </Button>
-                </div>
-                {/*
-                <div className="flashcard-container">
-                    <FlashcardList flashcards={flashcards} />
-                </div> */}
-                <div 
-    className="card" 
-    onClick={() => {
-        /*const savedFlashcards = localStorage.getItem('flashcards');
-        if (savedFlashcards=="undefined") {
-        localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
-        
-        //navigate(`/FlashCardDisplay`); 
+      <Container fluid className={styles.pageWrapper}>
+      <Row className="gx-0">
+        {/* Sidebar */}
+        <Col md={3} className={`bg-light vh-100 ${styles.sidebarCol}`}>
+          <LeftNavBar modules={modules} />
+        </Col>
 
-        
-        }
-        else{
-            localStorage.removeItem('flashcards');
-            localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
-            //navigate(`/FlashCardDisplay`); 
-        }
-            */
-           console.log("clicked");
-        setShowModal(true);
+        {/* Main Content */}
+        <Col md={9} className={`p-4 ${styles.mainContent}`}>
+          <h1 className={styles.moduleTitle}>{module.name}</h1>
 
-    }}
-    style={{
-        borderRadius: '15px', 
-        minHeight: '30vh', 
-        padding: '20px', 
-        margin: '10px', 
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
-    }}
+          <div className={styles.section}>
+            <div className={styles.headerRow}>
+              <h2>Official Module Flashcards</h2>
+              <Button as={Link} to="/FlashCardDisplay" className={styles.enhancedButton}>
+                <span className={styles.arrow}>→</span> Most Recent
+              </Button>
+            </div>
+
+            <div
+  className={styles.flashcardPreview}
+  onClick={() => {
+    console.log('clicked');
+    setShowModal(true);
+  }}
 >
+  <div className={styles.flashcardContent}>
     <h3>{data.name}</h3>
     <p>{data.description}</p>
-    <p>Total Flashcards: {data.flashcards.length}</p>
+  </div>
+  <div className={styles.flashcardCount}>
+    <span>{data.flashcards.length}</span>
+  </div>
 </div>
 
-                
-                
-            </div>
-            <div className="mt-5">
-              <h2>Quizzes</h2>
-              <Button variant="primary">Go to Target</Button>
-              </div>
-          </Col>
-        </Row>
-        {/* <CreateTaskModal show={showModal} handleClose={() => setShowModal(false)} handleSave={(task) => console.log(task)} /> */}
-         <SetsModal title={data.name} isOpen={showModal} closeModal={() => setShowModal(false)} givenSet={data.flashcards} onClick={onClick}/> 
-      </Container>
+          </div>
+        </Col>
+      </Row>
 
+      <SetsModal
+        title={data.name}
+        isOpen={showModal}
+        closeModal={() => setShowModal(false)}
+        givenSet={data.flashcards}
+        onClick={onClick}
+      />
+    </Container>
     );
   }

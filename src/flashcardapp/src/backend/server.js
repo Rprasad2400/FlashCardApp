@@ -37,11 +37,13 @@ app.use("/api/card", require("./routes/card"));
 
 app.use("/api/changeUsername", require("./routes/changeUsername"));
 
+app.use("/api/leaderboard", require("./routes/leaderboard"));
+
 app.use("/api/task", require("./routes/task"));
 
 app.use("/api/user", require("./routes/user"));
 
 app.use("/api/set", require("./routes/set"));
-
+app.use("/api/course", require("./routes/course"));
 // Start Server
 app.listen(5000);

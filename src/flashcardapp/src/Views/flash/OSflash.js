@@ -4,51 +4,64 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
+import { useEffect } from 'react';
 import TileCard from '../../Components/tilecard/tilecard';
+import LeftNavBar from '../../Components/sidebar/OSsidebar';
+import courseAPI from '../../scripts/course/CourseService';
+import styles from './OSflash.module.css';
 function OSFlash() {
-    return (
-      <Container fluid>
-        <Row>
-          {/* Sidebar Column */}
-          <Col md={3} className="bg-light vh-100">
-            <Nav className="flex-column p-3">
-              <h5 className="mb-4">Operating Systems</h5>
-              <Nav.Item>
-                <Nav.Link href="/module1" activeClassName="active">Module 1: OS Fundamentals</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module2">Module 2: Process Fundamentals</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module3">Module 3: Interprocess Communication</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module4">Module 4: Process Scheduling</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module5">Module 5: Memory Management Fundamentals</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/module6">Module 6: Paging and Segmentation</Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
-  
-          {/* Main Content Column */}
-          <Col md={9} className="p-4">
-            <h1>Welcome to Intro to Operating Systems</h1>
-            <p>
-              Start with OS fundamentals like procedure calls and system calls, the generations of operating systems and their influences, 
-              the effects of multiprogramming vs. uniprogramming, and other concepts.
-            </p>
-            <TileCard targetUrl="/module1" name="Module 1: OS Fundamentals" imageUrl="https://picsum.photos/id/237/200/300" />
-            <TileCard targetUrl="/module2" name="Module 2: Process Fundamentals" imageUrl="https://picsum.photos/id/238/200/300" />
-            <TileCard targetUrl="/module3"  name="Module 3: Interprocess Communication" imageUrl="https://picsum.photos/id/239/200/300" />
-          </Col>
-        </Row>
-      </Container>
-    );
+  const [course, setCourse] = React.useState(null);
+ /*const modules = [
+    { name: "Module 1: OS Fundamentals", link: "/module1" },
+    { name: "Module 2: Process Fundamentals", link: "/module2" },
+    { name: "Module 3: Interprocess Communication", link: "/module3" },
+    { name: "Module 4: Process Scheduling", link: "/module4" },
+    { name: "Module 5: Memory Management Fundamentals", link: "/module5" },
+    { name: "Module 6: Paging and Segmentation", link: "/module6" }
+  ];
+  */
+  const courseID = "67e5929e0d708b0cd1320931"; // Example course ID, replace with actual if needed
+  useEffect(() => {
+
+  async function fetchCourse() {
+    try {
+      const response = await courseAPI.findCourse(courseID);
+      console.log("Fetched course:", response);
+      setCourse(response);
+    } catch (error) {
+      console.error("Error fetching course:", error);
+      return null;
+    }
   }
+    fetchCourse();
+}
+, [courseID]);
+  if (!course) {
+    return <div>Loading...</div>; // Show loading state while fetching course
+  }
+  const modules = course.modules || []; // Ensure modules is defined
+    return (
+      
+      <div className={styles.pageWrapper}>
+      <div className={styles.sidebar}>
+        <LeftNavBar modules={modules} />
+      </div>
+
+      <div className={styles.mainContent}>
+        <h1 className={styles.heading}>Welcome to {course.name}</h1>
+        <p className={styles.description}>
+          {course.description || " "}
+        </p>
+
+        <div className={styles.cardList}>
+          {modules.map((module, index) => (
+            <TileCard key={index} index={index} module={module} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // function OSFlash() {
 //     return (
