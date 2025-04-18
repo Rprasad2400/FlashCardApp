@@ -46,4 +46,5 @@ app.use("/api/user", require("./routes/user"));
 app.use("/api/set", require("./routes/set"));
 app.use("/api/course", require("./routes/course"));
 // Start Server
-app.listen(5000);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT);

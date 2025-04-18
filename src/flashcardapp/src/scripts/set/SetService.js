@@ -1,9 +1,13 @@
 // SetService.js
 
+const address = 'https://flashcardappbackend.onrender.com'; // Adjust this URL as necessary
+
 const fetchSets = async () => {
     try {
         console.log('Fetching sets...');
-        const response = await fetch('http://localhost:5000/api/set/getAll'); // Adjust this URL as necessary
+
+        //http://localhost:5000/api/set/getAll
+        const response = await fetch(`${address}api/set/getAll`); // Adjust this URL as necessary
         if (!response.ok) {
             throw new Error('Failed to fetch sets');
         }
@@ -21,7 +25,7 @@ const fetchSets = async () => {
 const createSet = async (set) => {
     try {
         console.log('Saving set:', set);
-        const response = await fetch('http://localhost:5000/api/set/save', {
+        const response = await fetch(`${address}/api/set/save`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -44,7 +48,7 @@ const createSet = async (set) => {
 const findSet = async (id) => {
     try {
         console.log('Finding set:', id);
-        const response = await fetch(`http://localhost:5000/api/set/get/${id}`); // Adjust this URL as necessary
+        const response = await fetch(`${address}/api/set/get/${id}`); // Adjust this URL as necessary
         if (!response.ok) {
             throw new Error('Failed to find set');
         }
@@ -57,5 +61,19 @@ const findSet = async (id) => {
     }
 };
 
+const fetchSearchSuggestions = async (searchTerm) => {
+    try {
+        const response = await fetch(`${address}/api/set/search?query=${searchTerm}`);
+        if (!response.ok) {
+            alert("Response is not ok");
+            return [];
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching search suggestions:', error);
+        return [];
+    }
+};
 
-export default { fetchSets, createSet, findSet };
+export default { fetchSets, createSet, findSet, fetchSearchSuggestions };

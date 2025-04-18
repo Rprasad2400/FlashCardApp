@@ -68,7 +68,8 @@ export default function ProfilePage() {
     };
     const handleUsernameUpdate = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/changeUsername/update-username', {
+            const address = 'https://flashcardappbackend.onrender.com'; // Adjust this URL as necessary
+            const response = await fetch(`${address}/api/changeUsername/update-username`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ oldUsername: username, newUsername })

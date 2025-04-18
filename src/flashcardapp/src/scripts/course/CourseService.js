@@ -1,9 +1,10 @@
 // CourseService.js
+const address = 'https://flashcardappbackend.onrender.com'; // Adjust this URL as necessary
 
 const fetchCourses = async () => {
     try {
         console.log('Fetching courses...');
-        const response = await fetch('http://localhost:5000/api/course/getAll'); // Adjust this URL as necessary
+        const response = await fetch(`${address}/api/course/getAll`); // Adjust this URL as necessary
         if (!response.ok) {
             throw new Error('Failed to fetch courses');
         }
@@ -19,7 +20,7 @@ const fetchCourses = async () => {
 const createCourse = async (course) => {
     try {
         console.log('Saving course:', course);
-        const response = await fetch('http://localhost:5000/api/course/save', {
+        const response = await fetch(`${address}/api/course/save`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -41,7 +42,7 @@ const createCourse = async (course) => {
 const findCourse = async (id) => {
     try {
         console.log('Finding course:', id);
-        const response = await fetch(`http://localhost:5000/api/course/get/${id}`); // Adjust this URL as necessary
+        const response = await fetch(`${address}/api/course/get/${id}`); // Adjust this URL as necessary
         if (!response.ok) {
             throw new Error('Failed to find course');
         }

@@ -1,9 +1,9 @@
 // FlashcardService.js
-
+const address = 'https://flashcardappbackend.onrender.com'; // Adjust this URL as necessary
 const fetchFlashcards = async () => {
     try {
       console.log('Fetching flashcards...');
-      const response = await fetch('http://localhost:5000/api/card/getAll'); // Adjust this URL as necessary
+      const response = await fetch(`${address}/api/card/getAll`); // Adjust this URL as necessary
       if (!response.ok) {
         throw new Error('Failed to fetch flashcards');
       }

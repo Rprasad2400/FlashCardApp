@@ -1,10 +1,10 @@
-
+const address = 'https://flashcardappbackend.onrender.com'; // Adjust this URL as necessary
 
 
 const fetchLeaderboard = async (setId) => {
     try {
         console.log('Fetching leaderboard...');
-        const response = await fetch(`http://localhost:5000/api/leaderboard/${setId}`); // Adjust this URL with actual set ID
+        const response = await fetch(`${address}/api/leaderboard/${setId}`); // Adjust this URL with actual set ID
         if (!response.ok) {
             const text = await response.text(); // log the actual response from server
             console.error('Server error response:', text);
@@ -22,7 +22,7 @@ const fetchLeaderboard = async (setId) => {
 const updateLeaderboard = async (setId, userId, name, score) => {
     try {
         console.log('Updating leaderboard for set:', setId);
-        const response = await fetch(`http://localhost:5000/api/leaderboard/${setId}`, {
+        const response = await fetch(`${address}/api/leaderboard/${setId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
