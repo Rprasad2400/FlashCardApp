@@ -14,6 +14,6 @@ const ModuleSchema = new mongoose.Schema({
     },
 }, { autoIndex: false });  // Disable automatic index creation
 
-module.exports = { ModuleSchema };
+module.exports = ModuleSchema;
 
 

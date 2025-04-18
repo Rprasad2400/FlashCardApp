@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 export default function FlashCardDisplay() {
     const [flashcards, setFlashcards] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-    
+
     const [repeat, setRepeat] = useState(false); // Set to true if you want to repeat the flashcards
     const [shuff, setShuffle] = useState(false); // Set to true if you want to shuffle the flashcards
     const [currentCap, setCurrentCap] = useState(0);
@@ -262,8 +262,8 @@ const onRedButtonClick = () => {
                         
                     <div className={styles.buttonRow}>
                     
-                        <Button variant="danger" onClick={onRedButtonClick}>Red Button</Button>
-                        <Button variant="success" onClick={onGreenButtonClick}>Green Button</Button>
+                        <Button className={styles.redButton} onClick={onRedButtonClick}>Wrong</Button>
+                        <Button  className={styles.greenButton} onClick={onGreenButtonClick}>Correct</Button>
                     </div>
                 </Col>
 

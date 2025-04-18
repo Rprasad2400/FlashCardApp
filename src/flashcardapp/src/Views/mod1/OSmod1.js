@@ -18,6 +18,7 @@ import courseAPI from '../../scripts/course/CourseService';
 import { useLocation } from 'react-router-dom';
 import LeftNavBar from '../../Components/sidebar/OSsidebar';
 import styles from './OSmod1.module.css';
+import AddSetModal from '../../Components/addSetModal/addSetModal';
 
 const SAMPLE_FLASHCARDS = [
     {
@@ -56,6 +57,7 @@ export default function OSFlash() {
     const courseID = "67e5929e0d708b0cd1320931"; // Assuming you have a courseID to filter by 
     const [flashcards, setFlashcards] = useState(SAMPLE_FLASHCARDS);
     const [course, setCourse] = useState(null);
+    const [showCreateSetModal, setShowCreateSetModal] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [data, setData] = useState(null);
     const location = useLocation();
@@ -165,7 +167,7 @@ export default function OSFlash() {
               </Button>
             </div>
 
-            <div
+  <div
   className={styles.flashcardPreview}
   onClick={() => {
     console.log('clicked');
@@ -179,7 +181,17 @@ export default function OSFlash() {
   <div className={styles.flashcardCount}>
     <span>{data.flashcards.length}</span>
   </div>
+
 </div>
+
+<div className={styles.section}>
+            <div className={styles.headerRow}>
+              <h2>Personal Flashcards</h2>
+              <Button as={Link} to="/FlashCardDisplay" className={styles.enhancedButton}>
+                <span className={styles.arrow}>+</span> Create New Set
+              </Button>
+            </div>
+            </div>
 
           </div>
         </Col>
@@ -191,6 +203,10 @@ export default function OSFlash() {
         closeModal={() => setShowModal(false)}
         givenSet={data.flashcards}
         onClick={onClick}
+      />
+      <AddSetModal
+        showCreateSetModal={showCreateSetModal}
+        setShowCreateSetModal={setShowCreateSetModal}
       />
     </Container>
     );

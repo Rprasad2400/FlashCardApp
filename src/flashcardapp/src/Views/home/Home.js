@@ -225,6 +225,7 @@ function Home() {
                                 <Button onClick={() => setShowModal(true)} className="btn btn-primary rounded-pill shadow-sm fw-bold" style={{ transition: "all 0.3s ease-in-out" }}>
                                     Edit Goals
                                 </Button>
+                                
                             </Row>
                             </Card>
                         </Col>

@@ -29,6 +29,7 @@ const createSet = async (set) => {
             body: JSON.stringify(set),
         });
         if (!response.ok) {
+            console.log('Response not ok:', response);
             throw new Error('Failed to save set');
         }
         const savedSet = await response.json();

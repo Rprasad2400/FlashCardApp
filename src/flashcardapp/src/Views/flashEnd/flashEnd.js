@@ -5,6 +5,7 @@ import { Col, Row } from 'react-bootstrap';
 import styles from './flashEnd.module.css';
 import { Button } from 'react-bootstrap';
 import api from '../../scripts/leaderboard/LeaderBoardService';
+import userAPI from '../../scripts/user/UserService';
 import Leaderboard from '../../Components/leaderboard/leaderboard';
 
 const FlashEnd = () => {
@@ -18,6 +19,8 @@ const FlashEnd = () => {
     const misses = location.state?.misses;
     const navigate = useNavigate();
     const name = userID; // Assuming name is the same as userID
+
+
 
     // Fetch the leaderboard data
     useEffect(() => {
@@ -45,6 +48,21 @@ const FlashEnd = () => {
                 console.error('Error fetching leaderboard:', error);
             }
         };
+
+        const updateTasks = async () => {
+
+          try {
+              console.log('Updating tasks...');
+              const response = await userAPI.updateUserTasksCompleted(userID, setID,score);
+  
+              console.log('Tasks updated:', response.data);
+          } catch (error) {
+              console.error('Error updating tasks:', error);
+          }
+  
+          
+  
+      }
       const updateInfo = async () => {
         console.log('Updating leaderboard info...');
         await updateLeaderboard();
@@ -54,12 +72,18 @@ const FlashEnd = () => {
         console.log(leaderboardData);
       };
       updateInfo();
+      updateTasks();
 
     }, []); 
     // Log the leaderboard data whenever it changes
     useEffect(() => {
         console.log('Leaderboard data updated:', leaderboardData);
     }, [leaderboardData]);
+
+
+
+
+
 
     if (!leaderboardData) {
         return <div>Loading...</div>;
