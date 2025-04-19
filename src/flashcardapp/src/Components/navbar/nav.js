@@ -16,6 +16,7 @@ function NavbarDarkExample({ isAuthenticated }) {
   const [suggestions, setSuggestions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const searchRef = useRef(null);
+  const address = 'https://flashcardappbackend.onrender.com';
 
   const handleChange = async (event) => {
     const value = event.target.value;
@@ -31,8 +32,9 @@ function NavbarDarkExample({ isAuthenticated }) {
   };
 
   const fetchRecommendations = async (searchTerm) => {
+    
     try {
-      const response = await fetch(`http://localhost:5000/api/set/search?query=${searchTerm}`);
+      const response = await fetch(`${address}/api/set/search?query=${searchTerm}`);
       if (!response.ok) {
         alert("Response is not ok");
       }
