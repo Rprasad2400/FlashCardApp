@@ -7,7 +7,7 @@ const fetchSets = async () => {
         console.log('Fetching sets...');
 
         //http://localhost:5000/api/set/getAll
-        const response = await fetch(`${address}api/set/getAll`); // Adjust this URL as necessary
+        const response = await fetch(`${address}/api/set/getAll`); // Adjust this URL as necessary
         if (!response.ok) {
             throw new Error('Failed to fetch sets');
         }

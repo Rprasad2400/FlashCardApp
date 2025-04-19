@@ -23,6 +23,7 @@ function Home() {
     const [showGoalModal, setShowGoalModal] = useState(false);
     const [selectedDay, setSelectedDay] = useState(null);
     const [newGoal, setNewGoal] = useState("");
+    const address = 'https://flashcardappbackend.onrender.com';
 
     // Get start of the current week (Monday)
     function getWeekStart(date) {
@@ -162,7 +163,7 @@ function Home() {
         const fetchUserData = async () => {
             try {
                 //alert("I am trying!");
-                const response = await fetch(`http://localhost:5000/api/user/get-courses/${localStorage.getItem('username')}`);  
+                const response = await fetch(`${address}/api/user/get-courses/${localStorage.getItem('username')}`);  
                 const data = await response.json();
                 if (data.success) {
                     //alert("data.courses: " + JSON.stringify(data.user.courses)); 

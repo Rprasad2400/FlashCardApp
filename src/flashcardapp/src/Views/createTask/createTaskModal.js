@@ -7,6 +7,7 @@ const CreateTaskModal = ({ show, handleClose}) => {
     const [date, setDate] = useState('');
     const [amount, setAmount] = useState('');
     const [availableSets, setAvailableSets] = useState([]);
+    const address = 'https://flashcardappbackend.onrender.com';
 
     const onSave = () => {
         handleSaveChanges();
@@ -21,7 +22,7 @@ const CreateTaskModal = ({ show, handleClose}) => {
     const handleSaveChanges = async () => {
         const userId = localStorage.getItem("username");
         try {
-            const response = await fetch(`http://localhost:5000/api/task/add-personal-task/${userId}`, {
+            const response = await fetch(`${address}/api/task/add-personal-task/${userId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -50,7 +51,7 @@ const CreateTaskModal = ({ show, handleClose}) => {
         const fetchSets = async () => {
             try {
                 console.log("Inside my new use effect");
-                const response = await fetch(`http://localhost:5000/api/task/get-user-sets/${localStorage.getItem("username")}`);
+                const response = await fetch(`${address}/api/task/get-user-sets/${localStorage.getItem("username")}`);
                 const data = await response.json();
                 console.log("After new new stuff");
                 if (data.success) {
