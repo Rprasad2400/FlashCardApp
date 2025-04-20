@@ -60,7 +60,8 @@ export default function ProfilePage() {
             const fetchCourseInfo = async () => {
                 try {
                     //alert("I am trying!");
-                    const response = await fetch(`http://localhost:5000/api/user/get-course-info/${localStorage.getItem('username')}`);  
+                    const address = 'https://flashcardappbackend.onrender.com';
+                    const response = await fetch(`${address}/api/user/get-course-info/${localStorage.getItem('username')}`);  
                     const data = await response.json();
                     if (data.success) {
                         //alert("data.courses: " + JSON.stringify(data.user.courses)); 
@@ -68,7 +69,7 @@ export default function ProfilePage() {
                         localStorage.setItem("Course_Info", JSON.stringify(data.courses));
                     }
 
-                    const response2 = await fetch(`http://localhost:5000/api/user/get-recent-sets/?recent_sets=${localStorage.getItem('recent_sets')}`);  
+                    const response2 = await fetch(`${address}/api/user/get-recent-sets/?recent_sets=${localStorage.getItem('recent_sets')}`);  
                     const data2 = await response2.json();
                     if (data2.success) {
                         //alert("data.courses: " + JSON.stringify(data.user.courses)); 
