@@ -17,6 +17,9 @@ const CourseSchema = new mongoose.Schema({
         type: [Module],
         required: true,
     },
+    image: {
+        type: String
+    }
 }, { autoIndex: false });  // Disable automatic index creation
 
 module.exports = mongoose.model('courses', CourseSchema);

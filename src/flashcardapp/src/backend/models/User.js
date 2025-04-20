@@ -34,7 +34,19 @@ const UserSchema = new mongoose.Schema({
     ],
     badges: {
         type: [String],
-        default: [0, 0, 0, 0, 0, 0]
+        default: [0, 0, 0, 0]
+    },
+    date_joined: {
+        type: String,
+        default: () => new Date().toISOString()
+    },
+    total_pnts: {
+        type: Number,
+        default: 0
+    },
+    recent_sets: {
+        type: [String],
+        default: [0,0,0,0,0]
     }
 }, { autoIndex: false });  // Disable automatic index creation
 

@@ -142,64 +142,66 @@ export default function Login({setIsAuthenticated}) {
                             <h2 className="fw-bold">Flashy Flashcards</h2>
                             <p className="text-muted">Sign into your account</p>
                         </div>
+                        <div style={{ transform: 'translateY(10%)' }}>
+                            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                                <Form.Group className="mb-3" controlId="formBasicLogin">
+                                    <Form.Label>Username:</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="user"
+                                        placeholder="Enter username"
+                                        value={form_Data.user}
+                                        onChange={updateData}
+                                        pattern="^[a-zA-Z0-9]+$"
+                                        required
+                                        isInvalid={validated && (!/^[a-zA-Z0-9]+$/.test(form_Data.user) || loginFailed)}
+                                        isValid={validated && /^[a-zA-Z0-9]+$/.test(form_Data.user) && !loginFailed}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        Please enter a valid username (alphanumeric characters only).
+                                    </Form.Control.Feedback>
+                                </Form.Group>
 
-                        <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                            <Form.Group className="mb-3" controlId="formBasicLogin">
-                                <Form.Label>Username:</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="user"
-                                    placeholder="Enter username"
-                                    value={form_Data.user}
-                                    onChange={updateData}
-                                    pattern="^[a-zA-Z0-9]+$"
-                                    required
-                                    isInvalid={validated && (!/^[a-zA-Z0-9]+$/.test(form_Data.user) || loginFailed)}
-                                    isValid={validated && /^[a-zA-Z0-9]+$/.test(form_Data.user) && !loginFailed}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Please enter a valid username (alphanumeric characters only).
-                                </Form.Control.Feedback>
-                            </Form.Group>
+                                <Form.Group className="mb-3" controlId="formBasicPassword">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        name="pass"
+                                        placeholder="Enter password"
+                                        value={form_Data.pass}
+                                        onChange={updateData}
+                                        pattern="^[a-zA-Z0-9]+$"
+                                        required
+                                        isInvalid={validated && (!/^[a-zA-Z0-9]+$/.test(form_Data.pass) || loginFailed)}
+                                        isValid={validated && /^[a-zA-Z0-9]+$/.test(form_Data.pass) && !loginFailed}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        Please enter a valid password (alphanumeric only).
+                                    </Form.Control.Feedback>
+                                </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="formBasicPassword">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    name="pass"
-                                    placeholder="Enter password"
-                                    value={form_Data.pass}
-                                    onChange={updateData}
-                                    pattern="^[a-zA-Z0-9]+$"
-                                    required
-                                    isInvalid={validated && (!/^[a-zA-Z0-9]+$/.test(form_Data.pass) || loginFailed)}
-                                    isValid={validated && /^[a-zA-Z0-9]+$/.test(form_Data.pass) && !loginFailed}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Please enter a valid password (alphanumeric only).
-                                </Form.Control.Feedback>
-                            </Form.Group>
+                                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                    <Form.Check
+                                        type="checkbox"
+                                        label="Remember me"
+                                        onChange={(e) => setExcludeValidation(e.target.checked)}
+                                    />
+                                </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                <Form.Check
-                                    type="checkbox"
-                                    label="Remember me"
-                                    onChange={(e) => setExcludeValidation(e.target.checked)}
-                                />
-                            </Form.Group>
+                                <Button variant="dark" type="submit" className="w-100">
+                                    LOGIN
+                                </Button>
 
-                            <Button variant="dark" type="submit" className="w-100">
-                                LOGIN
-                            </Button>
+                                <div className="text-center mt-3">
+                                    <Link to="#" className="text-muted">Forgot password?</Link>
+                                    <br />
+                                    <Link to="#" onClick={() => setShowRegister(true)} className="text-primary">Don't have an account? Register here</Link>
+                                </div>
+                            </Form>
+                        </div>
+                        
 
-                            <div className="text-center mt-3">
-                                <Link to="#" className="text-muted">Forgot password?</Link>
-                                <br />
-                                <Link to="#" onClick={() => setShowRegister(true)} className="text-primary">Don't have an account? Register here</Link>
-                            </div>
-                        </Form>
-
-                        <div className="text-center text-muted mt-3">
+                        <div className="text-center text-muted mt-3" style={{ transform: 'translateY(100%)' }}>
                             <small>Terms of use. Privacy policy</small>
                         </div>
                     </Col>

@@ -170,6 +170,9 @@ function Home() {
                     localStorage.setItem("courses",JSON.stringify(data.user.courses));
                     localStorage.setItem("badges",JSON.stringify(data.user.badges));
                     localStorage.setItem("tasks-completed", JSON.stringify(data.user.tasksCompleted));
+                    localStorage.setItem("date_joined", data.user.date_joined);
+                    localStorage.setItem("total_pnts", data.user.total_pnts);
+                    localStorage.setItem("recent_sets", JSON.stringify(data.user.recent_sets));
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);

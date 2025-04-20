@@ -106,6 +106,8 @@ const TaskManager = () => {
                 });
     
                 console.log("Tasks successfully categorized!");
+                //console.log("task size: ", completedTasks.size());
+                localStorage.setItem("completed", completedTasks.length);
             })
             .catch((error) => console.error("Error fetching tasks:", error));
     }, []);

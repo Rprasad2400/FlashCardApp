@@ -27,12 +27,17 @@ const SAMPLE_COURSES = [
 ]
 
 const BADGES = [
-    String.fromCodePoint(0x1F535), // ??
-    String.fromCodePoint(0x26AB), // ?
     String.fromCodePoint(0x1F31E), // ??
     String.fromCodePoint(0x1F30D), // ??
     String.fromCodePoint(0x1F315), // ??
     String.fromCodePoint(0x1F525), // ??
+];
+
+const badgeNames = [
+    "Daily Tasks",
+    "Modules Completed",
+    "Top 10",
+    "Daily Streak"
 ];
 
 export default function ProfilePage() {
@@ -51,14 +56,35 @@ export default function ProfilePage() {
     const [newUsername, setNewUsername] = useState(localStorage.getItem('username') || ''); // New username input
     const courses = JSON.parse(localStorage.getItem("courses"));
     const badges = JSON.parse(localStorage.getItem("badges"));
+    const [recentSets, setRecentSets] = useState([]);
 
-    // Save profile changes
-    // const handleSaveChanges = () => {
-    //     if (tempImage) {
-    //         setProfileImage(tempImage); // Apply new profile image
-    //     }
-    //     setShowModal(false);
-    // };
+    useEffect(() => {
+            const fetchCourseInfo = async () => {
+                try {
+                    //alert("I am trying!");
+                    const response = await fetch(`http://localhost:5000/api/user/get-course-info/${localStorage.getItem('username')}`);  
+                    const data = await response.json();
+                    if (data.success) {
+                        //alert("data.courses: " + JSON.stringify(data.user.courses)); 
+                        //alert("data: " + JSON.stringify(data));
+                        localStorage.setItem("Course_Info", JSON.stringify(data.courses));
+                    }
+
+                    const response2 = await fetch(`http://localhost:5000/api/user/get-recent-sets/?recent_sets=${localStorage.getItem('recent_sets')}`);  
+                    const data2 = await response2.json();
+                    if (data2.success) {
+                        //alert("data.courses: " + JSON.stringify(data.user.courses)); 
+                        //alert("data: " + JSON.stringify(data));
+                        setRecentSets(data2.recent_sets)
+                    }
+
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                }
+            };
+    
+            fetchCourseInfo();
+        }, []);
 
     // Handle image selection
     const handleImageChange = (event) => {
@@ -325,7 +351,7 @@ export default function ProfilePage() {
                                         <h2>My Profile</h2>
                                         <p>Welcome to your profile page!</p>
                                     </Col>
-                                    <Col className="d-flex justify-content-end">
+                                    {/* <Col className="d-flex justify-content-end">
                                         <Image
                                             src={profileImage}
                                             roundedCircle
@@ -333,18 +359,15 @@ export default function ProfilePage() {
                                             height="80" // Adjust size
                                             className="border border-secondary"
                                         />
-                                    </Col>
+                                    </Col> */}
                                 </Row>
                                 <Row className="mt-3">
                                     <Col>
                                         <Card className="mb-3 p-3 d-flex flex-column h-100"> {/*makes card stretch to fill row*/ }
-                                            <h5>User Statistics</h5>
-                                            <p>Date joined: <strong>5 years ago</strong></p>
-                                            <p>Energy points earned: <Button variant="primary" size="sm">21,000</Button></p>
-                                            <p>Flashcard Sets completed: <strong>0</strong></p>
-                                            <div className="mt-auto"> {/* Pushes this to the bottom */}
-                                                <Button variant="success">View Stats</Button>
-                                            </div>
+                                            <h5 className="mb-3">User Statistics</h5>
+                                            <p>Date joined: <strong>{localStorage.getItem("date_joined")}</strong></p>
+                                            <p>Card points earned: <Button variant="primary" size="sm">{localStorage.getItem("total_pnts")}</Button></p>
+                                            <p>Tasks completed: <strong>{localStorage.getItem("completed")}</strong></p>
                                         </Card>
                                     </Col>
                                     <Col>
@@ -363,16 +386,16 @@ export default function ProfilePage() {
                                 <Row className="justify-content-center mt-3">
                                     {/* Badge Section */}
                                     <Card className="mb-3 p-3" style={{ width: "800px" }}>
-                                        <h5>Badge Counts <a href="#">View all</a></h5>
-                                        <Row>
+                                        <h5>Badge Counts</h5>
+                                        <Row className="justify-content-center mt-3">
                                             {BADGES.map((badge, i) => (
-                                                <Col key={i} xs={2} className="text-center">
+                                                <Col key={i} xs={3} className="text-center">
                                                     <span style={{ fontSize: "2rem" }}>{badge}</span>
+                                                    <h6>{badgeNames[i]}</h6>
                                                     <p>{badges[i]}</p>
                                                 </Col>
                                             ))}
                                         </Row>
-                                        <a href="#">Check for new badges and avatars</a>
                                     </Card>
                                 </Row>
                             </Card.Body>
@@ -388,14 +411,14 @@ export default function ProfilePage() {
                                     </Col>
                                 </Row>
                                 <Row xs={1} md={2} lg={3} className="g-4"> {/* Responsive Grid */}
-                                    {SAMPLE_COURSES.map((course) => (
-                                        <Col key={course.id}>
+                                    {JSON.parse(localStorage.getItem("Course_Info")).map((course) => (
+                                        <Col key={course._id}>
                                             <Card className="h-100">
-                                                <Card.Img variant="top" src={course.image} alt={course.course} />
+                                                <Card.Img variant="top" src={course.image_src} alt={course.name} />
                                                 <Card.Body className="d-flex flex-column">
-                                                    <Card.Title>{course.course}</Card.Title>
+                                                    <Card.Title>{course.name}</Card.Title>
                                                     <Card.Text>
-                                                        {course.options.join(", ")}
+                                                        {course.teacher}
                                                     </Card.Text>
                                                     <Button variant="primary" className="mt-auto" onClick={() => navigate("/OS-flashcards")}>View Course</Button>
                                                 </Card.Body>

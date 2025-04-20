@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Home from './Views/home/Home';
 import StudyNow from './Views/studynow/StudyNow';
@@ -22,7 +22,14 @@ import FlashEnd from './Views/flashEnd/flashEnd';
 import ViewSet from './Views/viewSet/viewSet';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  //const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem("isAuthenticated") === "true";
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem("isAuthenticated", isAuthenticated);
+  }, [isAuthenticated]);
   return (
     <div className="App">
         {/*define routes*/}

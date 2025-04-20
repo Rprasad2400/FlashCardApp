@@ -9,7 +9,7 @@ const ModuleSchema = new mongoose.Schema({
         required: true,
     },
     main: {
-        type: ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: false,
     },
 }, { autoIndex: false });  // Disable automatic index creation
