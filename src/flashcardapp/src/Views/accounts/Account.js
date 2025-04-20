@@ -52,7 +52,7 @@ export default function ProfilePage() {
     const [profileImage, setProfileImage] = useState(defaultImg); // Stores the displayed profile image
     const navigate = useNavigate();
     const [newUsername, setNewUsername] = useState(localStorage.getItem('username') || ''); // New username input
-    const courses = JSON.parse(localStorage.getItem("courses"));
+    const courses = JSON.parse(localStorage.getItem("courses") || "[]");
     const badges = JSON.parse(localStorage.getItem("badges"));
     const [recentSets, setRecentSets] = useState([]);
 
@@ -294,7 +294,7 @@ export default function ProfilePage() {
                                     </Col>
                                 </Row>
                                 <Row xs={1} md={2} lg={3} className="g-4"> {/* Responsive Grid */}
-                                    {JSON.parse(localStorage.getItem("Course_Info")).map((course) => (
+                                    {courses.map((course) => (
                                         <Col key={course._id}>
                                             <Card className="h-100">
                                                 <Card.Img variant="top" src={course.image_src} alt={course.name} />
