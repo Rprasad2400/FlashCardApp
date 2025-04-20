@@ -10,8 +10,8 @@ const TaskManager = () => {
 
     useEffect(() => {
         console.error("Inside other useEffect:");
-    
-        fetch(`http://localhost:5000/api/task/get-tasks/${localStorage.getItem("username")}`)
+        const address = 'https://flashcardappbackend.onrender.com'; // Adjust this URL as necessary
+        fetch(`${address}/api/task/get-tasks/${localStorage.getItem("username")}`)
             .then((res) => res.json())
             .then((data) => {
                 if (!data.success) {
@@ -158,7 +158,8 @@ const TaskManager = () => {
 
     const markTaskAsCompleted = async (userId, taskId, setId) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/user/${userId}/complete-task`, {
+            const address = 'https://flashcardappbackend.onrender.com'; // Adjust this URL as necessary
+            const response = await fetch(`${address}/api/user/${userId}/complete-task`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ task_id: taskId, set_id: setId })

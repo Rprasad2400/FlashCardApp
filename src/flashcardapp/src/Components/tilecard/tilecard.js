@@ -1,19 +1,28 @@
 import React from 'react';
-import Nav from 'react-bootstrap/Nav';
 import styles from './tilecard.module.css';
-// <img src={imageUrl} alt={name} /> 
-const TileCard = ({ targetUrl, name, imageUrl }) => {
-    return (
-        <Nav.Link href={targetUrl}  className={styles.tileCard}>
-            <div className={styles.leftContainer}>
-            <div className={styles.title}>
-                <h1>{name}</h1></div>
-                </div>
-            <div className={styles.rightContainer}>
-           
-            </div>
-        </Nav.Link>
-    );
+import { useNavigate } from 'react-router-dom';
+
+const TileCard = ({ module, index }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/module/${module.name.replace(/\s+/g, '-').toLowerCase()}`, {
+      state: { module },
+    });
+  };
+
+  return (
+    <div className={styles.tileCard} onClick={handleClick}>
+      <div className={styles.leftContainer}>
+        <div className={styles.title}>
+          <h1>{`Module ${index + 1}: ${module.name}`}</h1>
+        </div>
+      </div>
+      <div className={styles.rightContainer}>
+        <div className={styles.arrow}></div>
+      </div>
+    </div>
+  );
 };
 
 export default TileCard;

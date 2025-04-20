@@ -8,12 +8,12 @@ const ModuleSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    main: {
-        type: mongoose.Schema.Types.ObjectId,
+    mainSet: {
+        type: String,
         required: false,
     },
 }, { autoIndex: false });  // Disable automatic index creation
 
-module.exports = { ModuleSchema };
+module.exports = ModuleSchema;
 
 

@@ -1,95 +1,90 @@
+/* General Modal Styles */
 .modal {
-    display: flex;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 10px auto;
     align-items: center;
     justify-content: center;
-}
-
-.modal-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-}
-
-.modal-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.modalBody {
-    padding: 1.5rem;
-    height: 60%;
-    
-}
-
-.titleCol{
+  }
+  
+  .modalBody {
+    background-color: #f9f9f9;
+    padding: 24px;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+  
+  .titleRow {
     text-align: center;
-    font-size: 1.5rem;
-    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .titleCol h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  hr {
+    margin: 16px 0;
+    border: 0;
+    border-top: 1px solid #ccc;
+  }
+  
+  /* Flashcard Row Styles */
+  .flashcardRow {
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+  
+  .flashcardCol {
     padding: 0;
-    margin: 0;
-}
-
-.titleRow{
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: bold;
-    padding: 0;
-    margin: 0;
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -15px;
-    align-items: center;
-    min-height: 100px;
-    margin-left: -15px;
-}
-
-.col {
-    flex: 1;
-    align-items: center;
-    text-align: center;
-    padding: 5px;
-    
-}
-
-.card {
-    margin: 0.5rem;
-    align-items: center;
-    border: 1px solid #dee2e6;
-    border-radius: 0.25rem;
+  }
+  
+  /* Card Styles */
+  .card {
+    background-color: #ffffff;
+    border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+  
+  .cardText {
     font-size: 1rem;
-    font-weight: bold;
-    
-    min-height: 100px;
-    
-}
-
-.card:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.cardText{
-    text-align: end;
-    align-self: center;
-}
-.modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    padding: 1rem;
-    border-top: 1px solid #dee2e6;
-}
-
-.button {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    cursor: pointer;
-}
-
-.button:hover {
-    background-color: #5a6268;
-}
+    color: #212529;
+    line-height: 1.6;
+  }
+  
+  /* Modal Footer Styles */
+  .footerButton {
+    font-weight: 600;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .footerButton:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Small Screen Responsiveness */
+  @media (max-width: 768px) {
+    .modalBody {
+      padding: 16px;
+    }
+  
+    .flashcardRow {
+      flex-direction: column;
+      gap: 8px;
+    }
+  
+    .flashcardCol {
+      padding: 8px;
+    }
+  }
+  

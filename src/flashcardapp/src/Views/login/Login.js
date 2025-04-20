@@ -9,6 +9,7 @@ export default function Login({setIsAuthenticated}) {
     const [excludeValidation, setExcludeValidation] = useState(false);
     const [loginFailed, setLoginFailed] = useState(false);
     const navigate = useNavigate(); // Initialize navigation
+    const address = 'https://flashcardappbackend.onrender.com';
     const [form_Data, set_Form_Data] = useState({
         user: "",
         pass: "",
@@ -45,8 +46,10 @@ export default function Login({setIsAuthenticated}) {
         setValidated(true);
         setLoginFailed(false);
         //event.preventDefault();
+        
         let result = await fetch(
-        'http://localhost:5000/api/auth/login', {
+            
+        `${address}/api/auth/login`, {
             method: "post",
             body: JSON.stringify(form_Data),
             headers: {
@@ -89,7 +92,8 @@ export default function Login({setIsAuthenticated}) {
         setLoginFailed(false);
         event.preventDefault();
         let result = await fetch(
-        'http://localhost:5000/api/auth/register', {
+        
+        `${address}/api/auth/register`, {
             method: "post",
             body: JSON.stringify(form_Register_Data),
             headers: {

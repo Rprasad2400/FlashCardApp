@@ -6,6 +6,7 @@ import osImg from '../../assets/images/OS Image.png';
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from '../../scripts/set/SetService';
 import ProgressRow from '../../Components/recentsets/recentSet';
+import AddSetModal from "../../Components/addSetModal/addSetModal";
 
 const SAMPLE_COURSES = [
     {
@@ -41,9 +42,6 @@ const badgeNames = [
 ];
 
 export default function ProfilePage() {
-    const [setName, setSetName] = useState('');
-    const [setDescription, setSetDescription] = useState('');
-    const [selectedCourse, setSelectedCourse] = useState('');
     const [flashcards, setFlashcards] = useState([{ question: '', answer: '' }]);
     const [showCreateSetModal, setShowCreateSetModal] = useState(false);
     const [activeSection, setActiveSection] = useState("profile");
@@ -94,20 +92,10 @@ export default function ProfilePage() {
             setTempImage(imageURL); // Show preview before saving
         }
     };
-
-    const handleAddFlashcard = () => {
-        setFlashcards([...flashcards, { question: '', answer: '' }]);
-    };
-    
-    const handleFlashcardChange = (index, field, value) => {
-        const updatedFlashcards = [...flashcards];
-        updatedFlashcards[index][field] = value;
-        setFlashcards(updatedFlashcards);
-    };
-
     const handleUsernameUpdate = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/changeUsername/update-username', {
+            const address = 'https://flashcardappbackend.onrender.com'; // Adjust this URL as necessary
+            const response = await fetch(`${address}/api/changeUsername/update-username`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ oldUsername: username, newUsername })
@@ -204,113 +192,8 @@ export default function ProfilePage() {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
-            {/* Create Set Modal */}
-            <Modal show={showCreateSetModal} onHide={() => setShowCreateSetModal(false)} centered size="lg">
-                <Modal.Header closeButton>
-                    <Modal.Title>Create New Flashcard Set</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            {/* Set Name */}
-                            <Form.Group className="mb-3">
-                                <Form.Label>Set Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter set name"
-                                    value={setName}
-                                    onChange={(e) => setSetName(e.target.value)}
-                                />
-                            </Form.Group>
-                        {/* Description */}
-                        <Form.Group className="mb-3">
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control 
-                                as="textarea" 
-                                rows={2} 
-                                placeholder="Enter set description"
-                                value={setDescription}
-                                onChange={(e) => setSetDescription(e.target.value)} 
-                            />
-                        </Form.Group>
-
-                        {/* Course Selection */}
-                        <Form.Group className="mb-4">
-                            <Form.Label>Course</Form.Label>
-                            <Form.Select 
-                                value={selectedCourse} 
-                                onChange={(e) => setSelectedCourse(e.target.value)}
-                            >
-                                <option value="">Select a course</option>
-                                {SAMPLE_COURSES.map((course) => (
-                                    <option key={course.id} value={course.course}>
-                                        {course.course}
-                                    </option>
-                                ))}
-                            </Form.Select>
-                        </Form.Group>
-
-                        {/* Flashcards Entry */}
-                        <div className="mb-3">
-                            <h6>Flashcards</h6>
-                            {flashcards.map((card, index) => (
-                                <Row key={index} className="mb-2">
-                                    <Col md={6}>
-                                        <Form.Control
-                                            placeholder={`Question #${index + 1}`}
-                                            value={card.question}
-                                            onChange={(e) => 
-                                                handleFlashcardChange(index, 'question', e.target.value)
-                                            }
-                                        />
-                                    </Col>
-                                    <Col md={6}>
-                                        <Form.Control
-                                            placeholder={`Answer #${index + 1}`}
-                                            value={card.answer}
-                                            onChange={(e) => 
-                                                handleFlashcardChange(index, 'answer', e.target.value)
-                                            }
-                                        />
-                                    </Col>
-                                </Row>
-                            ))}
-                            <Button 
-                                variant="outline-primary" 
-                                size="sm" 
-                                onClick={handleAddFlashcard}
-                                className="mt-2"
-                            >
-                                + Add Flashcard
-                            </Button>
-                        </div>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowCreateSetModal(false)}>
-                        Cancel
-                    </Button>
-                    <Button variant="primary" onClick={() => {
-                        // Handle submission here
-                        console.log({
-                            name: setName,
-                            description: setDescription,
-                            course: selectedCourse,
-                            accountId: "12345",
-                            flashcards: flashcards
-                        });
-                        api.createSet({
-                            setName,
-                            setDescription,
-                            selectedCourse,
-                            flashcards
-                        });
-                        setShowCreateSetModal(false);
-                    }}>
-                        Create Set
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            {/* Add Set Modal */}
+            <AddSetModal showCreateSetModal={showCreateSetModal} setShowCreateSetModal={setShowCreateSetModal}/>
 
             <Row>
                 {/* Sidebar Column */}

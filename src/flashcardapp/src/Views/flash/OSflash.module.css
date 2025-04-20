@@ -1,0 +1,58 @@
+.pageWrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .sidebar {
+    width: auto;
+    background-color:  #f9f9f9;
+    border-right: 1px solid #ddd;
+    padding: 24px 16px;
+    overflow-y: auto;
+  }
+  
+  .mainContent {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+  }
+  
+  .heading {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+  }
+  
+  .description {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  
+  .cardList {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .pageWrapper {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #ddd;
+    }
+  
+    .mainContent {
+      padding: 24px;
+    }
+  }
+  

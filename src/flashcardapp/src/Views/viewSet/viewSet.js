@@ -8,6 +8,7 @@ import { Card } from 'react-bootstrap';
 import styles from './viewSet.module.css';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { Table } from 'react-bootstrap'; // Import Table from react-bootstrap
 const ViewSet = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -20,6 +21,7 @@ const ViewSet = () => {
         const savedFlashcards = localStorage.getItem('flashcards');
         if (savedFlashcards=="undefined") {
         localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
+        localStorage.setItem('currentSetID', accountID);
         
         navigate(`/FlashCardDisplay`); 
 
@@ -27,7 +29,9 @@ const ViewSet = () => {
         }
         else{
             localStorage.removeItem('flashcards');
+            localStorage.removeItem('currentSetID');
             localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
+            localStorage.setItem('currentSetID', accountID);
             navigate(`/FlashCardDisplay`); 
 
         }
@@ -64,39 +68,39 @@ const ViewSet = () => {
             <div className={styles.content}>
             <Row>
                 {/* Displaying the flashcards */}
-            <Col className={styles.flashcardColumn}>
-            <div className={styles.flashcardContainer}>
-                <Row  className={styles.titleRow}>
-                        <Col className={styles.titleCol}>
-                            <h3>Questions</h3>
-                        </Col>
-                        <Col className={styles.titleCol}>
-                            <h3>Answers</h3>
-                        </Col>
-                    </Row>
-                <div className={styles.flashcardList}>    
-                {givenSet.map((item, index) => (
-                    <Row key={index} className={styles.flashcardRow}>
-                        <Col className={styles.flashcardCol}>
-                            <Card className={styles.card} >
-                                <Card.Body>
-                                    <Card.Text>{item.question}</Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col className={styles.flashcardCol}>
-                            <Card className={styles.card}>
-                                <Card.Body>
-                                    <Card.Text className={styles.cardText}>{item.answer}</Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    </Row>
-                ))}
-                </div>
-            </div>
-                
-            </Col>
+<Col>
+<Table bordered className={styles.flashcardTable}>
+  <thead className={styles.tableHeader} >
+    <tr>
+      <th rowSpan={2}>
+      Questions</th>
+      <th  rowSpan={2}>
+        Answers</th>
+    </tr>
+  </thead>
+  <tbody>
+    {givenSet.map((item, index) => (
+      <tr key={index}>
+        <td className={styles.questionColumn}>
+          <Card className={styles.card}>
+            <Card.Body>
+              <Card.Text>{item.question}</Card.Text>
+            </Card.Body>
+          </Card>
+        </td>
+        <td className={styles.answerColumn}> 
+          <Card className={styles.card}>
+            <Card.Body>
+              <Card.Text >{item.answer}</Card.Text>
+            </Card.Body>
+          </Card>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+
+</Table>
+</Col>
             {/* Displaying the set details */}
             <Col className={styles.descriptionColumn}>
             <div className={styles.descriptionContent}>
@@ -108,7 +112,7 @@ const ViewSet = () => {
                     </div>
                     <div className={styles.entry}>
                         <h3>Course</h3>
-                        <div className={styles.value}>{data.name}</div>
+                        <div className={styles.value}>{data.course}</div>
                         
                     </div>
                     <div className={styles.entry}>

@@ -8,6 +8,10 @@ const FlashCardSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    difficulty: {
+        type: Number,
+        default: 1,
+    },
 }, { autoIndex: false });  // Disable automatic index creation
 
 const FlashCard = mongoose.model('flashcards', FlashCardSchema);
