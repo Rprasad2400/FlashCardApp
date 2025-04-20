@@ -13,6 +13,7 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import { Bullseye } from "react-bootstrap-icons";
 import CreateTaskModal from '../createTask/createTaskModal';
+import BadgePopup from '../../Components/badgePopUp/badgePopUp';
 function Home() {
     const [showModal, setShowModal] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState(false);
@@ -187,6 +188,7 @@ function Home() {
     const totalProgress = getTotalProgressForToday();
     return (
         <Container>
+            <BadgePopup/>
             <Row className='mt-4 justify-content-center' style={{width: "100%", margin: "0 auto"}}>
                 <Col>
                     <Row className='text-center mb-3'>
