@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 
+const personalSetsSchema = new mongoose.Schema({
+    course_id: { type: mongoose.Schema.Types.ObjectId, ref: 'course', required: true },
+    module_name: { type: String, required: true },
+    set_ids: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'set',  // assuming your referenced collection is called 'Set'
+        required: true
+      }]
+  }, { timestamps: true });
+  
+
 const UserSchema = new mongoose.Schema({
     _id: {
         type: String, // username as _id, so it's a string
@@ -47,7 +58,11 @@ const UserSchema = new mongoose.Schema({
     recent_sets: {
         type: [String],
         default: [0,0,0,0,0]
-    }
+    },
+    personal_sets: {
+        type: [personalSetsSchema], // Array of personal sets
+        default: [], // Default to an empty array
+    },
 }, { autoIndex: false });  // Disable automatic index creation
 
 module.exports = mongoose.model('users', UserSchema);

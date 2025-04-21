@@ -1,11 +1,13 @@
 //UserService.js
 
+const address = 'https://flashcardappbackend.onrender.com'; // Adjust this URL as necessary
+
 const updateUserTasksCompleted = async (userId, setID, score) => {
     try {
         console.log("fbewufw");
         console.log('Updating user tasks completed...');
         
-        const response = await fetch(`http://localhost:5000/api/task/update-tasks/${userId}/${setID}`, {
+        const response = await fetch(`${address}/api/task/update-tasks/${userId}/${setID}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

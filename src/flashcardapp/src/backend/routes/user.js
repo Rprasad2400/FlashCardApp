@@ -62,4 +62,70 @@ router.get('/get-recent-sets/:userID', async (req, res) => {
     }
 });
 
+/*Personal Sets*/
+
+router.get('get-personal-sets/:userID', async (req, res) => {
+    const { username } = req.params;
+    const { course_id, module_name } = req.query;
+  
+    try {
+      const user = await User.findById(username);
+      if (!user) return res.status(404).json({ message: 'User not found' });
+  
+      const personalSet = user.personal_sets.find(
+        set => set.course_id === course_id && set.module_name === module_name
+      );
+  
+      if (!personalSet) return res.json({ personal_set: [] });
+
+       // Now manually query the Set documents matching the set_ids
+     const populatedSets = await Set.find({
+        _id: { $in: personalSet.set_ids }
+      });
+      res.json({ personal_set: populatedSets});
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching personal set', error });
+    }
+  });
+
+
+
+  router.post('create-personal-set/:userID', async (req, res) => {
+    const { username } = req.params;
+    const { course_id, module_name, set_id } = req.body;
+  
+    try {
+      const user = await User.findById(username);
+      if (!user) return res.status(404).json({ message: 'User not found' });
+  
+      // Find if personal_set exists for this course_id and module_name
+      const existingSet = user.personal_sets.find(
+        set => set.course_id === course_id && set.module_name === module_name
+      );
+  
+      if (existingSet) {
+        // If exists, update its set_ids (replace or merge depending on preference)
+        if (!existingSet.set_ids.includes(set_id)) {
+          existingSet.set_ids.push(set_id); // Add new set_id if it doesn't exist
+        }
+      } else {
+        // If not, add a new personal set
+        user.personal_sets.push({
+          course_id,
+          module_name,
+          set_ids: [set_id],
+        });
+      }
+  
+      await user.save();
+  
+      res.status(200).json({ message: 'Personal set created/updated', personal_sets: user.personal_sets });
+    } catch (error) {
+      res.status(500).json({ message: 'Error processing personal set', error });
+    }
+  });
+  
+  
+
+
 module.exports = router;

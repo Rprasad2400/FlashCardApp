@@ -76,4 +76,48 @@ const fetchSearchSuggestions = async (searchTerm) => {
     }
 };
 
+
+const fetchPersonalSets = async(userID, course_id, module_name) => {
+    try {
+        const response = await fetch(`${address}/api/user/get-personal-sets/${userID}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ course_id, module_name }),
+        });
+        if (!response.ok) {
+            alert("Response is not ok");
+            return [];
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching personal sets:', error);
+        return [];
+    }
+}
+
+const createPersonalSet = async (userID, course_id, module_name, set_id) => {
+    try {
+        const response = await fetch(`${address}/api/user/create-personal-set/${userID}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ course_id, module_name, set_id }),
+        });
+        if (!response.ok) {
+            alert("Response is not ok");
+            return null;
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error creating personal set:', error);
+        return null;
+    }
+}
+
+
 export default { fetchSets, createSet, findSet, fetchSearchSuggestions };

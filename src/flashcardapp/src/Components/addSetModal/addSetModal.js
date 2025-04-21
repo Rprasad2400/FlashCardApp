@@ -32,10 +32,11 @@ export default function AddSetModal({ showCreateSetModal, setShowCreateSetModal 
 
   const handleCreateSet = () => {
     console.log({
+
       name: setName,
       description: setDescription,
       course: selectedCourse,
-      accountId: '12345',
+      accountId: localStorage.getItem("username"),
       flashcards: flashcards,
     });
     api.createSet({
@@ -44,6 +45,13 @@ export default function AddSetModal({ showCreateSetModal, setShowCreateSetModal 
       selectedCourse,
       flashcards,
     });
+    api.createPersonalSet(
+      localStorage.getItem("username"),
+      selectedCourse,
+      setName,
+      setDescription,
+      flashcards
+    );
     setShowCreateSetModal(false);
   };
 
