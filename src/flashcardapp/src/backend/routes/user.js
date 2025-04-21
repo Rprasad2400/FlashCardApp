@@ -62,15 +62,14 @@ router.get('/get-recent-sets/:userID', async (req, res) => {
     }
 });
 
-/*Personal Sets*/
 
-router.get('get-personal-sets/:userID', async (req, res) => {
-    const { username } = req.params;
+router.get('/get-personal-sets/:userID', async (req, res) => {
+    const { userID } = req.params;
     const { course_id, module_name } = req.query;
     console.log("get personal set: ", req.body);
   
     try {
-      const user = await User.findById(username);
+      const user = await User.findById(userID);
       if (!user) return res.status(404).json({ message: 'User not found' });
   
       const personalSet = user.personal_sets.find(
@@ -92,13 +91,13 @@ router.get('get-personal-sets/:userID', async (req, res) => {
 
 
 
-  router.post('create-personal-set/:userID', async (req, res) => {
-    const { username } = req.params;
+  router.post('/create-personal-set/:userID', async (req, res) => {
+    const { userID } = req.params;
     const { course_id, module_name, set_id } = req.body;
     console.log("create personal set: ", req.body);
   
     try {
-      const user = await User.findById(username);
+      const user = await User.findById(userID);
       if (!user) return res.status(404).json({ message: 'User not found' });
   
       // Find if personal_set exists for this course_id and module_name
