@@ -67,6 +67,7 @@ router.get('/get-recent-sets/:userID', async (req, res) => {
 router.get('get-personal-sets/:userID', async (req, res) => {
     const { username } = req.params;
     const { course_id, module_name } = req.query;
+    console.log("get personal set: ", req.body);
   
     try {
       const user = await User.findById(username);
@@ -82,6 +83,7 @@ router.get('get-personal-sets/:userID', async (req, res) => {
      const populatedSets = await Set.find({
         _id: { $in: personalSet.set_ids }
       });
+      console.log("Should succesfully return personal set: ", populatedSets);
       res.json({ personal_set: populatedSets});
     } catch (error) {
       res.status(500).json({ message: 'Error fetching personal set', error });
@@ -93,6 +95,7 @@ router.get('get-personal-sets/:userID', async (req, res) => {
   router.post('create-personal-set/:userID', async (req, res) => {
     const { username } = req.params;
     const { course_id, module_name, set_id } = req.body;
+    console.log("create personal set: ", req.body);
   
     try {
       const user = await User.findById(username);
@@ -116,6 +119,7 @@ router.get('get-personal-sets/:userID', async (req, res) => {
           set_ids: [set_id],
         });
       }
+      console.log("Succesfully added personal set: ", user.personal_sets);
   
       await user.save();
   

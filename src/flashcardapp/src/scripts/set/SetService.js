@@ -87,13 +87,13 @@ const fetchPersonalSets = async(userID, course_id, module_name) => {
             body: JSON.stringify({ course_id, module_name }),
         });
         if (!response.ok) {
-            alert("Response is not ok");
+            alert("Can't fetch personal sets");
             return [];
         }
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error fetching personal sets:', error);
+        console.error('Cant fetch personal sets', error);
         return [];
     }
 }
@@ -108,16 +108,16 @@ const createPersonalSet = async (userID, course_id, module_name, set_id) => {
             body: JSON.stringify({ course_id, module_name, set_id }),
         });
         if (!response.ok) {
-            alert("Response is not ok");
+            alert("Could not create personal set");
             return null;
         }
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error creating personal set:', error);
+        console.error('Could not create personal set:', error);
         return null;
     }
 }
 
 
-export default { fetchSets, createSet, findSet, fetchSearchSuggestions };
+export default { fetchSets, createSet, findSet, fetchSearchSuggestions, fetchPersonalSets, createPersonalSet };

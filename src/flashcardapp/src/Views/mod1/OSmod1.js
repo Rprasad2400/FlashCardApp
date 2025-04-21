@@ -215,6 +215,8 @@ export default function OSFlash() {
         onClick={onClick}
       />
       <AddSetModal
+        course={course}
+        module={module.name}
         showCreateSetModal={showCreateSetModal}
         setShowCreateSetModal={setShowCreateSetModal}
       />

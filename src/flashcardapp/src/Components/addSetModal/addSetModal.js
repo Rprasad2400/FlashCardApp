@@ -3,17 +3,16 @@ import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 import api from '../../scripts/set/SetService';
 import styles from './addSetModal.module.css';
 
-const SAMPLE_COURSES = [
-  { id: 1, course: 'Math' },
-  { id: 2, course: 'Science' },
-  { id: 3, course: 'History' },
-];
 
-export default function AddSetModal({ showCreateSetModal, setShowCreateSetModal }) {
+
+export default function AddSetModal({course,module, showCreateSetModal, setShowCreateSetModal }) {
   const [setName, setSetName] = useState('');
   const [setDescription, setSetDescription] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('');
   const [flashcards, setFlashcards] = useState([]);
+  //const courses = JSON.parse(localStorage.getItem("courses"));
+
+  const SAMPLE_COURSES = [course];
 
   const handleAddFlashcard = () => {
     setFlashcards([...flashcards, { question: '', answer: '' }]);
@@ -30,7 +29,7 @@ export default function AddSetModal({ showCreateSetModal, setShowCreateSetModal 
     setFlashcards(updatedFlashcards);
   };
 
-  const handleCreateSet = () => {
+  const handleCreateSet = async () => {
     console.log({
 
       name: setName,
@@ -39,19 +38,24 @@ export default function AddSetModal({ showCreateSetModal, setShowCreateSetModal 
       accountId: localStorage.getItem("username"),
       flashcards: flashcards,
     });
-    api.createSet({
+
+    
+    const set = await api.createSet({
       setName,
       setDescription,
       selectedCourse,
       flashcards,
     });
+    console.log("SETID", set._id);
+    
     api.createPersonalSet(
       localStorage.getItem("username"),
       selectedCourse,
-      setName,
-      setDescription,
-      flashcards
+      module,
+      set._id
+
     );
+    console.log("FAILED?")
     setShowCreateSetModal(false);
   };
 
@@ -91,8 +95,8 @@ export default function AddSetModal({ showCreateSetModal, setShowCreateSetModal 
             >
               <option value="">Select a course</option>
               {SAMPLE_COURSES.map((course) => (
-                <option key={course.id} value={course.course}>
-                  {course.course}
+                <option key={course.name} value={course._id}>
+                  {course.name}
                 </option>
               ))}
             </Form.Select>
