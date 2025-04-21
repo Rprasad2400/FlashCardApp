@@ -77,27 +77,23 @@ const fetchSearchSuggestions = async (searchTerm) => {
 };
 
 
-const fetchPersonalSets = async(userID, course_id, module_name) => {
+const fetchPersonalSets = async (userID, course_id, module_name) => {
     try {
-        const response = await fetch(`${address}/api/user/get-personal-sets/${userID}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ course_id, module_name }),
-        });
-        if (!response.ok) {
-            alert("Can't fetch personal sets");
-            return [];
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Cant fetch personal sets', error);
+        console.log("RAHHHHH");
+        console.log(`${address}/api/user/get-personal-sets/${userID}?course_id=${course_id}&module_name=${module_name}`);
+      const response = await fetch(`${address}/api/user/get-personal-sets/${userID}?course_id=${course_id}&module_name=${module_name}`);
+      if (!response.ok) {
+        console.error('Response is not ok:', response);
         return [];
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Cant fetch personal sets', error);
+      return [];
     }
-}
-
+  }
+  
 const createPersonalSet = async (userID, course_id, module_name, set_id) => {
     try {
         const response = await fetch(`${address}/api/user/create-personal-set/${userID}`, {

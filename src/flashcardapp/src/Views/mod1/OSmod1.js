@@ -64,10 +64,11 @@ export default function OSFlash() {
     const location = useLocation();
     const navigate = useNavigate();
   
+  
     // Use optional chaining to avoid crashes
     const state = location.state;
     const module = state?.module; // Get the module from state if it exists
-    console.log("Module data:", module); // Is this null?
+    const moduleID = module.name.replace(/\s+/g, '-').toLowerCase();
 
 
     
@@ -109,7 +110,7 @@ export default function OSFlash() {
           const blah = await api.fetchPersonalSets(
             localStorage.getItem("username"),
             courseID,
-            module.name
+            moduleID
           );
           console.log("Fetched personal sets:", blah);
           const response = await api.findSet(module.mainSet);
@@ -216,7 +217,7 @@ export default function OSFlash() {
       />
       <AddSetModal
         course={course}
-        module={module.name}
+        module={moduleID}
         showCreateSetModal={showCreateSetModal}
         setShowCreateSetModal={setShowCreateSetModal}
       />

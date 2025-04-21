@@ -75,6 +75,8 @@ router.get('/get-personal-sets/:userID', async (req, res) => {
       const personalSet = user.personal_sets.find(
         set => set.course_id === course_id && set.module_name === module_name
       );
+      console.log("User's personal sets: ", user.personal_sets);
+      console.log("Looking for course_id:", course_id, "and module_name:", module_name);
   
       if (!personalSet) return res.json({ personal_set: [] });
 
