@@ -57,9 +57,11 @@ const BadgePopup = () => {
         const data = await response.json();
 
         if (data.success) {
-            alert("success");
+            //alert("success");
+            console.log("success");
         } else {
-            alert("fail"); // Show error message
+            //alert("fail"); // Show error message
+            console.log("failed");
         }
     } catch (error) {
         console.error("Error updating badges:", error);

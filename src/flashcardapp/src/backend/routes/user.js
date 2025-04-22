@@ -161,7 +161,7 @@ router.get('/get-personal-sets/:userID', async (req, res) => {
   
       await user.save();
   
-      res.status(200).json({ message: 'Badges updated', updatedBadges: user.badges});
+      res.status(200).json({ success: true, message: 'Badges updated', updatedBadges: user.badges});
     } catch (error) {
       res.status(500).json({ message: 'Error updating badges', error });
     }

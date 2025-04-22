@@ -194,7 +194,7 @@ export default function ProfilePage() {
                 </Modal.Footer>
             </Modal>
             {/* Add Set Modal */}
-            <AddSetModal showCreateSetModal={showCreateSetModal} setShowCreateSetModal={setShowCreateSetModal}/>
+            <AddSetModal course={courses} showCreateSetModal={showCreateSetModal} setShowCreateSetModal={setShowCreateSetModal}/>
 
             <Row>
                 {/* Sidebar Column */}
