@@ -39,8 +39,8 @@ function StudyNow() {
   useEffect(() => {
     const fetchCourseInfo = async () => {
         try {
-            //const address = 'https://flashcardappbackend.onrender.com';
-            const address = 'http://localhost:5000'; // Adjust this URL as necessary
+            const address = 'https://flashcardappbackend.onrender.com';
+
             const response = await fetch(`${address}/api/user/get-course-info/${localStorage.getItem('username')}`);  
             console.log("Fetching course info from:", `${address}/api/user/get-course-info/${localStorage.getItem('username')}`);
             const data = await response.json();
