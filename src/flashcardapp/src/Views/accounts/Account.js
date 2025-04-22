@@ -52,7 +52,7 @@ export default function ProfilePage() {
     const [profileImage, setProfileImage] = useState(defaultImg); // Stores the displayed profile image
     const navigate = useNavigate();
     const [newUsername, setNewUsername] = useState(localStorage.getItem('username') || ''); // New username input
-    const courses = JSON.parse(localStorage.getItem("Course_Info") || "[]");
+    let courses = JSON.parse(localStorage.getItem("Course_Info") || "[]");
     const badges = JSON.parse(localStorage.getItem("badges"));
     const [recentSets, setRecentSets] = useState([]);
 
