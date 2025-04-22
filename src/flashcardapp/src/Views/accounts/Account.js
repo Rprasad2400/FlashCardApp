@@ -52,7 +52,7 @@ export default function ProfilePage() {
     const [profileImage, setProfileImage] = useState(defaultImg); // Stores the displayed profile image
     const navigate = useNavigate();
     const [newUsername, setNewUsername] = useState(localStorage.getItem('username') || ''); // New username input
-    const courses = JSON.parse(localStorage.getItem("courses") || "[]");
+    const courses = JSON.parse(localStorage.getItem("Course_Info") || "[]");
     const badges = JSON.parse(localStorage.getItem("badges"));
     const [recentSets, setRecentSets] = useState([]);
 
@@ -67,8 +67,10 @@ export default function ProfilePage() {
                         //alert("data.courses: " + JSON.stringify(data.user.courses)); 
                         //alert("data: " + JSON.stringify(data));
                         localStorage.setItem("Course_Info", JSON.stringify(data.courses));
+                        courses = JSON.parse(localStorage.getItem("Course_Info"));
                     }
                     console.log("courses", localStorage.getItem('courses'));
+                    console.log("course_info", courses);
                     console.log("recent_sets", localStorage.getItem('recent_sets'));
                     const recentSetArray = JSON.parse(localStorage.getItem('recent_sets') || '[]');
                     const recentSetParam = recentSetArray.join(',');
