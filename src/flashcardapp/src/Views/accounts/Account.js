@@ -68,10 +68,11 @@ export default function ProfilePage() {
                         //alert("data: " + JSON.stringify(data));
                         localStorage.setItem("Course_Info", JSON.stringify(data.courses));
                     }
-
+                    console.log("courses", localStorage.getItem('courses'));
                     console.log("recent_sets", localStorage.getItem('recent_sets'));
                     const recentSetArray = JSON.parse(localStorage.getItem('recent_sets') || '[]');
                     const recentSetParam = recentSetArray.join(',');
+                    console.log("recent_params", recentSetParam);
 
                     const response2 = await fetch(`${address}/api/user/get-recent-sets/?recent_sets=${recentSetParam}`);  
                     const data2 = await response2.json();
