@@ -67,27 +67,17 @@ router.get('/get-recent-sets/:userID', async (req, res) => {
 router.get('/get-personal-sets/:userID', async (req, res) => {
     const { userID } = req.params;
     const { course_id, module_name } = req.query;
-    console.log("get personal set: ", req.body);
+    //console.log("get personal set: ", req.body);
   
     try {
-      console.log(
-        "userID: ", userID,
-        "course_id: ", course_id,
-        "module_name: ", module_name
-      )
       const user = await User.findById(userID);
+      //console.log("user: ", user);
       if (!user) return res.status(404).json({ message: 'User not found' });
   
       const personalSet = user.personal_sets.find(
-        set => set.course_id.toString().equals(course_id) && set.module_name === module_name
+        set => set.course_id.toString() === course_id && set.module_name === module_name
       );
-
-      const testSearch =  user.personal_sets.find(
-        set => set.course_id.equals(mongoose.Types.ObjectId(course_id))
-        && set.module_name === module_name
-      );
-      console.log("First", personalSet);
-      console.log("Second", testSearch);
+  
   
       if (!personalSet) return res.json({ personal_set: [] });
 
@@ -95,10 +85,10 @@ router.get('/get-personal-sets/:userID', async (req, res) => {
      const populatedSets = await Set.find({
         _id: { $in: personalSet.set_ids }
       });
-      console.log("Should succesfully return personal set: ", populatedSets);
+      //console.log("Should succesfully return personal set: ", populatedSets);
       res.json({ personal_set: populatedSets});
     } catch (error) {
-      console.log("Error fetching personal set: ", error);
+      //console.log("Error fetching personal set: ", error);
       res.status(500).json({ message: 'Error fetching personal set', error });
     }
   });
@@ -116,7 +106,7 @@ router.get('/get-personal-sets/:userID', async (req, res) => {
   
       // Find if personal_set exists for this course_id and module_name
       const existingSet = user.personal_sets.find(
-        set => set.course_id === course_id && set.module_name === module_name
+        set => set.course_id.toString()=== course_id && set.module_name === module_name
       );
   
       if (existingSet) {

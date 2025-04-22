@@ -1,7 +1,7 @@
 // SetService.js
 
-const address = 'https://flashcardappbackend.onrender.com'; // Adjust this URL as necessary
-
+//const address = 'https://flashcardappbackend.onrender.com'; // Adjust this URL as necessary
+const address = 'http://localhost:5000'; // Adjust this URL as necessary
 const fetchSets = async () => {
     try {
         console.log('Fetching sets...');

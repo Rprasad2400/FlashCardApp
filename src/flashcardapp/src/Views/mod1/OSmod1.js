@@ -60,7 +60,9 @@ export default function OSFlash() {
     const [course, setCourse] = useState(null);
     const [showCreateSetModal, setShowCreateSetModal] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [data, setData] = useState(null);
+    const [data, setData] = useState(null)
+    const [baseSet, setBaseSet] = useState(null);
+    const [personalSets, setPersonalSets] = useState([]);
     const location = useLocation();
     const navigate = useNavigate();
   
@@ -112,7 +114,9 @@ export default function OSFlash() {
             courseID,
             moduleID
           );
+
           console.log("Fetched personal sets:", blah);
+          setPersonalSets(blah.personal_set);
           const response = await api.findSet(module.mainSet);
           setData(response.data);
           if (response) {
@@ -138,7 +142,7 @@ export default function OSFlash() {
     const onClick = () => {
       const savedFlashcards = localStorage.getItem('flashcards');
       if (savedFlashcards=="undefined") {
-        localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
+        localStorage.setItem('flashcards', JSON.stringify(baseSet.flashcards));
       
 
     }
@@ -176,12 +180,13 @@ export default function OSFlash() {
                 <span className={styles.arrow}>→</span> Most Recent
               </Button>
             </div>
-
+<div className={styles.flashcardList}>
   <div
   className={styles.flashcardPreview}
   onClick={() => {
     console.log('clicked');
     setShowModal(true);
+    setBaseSet(data);
   }}
 >
   <div className={styles.flashcardContent}>
@@ -190,6 +195,7 @@ export default function OSFlash() {
   </div>
   <div className={styles.flashcardCount}>
     <span>{data.flashcards.length}</span>
+  </div>
   </div>
 
 </div>
@@ -202,6 +208,39 @@ export default function OSFlash() {
                 <span className={styles.arrow}>+</span> Create New Set
               </Button>
             </div>
+            <div className={styles.flashcardList}>
+
+              {personalSets.length > 0 ? (
+                personalSets.map((set) => (
+                  <div className={styles.flashcardPreview}>
+                  <div
+                    key={set._id}
+                    className={styles.flashcardContent}
+                    onClick={() => {
+                      console.log('clicked');
+                      setShowModal(true);
+                      setBaseSet(set);
+                      
+                    }}
+                  >
+                    
+                      <h3>{set.name}</h3>
+                      <p>{set.description}</p>
+                    </div>
+                    <div className={styles.flashcardCount}>
+                      <span>{set.flashcards.length}</span>
+                    </div>
+                  </div>
+                  
+
+                ))
+              ) : (
+                <p>No personal flashcards available.</p>
+              )}
+
+
+              
+            </div>
             </div>
 
           </div>
@@ -211,8 +250,9 @@ export default function OSFlash() {
       <SetsModal
         title={data.name}
         isOpen={showModal}
-        closeModal={() => setShowModal(false)}
-        givenSet={data.flashcards}
+        closeModal={() => 
+          setShowModal(false)}
+        givenSet={baseSet.flashcards}
         onClick={onClick}
       />
       <AddSetModal
