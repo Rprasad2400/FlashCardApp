@@ -29,7 +29,7 @@ import CourseCardList from "../../Components/coursesList/coursesList";
 function StudyNow() {
   const [showModal, setShowModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(false);
-  let courses = JSON.parse(localStorage.getItem("Course_Info")); // You may or may not need this line
+  let courses = JSON.parse(localStorage.getItem("Course_Info")) || []; // You may or may not need this line
 
   // Save profile changes
   const handleSaveChanges = () => {
