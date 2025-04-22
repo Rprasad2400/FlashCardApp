@@ -58,7 +58,7 @@ function StudyNow() {
     fetchCourseInfo();
 }, []);
 
-if (!courses) {
+if (!courses || courses.length === 0) {
   return <div>Loading...</div>; // Handle loading state if necessary
 }
 
