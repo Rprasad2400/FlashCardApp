@@ -73,19 +73,13 @@ router.get('/get-personal-sets/:userID', async (req, res) => {
       if (!user) return res.status(404).json({ message: 'User not found' });
   
       const personalSet = user.personal_sets.find(
-        set => set.course_id.toString() === course_id && set.module_name === module_name
+        set => set.course_id.toString().equals(course_id) && set.module_name === module_name
       );
 
       const testSearch =  user.personal_sets.find(
-        set => set.course_id == mongoose.Types.ObjectId(course_id)
+        set => set.course_id.equals(mongoose.Types.ObjectId(course_id))
         && set.module_name === module_name
       );
-      const aggregateVersion = await user.aggregate([
-        { $match: { _id: userID } },
-        { $unwind: "$personal_sets" },
-        { $match: { "personal_sets.course_id": mongoose.Types.ObjectId(course_id) } },
-        { $replaceRoot: { newRoot: "$personal_sets" } }
-      ]);
       console.log("First", personalSet);
       console.log("Second", testSearch);
       console.log("Third", aggregateVersion);
