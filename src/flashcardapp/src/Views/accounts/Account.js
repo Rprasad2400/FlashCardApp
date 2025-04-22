@@ -228,7 +228,7 @@ export default function ProfilePage() {
                             active={activeSection === "progress"}
                             onClick={() => setActiveSection("progress")}
                         >
-                            Progress
+                            Activity
                         </ListGroup.Item>
                     </ListGroup>
                 </Col>
@@ -325,8 +325,8 @@ export default function ProfilePage() {
                     {activeSection === "progress" && (
                         <Card>
                             <Card.Body>
-                                <h2>Progress</h2>
-                                <p>Check your learning progress here.</p>
+                                <h2>Activity</h2>
+                                <p>Check your recent activity here.</p>
                                 <h5 className="fw-bold text-secondary ms-2">📚 Recent Sets:</h5>
                                 <div style={{ width: "80%", margin: "0 auto", maxHeight: "400px", overflowY: "auto", borderRadius: "5px", padding: "5px" }}>
                                     <ListGroup variant="flush">
@@ -335,7 +335,7 @@ export default function ProfilePage() {
                                                 border: "1px solid #888", // Dark border color
                                                 transition: "border-color 0.3s ease", // Smooth transition for border color change
                                             }}>
-                                            <Row className="align-items-center">
+                                            <Row className="align-items-center mb-3">
                                                 <Col>
                                                 <b className="text-dark">{set.name}</b>
                                                 </Col>
