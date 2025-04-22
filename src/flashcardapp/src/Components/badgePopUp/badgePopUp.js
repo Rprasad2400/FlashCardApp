@@ -110,6 +110,7 @@ const BadgePopup = () => {
 
     // Always update the last shown date to today (as MM/DD/YYYY for consistency)
     localStorage.setItem("badgeLastShown", today.toLocaleDateString("en-US"));
+    handleBadgeUpdate(streak);
   }, []);
 
   const handleClose = () => setShow(false);
