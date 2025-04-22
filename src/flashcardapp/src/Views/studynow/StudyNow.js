@@ -1,5 +1,6 @@
 // JavaScript source code
-import React, {useState} from 'react';
+
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -39,8 +40,10 @@ function StudyNow() {
   useEffect(() => {
     const fetchCourseInfo = async () => {
         try {
-            const address = 'https://flashcardappbackend.onrender.com';
+            //const address = 'https://flashcardappbackend.onrender.com';
+            const address = 'http://localhost:5000'; // Adjust this URL as necessary
             const response = await fetch(`${address}/api/user/get-course-info/${localStorage.getItem('username')}`);  
+            console.log("Fetching course info from:", `${address}/api/user/get-course-info/${localStorage.getItem('username')}`);
             const data = await response.json();
 
             if (data.success) {
@@ -56,6 +59,9 @@ function StudyNow() {
     fetchCourseInfo();
 }, []);
 
+if (!courses) {
+  return <div>Loading...</div>; // Handle loading state if necessary
+}
 
   return (
       <Container>

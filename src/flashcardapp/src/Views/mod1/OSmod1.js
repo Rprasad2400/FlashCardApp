@@ -195,6 +195,7 @@ export default function OSFlash() {
   </div>
   <div className={styles.flashcardCount}>
     <span>{data.flashcards.length}</span>
+    <p>flashcards left to learn</p>
   </div>
   </div>
 
