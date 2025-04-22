@@ -96,7 +96,7 @@ router.post('/update-tasks/:userID/:setID', async (req, res) => {
         const completedTasks = tasks.filter(task => parseInt(task.progress) >= parseInt(task.goal));
         console.log("Completed Tasks: ", completedTasks);
         res.json({ success: true, completedTasks });
-        //await user.save();
+        await user.save();
 
 
 
