@@ -54,7 +54,7 @@ export default function ProfilePage() {
     const [newUsername, setNewUsername] = useState(localStorage.getItem('username') || ''); // New username input
     let courses = JSON.parse(localStorage.getItem("Course_Info") || "[]");
     const badges = JSON.parse(localStorage.getItem("badges"));
-    const [recentSets, setRecentSets] = useState([]);
+    let recentSets = JSON.parse(localStorage.getItem("recent_sets")) || [];
 
     useEffect(() => {
             const fetchCourseInfo = async () => {
@@ -81,8 +81,8 @@ export default function ProfilePage() {
                     if (data2.success) {
                         //alert("data.courses: " + JSON.stringify(data.user.courses)); 
                         //alert("data: " + JSON.stringify(data));
-                        setRecentSets(data2.sets)
                         localStorage.setItem("recent_sets", JSON.stringify(data2.sets));
+                        recentSets = JSON.parse(localStorage.getItem("recent_sets"));
                     }
 
                 } catch (error) {
@@ -330,14 +330,14 @@ export default function ProfilePage() {
                                 <h5 className="fw-bold text-secondary ms-2">📚 Recent Sets:</h5>
                                 <div style={{ width: "80%", margin: "0 auto", maxHeight: "400px", overflowY: "auto", borderRadius: "5px", padding: "5px" }}>
                                     <ListGroup variant="flush">
-                                        {["Module 1 Flashcards", "Module 2 Flashcards", "Module 3 Flashcards"].map((module, index) => (
+                                        {recentSets.map((set, index) => (
                                             <ListGroup.Item key={index} className="p-3 rounded mb-3" style={{
                                                 border: "1px solid #888", // Dark border color
                                                 transition: "border-color 0.3s ease", // Smooth transition for border color change
                                             }}>
                                             <Row className="align-items-center">
                                                 <Col>
-                                                <b className="text-dark">{module}</b>
+                                                <b className="text-dark">{set.title}</b>
                                                 </Col>
                                                 <Col className="d-flex justify-content-end">
                                                 <Button
@@ -346,7 +346,7 @@ export default function ProfilePage() {
                                                     style={{ transition: "all 0.3s ease-in-out" }}
                                                     onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
                                                     onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
-                                                    href="/module1"
+                                                    href={`/ViewSet/${set._id}`}
                                                 >
                                                     Continue →
                                                 </Button>
