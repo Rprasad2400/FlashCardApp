@@ -227,8 +227,10 @@ export default function OSFlash() {
                       <h3>{set.name}</h3>
                       <p>{set.description}</p>
                     </div>
+                    <div className={styles.flashcardRight}>
                     <div className={styles.flashcardCount}>
                       <span>{set.flashcards.length}</span>
+                      </div>
                     </div>
                   </div>
                   
