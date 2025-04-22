@@ -40,6 +40,33 @@ const BadgePopup = () => {
   const [show, setShow] = useState(false);
   const [streak, setStreak] = useState(0);
 
+  const handleBadgeUpdate = async (streak) => {
+    try {
+        const address = 'https://flashcardappbackend.onrender.com'; // Adjust this URL as necessary
+        const body = {
+          incrementDailyLogin: true,
+          incrementStreak: streak >= 2, // only true if conditions met
+        };
+
+        const response = await fetch(`${address}/api/user/update-daily-badges/${localStorage.getItem('username')}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert("success");
+        } else {
+            alert("fail"); // Show error message
+        }
+    } catch (error) {
+        console.error("Error updating badges:", error);
+        alert("Failed to update badges.");
+    }
+};
+
   useEffect(() => {
     const today = new Date();
     const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate()); // no time

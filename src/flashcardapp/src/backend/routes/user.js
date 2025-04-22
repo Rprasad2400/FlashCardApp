@@ -142,6 +142,31 @@ router.get('/get-personal-sets/:userID', async (req, res) => {
     }
   });
   
+  router.post('/update-daily-badges/:userID', async (req, res) => {
+    const { userID } = req.params;
+    const { incrementDailyLogin, incrementStreak } = req.body;
+    console.log("update badges: ", req.body);
+  
+    try {
+      const user = await User.findById(userID);
+      if (!user) return res.status(404).json({ message: 'User not found' });
+      
+      // update the first in the badges array (always do this)
+      user.badges[0] += 1;
+      //update the last elemt in the badges array
+      if(incrementStreak){
+        user.badges[user.badges.length - 1] += 1;
+      }
+      console.log("Succesfully updated badges: ", user.badges);
+  
+      await user.save();
+  
+      res.status(200).json({ message: 'Badges updated', updatedBadges: user.badges});
+    } catch (error) {
+      res.status(500).json({ message: 'Error updating badges', error });
+    }
+  });
+  
   
 
 
