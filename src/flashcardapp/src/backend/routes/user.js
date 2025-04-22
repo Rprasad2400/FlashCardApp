@@ -75,8 +75,20 @@ router.get('/get-personal-sets/:userID', async (req, res) => {
       const personalSet = user.personal_sets.find(
         set => set.course_id.toString() === course_id && set.module_name === module_name
       );
-      console.log("User's personal sets: ", user.personal_sets);
-      console.log("Looking for course_id:", course_id, "and module_name:", module_name);
+
+      const testSearch =  user.personal_sets.find(
+        set => set.course_id == mongoose.Types.ObjectId(course_id)
+        && set.module_name === module_name
+      );
+      const aggregateVersion = await user.aggregate([
+        { $match: { _id: userID } },
+        { $unwind: "$personal_sets" },
+        { $match: { "personal_sets.course_id": mongoose.Types.ObjectId(course_id) } },
+        { $replaceRoot: { newRoot: "$personal_sets" } }
+      ]);
+      console.log("First", personalSet);
+      console.log("Second", testSearch);
+      console.log("Third", aggregateVersion);
   
       if (!personalSet) return res.json({ personal_set: [] });
 
