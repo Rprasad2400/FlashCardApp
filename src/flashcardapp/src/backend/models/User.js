@@ -44,12 +44,12 @@ const UserSchema = new mongoose.Schema({
         }
     ],
     badges: {
-        type: [String],
+        type: [Number],
         default: [0, 0, 0, 0]
     },
     date_joined: {
         type: String,
-        default: () => new Date().toISOString()
+        default: () => new Date().toISOString().split('T')[0]
     },
     total_pnts: {
         type: Number,
@@ -58,6 +58,9 @@ const UserSchema = new mongoose.Schema({
     recent_sets: {
         type: [String],
         default: [0,0,0,0,0]
+    },
+    last_active: {
+        type: String
     },
     personal_sets: {
         type: [personalSetsSchema], // Array of personal sets

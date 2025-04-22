@@ -10,7 +10,7 @@ router.get('/get-courses/:userID', async (req, res) => {
     //console.log("I am trying!");
     //console.log("usrdID: ", req.params.userID);
     try {
-        const user = await User.findById(req.params.userID, 'courses tasksCompleted badges date_joined total_pnts recent_sets'); // Select specific fields
+        const user = await User.findById(req.params.userID, 'courses tasksCompleted badges date_joined total_pnts recent_sets last_active'); // Select specific fields
         //const user = await User.findById(req.params.userID).lean();
         if (!user) {
             console.log("user not found!");
@@ -24,6 +24,7 @@ router.get('/get-courses/:userID', async (req, res) => {
         console.log("date_joined: ", user.date_joined);
         console.log("badges", user.badges);
         console.log("recent_sets", user.recent_sets);
+        console.log("last_active: ", user.last_active);
     } catch (error) {
         res.status(500).json({ success: false, message: 'Server error' });
     }
@@ -128,6 +129,31 @@ router.get('/get-personal-sets/:userID', async (req, res) => {
       res.status(200).json({ message: 'Personal set created/updated', personal_sets: user.personal_sets });
     } catch (error) {
       res.status(500).json({ message: 'Error processing personal set', error });
+    }
+  });
+  
+  router.post('/update-daily-badges/:userID', async (req, res) => {
+    const { userID } = req.params;
+    const { incrementDailyLogin, incrementStreak } = req.body;
+    console.log("update badges: ", req.body);
+  
+    try {
+      const user = await User.findById(userID);
+      if (!user) return res.status(404).json({ message: 'User not found' });
+      
+      // update the first in the badges array (always do this)
+      user.badges[0] += 1;
+      //update the last elemt in the badges array
+      if(incrementStreak){
+        user.badges[user.badges.length - 1] += 1;
+      }
+      console.log("Succesfully updated badges: ", user.badges);
+  
+      await user.save();
+  
+      res.status(200).json({ success: true, message: 'Badges updated', updatedBadges: user.badges});
+    } catch (error) {
+      res.status(500).json({ message: 'Error updating badges', error });
     }
   });
   
