@@ -48,6 +48,8 @@ const createSet = async (set) => {
 const findSet = async (id) => {
     try {
         console.log('Finding set:', id);
+        const url = `${address}/api/set/get/${id}`;
+        console.log("Fetching URL:", url);
         const response = await fetch(`${address}/api/set/get/${id}`); // Adjust this URL as necessary
         if (!response.ok) {
             throw new Error('Failed to find set');

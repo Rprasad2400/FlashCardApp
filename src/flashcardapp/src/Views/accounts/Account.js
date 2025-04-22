@@ -156,7 +156,7 @@ export default function ProfilePage() {
                 <Modal.Body>
                     <Form>
                         {/* Profile Picture Upload */}
-                        <Form.Group className="mb-3 text-center">
+                        {/* <Form.Group className="mb-3 text-center">
                             <Form.Label>Profile Picture</Form.Label>
                             <div>
                                 <Image
@@ -172,7 +172,7 @@ export default function ProfilePage() {
                                 accept="image/*"
                                 onChange={handleImageChange}
                             />
-                        </Form.Group>
+                        </Form.Group> */}
 
                         {/* Username Field */}
                         <Form.Group className="mb-3">
@@ -337,7 +337,7 @@ export default function ProfilePage() {
                                             }}>
                                             <Row className="align-items-center">
                                                 <Col>
-                                                <b className="text-dark">{set.title}</b>
+                                                <b className="text-dark">{set.name}</b>
                                                 </Col>
                                                 <Col className="d-flex justify-content-end">
                                                 <Button
