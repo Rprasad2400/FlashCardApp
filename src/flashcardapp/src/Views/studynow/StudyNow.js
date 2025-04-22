@@ -40,7 +40,9 @@ function StudyNow() {
     const fetchCourseInfo = async () => {
         try {
             const address = 'https://flashcardappbackend.onrender.com';
+
             const response = await fetch(`${address}/api/user/get-course-info/${localStorage.getItem('username')}`);  
+            console.log("Fetching course info from:", `${address}/api/user/get-course-info/${localStorage.getItem('username')}`);
             const data = await response.json();
 
             if (data.success) {
@@ -56,6 +58,9 @@ function StudyNow() {
     fetchCourseInfo();
 }, []);
 
+if (!courses || courses.length === 0) {
+  return <div>Loading...</div>; // Handle loading state if necessary
+}
 
   return (
       <Container>

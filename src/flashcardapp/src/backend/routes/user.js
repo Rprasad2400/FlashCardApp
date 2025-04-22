@@ -34,6 +34,7 @@ router.get('/get-course-info/:userID', async (req, res) => {
     //console.log("I am trying!");
     //console.log("usrdID: ", req.params.userID);
     try {
+      console.log("IVE ENTERED THE GET COURSE INFO ROUTE");
         const user = await User.findById(req.params.userID, 'courses'); // Select specific fields
         //const user = await User.findById(req.params.userID).lean();
         if (!user) {

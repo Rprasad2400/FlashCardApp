@@ -39,7 +39,7 @@ function App() {
                   <Route path="/" exact={true} element={<Login setIsAuthenticated={setIsAuthenticated}/>} />
                   <Route path="/home" exact={true} element={<Home />} /> {/* This works because our root path (just the "/") is what appears when the page is opened*/}
                   <Route path="/courses" exact={true} element={<StudyNow />} />
-                  <Route path="/OS-flashcards" exact={true} element={<OSFlash />} />
+                  <Route path="/course/*" element={<OSFlash />} />
                   <Route path="/module/*" element={<OSmod1 />} />
                   <Route path="/account-page" exact={true} element={<Account />} />
                   <Route path="/FlashCardDisplay" exact={true} element={<FlashCardDisplay />} />
