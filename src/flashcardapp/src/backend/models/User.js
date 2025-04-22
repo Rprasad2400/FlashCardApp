@@ -27,6 +27,7 @@ const UserSchema = new mongoose.Schema({
     courses: {
         type: [String], // array of course names
         required: true,
+        default: ["Operating Systems"]
     },
     sets: {
         type: [String], // array of set names
