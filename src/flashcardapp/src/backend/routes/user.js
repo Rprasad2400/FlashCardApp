@@ -10,7 +10,7 @@ router.get('/get-courses/:userID', async (req, res) => {
     //console.log("I am trying!");
     //console.log("usrdID: ", req.params.userID);
     try {
-        const user = await User.findById(req.params.userID, 'courses tasksCompleted badges date_joined total_pnts recent_sets'); // Select specific fields
+        const user = await User.findById(req.params.userID, 'courses tasksCompleted badges date_joined total_pnts recent_sets last_active'); // Select specific fields
         //const user = await User.findById(req.params.userID).lean();
         if (!user) {
             console.log("user not found!");
@@ -24,6 +24,7 @@ router.get('/get-courses/:userID', async (req, res) => {
         console.log("date_joined: ", user.date_joined);
         console.log("badges", user.badges);
         console.log("recent_sets", user.recent_sets);
+        console.log("last_active: ", user.last_active);
     } catch (error) {
         res.status(500).json({ success: false, message: 'Server error' });
     }

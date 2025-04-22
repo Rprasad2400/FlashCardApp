@@ -38,7 +38,7 @@ const UserSchema = new mongoose.Schema({
     },
     date_joined: {
         type: String,
-        default: () => new Date().toISOString()
+        default: () => new Date().toISOString().split('T')[0]
     },
     total_pnts: {
         type: Number,
@@ -47,6 +47,9 @@ const UserSchema = new mongoose.Schema({
     recent_sets: {
         type: [String],
         default: [0,0,0,0,0]
+    },
+    last_active: {
+        type: String
     }
 }, { autoIndex: false });  // Disable automatic index creation
 

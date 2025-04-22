@@ -175,6 +175,7 @@ function Home() {
                     localStorage.setItem("date_joined", data.user.date_joined);
                     localStorage.setItem("total_pnts", data.user.total_pnts);
                     localStorage.setItem("recent_sets", JSON.stringify(data.user.recent_sets));
+                    localStorage.setItem("last_active", data.user.last_active);
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
