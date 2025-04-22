@@ -69,6 +69,8 @@ export default function ProfilePage() {
                         localStorage.setItem("Course_Info", JSON.stringify(data.courses));
                     }
 
+                    console.log("recent_sets", localStorage.getItem('recent_sets'));
+
                     const response2 = await fetch(`${address}/api/user/get-recent-sets/?recent_sets=${localStorage.getItem('recent_sets')}`);  
                     const data2 = await response2.json();
                     if (data2.success) {

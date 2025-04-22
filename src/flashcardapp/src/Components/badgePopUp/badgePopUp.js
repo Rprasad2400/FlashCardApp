@@ -94,11 +94,13 @@ const BadgePopup = () => {
         localStorage.setItem("badgeStreak", newStreak.toString());
         setStreak(newStreak);
         setShow(true);
+        handleBadgeUpdate(streak);
       } else if (diffDays > 1) {
         // Missed a day, reset streak
         localStorage.setItem("badgeStreak", "1");
         setStreak(1);
         setShow(true);
+        handleBadgeUpdate(streak);
       } else if (diffDays === 0) {
         // Already shown today, do nothing
         setStreak(streakCount);
@@ -108,11 +110,11 @@ const BadgePopup = () => {
       localStorage.setItem("badgeStreak", "1");
       setStreak(1);
       setShow(true);
+      handleBadgeUpdate(streak);
     }
 
     // Always update the last shown date to today (as MM/DD/YYYY for consistency)
     localStorage.setItem("badgeLastShown", today.toLocaleDateString("en-US"));
-    handleBadgeUpdate(streak);
   }, []);
 
   const handleClose = () => setShow(false);
