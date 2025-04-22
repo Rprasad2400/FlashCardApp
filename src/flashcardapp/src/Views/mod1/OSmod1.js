@@ -20,6 +20,7 @@ import LeftNavBar from '../../Components/sidebar/OSsidebar';
 import styles from './OSmod1.module.css';
 import AddSetModal from '../../Components/addSetModal/addSetModal';
 
+
 const SAMPLE_FLASHCARDS = [
     {
         id: 1,
@@ -63,10 +64,11 @@ export default function OSFlash() {
     const location = useLocation();
     const navigate = useNavigate();
   
+  
     // Use optional chaining to avoid crashes
     const state = location.state;
     const module = state?.module; // Get the module from state if it exists
-    console.log("Module data:", module); // Is this null?
+    const moduleID = module.name.replace(/\s+/g, '-').toLowerCase();
 
 
     
@@ -104,6 +106,13 @@ export default function OSFlash() {
         try {
           console.log("NAME:" , module ? module.name : "No module name available");
           console.log("Fetching flashcards for mainSet:", module.mainSet);
+          console.log("TESTING FOR PERSONAL SETS" );
+          const blah = await api.fetchPersonalSets(
+            localStorage.getItem("username"),
+            courseID,
+            moduleID
+          );
+          console.log("Fetched personal sets:", blah);
           const response = await api.findSet(module.mainSet);
           setData(response.data);
           if (response) {
@@ -130,8 +139,7 @@ export default function OSFlash() {
       const savedFlashcards = localStorage.getItem('flashcards');
       if (savedFlashcards=="undefined") {
         localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
-        
-  
+      
 
     }
    // navigate(`/FlashCardDisplay`); 
@@ -144,6 +152,8 @@ export default function OSFlash() {
     console.log(data);
     
   }
+
+
 
   console.log("Flashcards loaded:", course); // Debugging line to check flashcards
   const modules = course ? course.modules : []; // Ensure modules is defined
@@ -187,7 +197,8 @@ export default function OSFlash() {
 <div className={styles.section}>
             <div className={styles.headerRow}>
               <h2>Personal Flashcards</h2>
-              <Button as={Link} to="/FlashCardDisplay" className={styles.enhancedButton}>
+              <Button onClick={() => setShowCreateSetModal(true)}
+              className={styles.enhancedButton}>
                 <span className={styles.arrow}>+</span> Create New Set
               </Button>
             </div>
@@ -205,6 +216,8 @@ export default function OSFlash() {
         onClick={onClick}
       />
       <AddSetModal
+        course={course}
+        module={moduleID}
         showCreateSetModal={showCreateSetModal}
         setShowCreateSetModal={setShowCreateSetModal}
       />
