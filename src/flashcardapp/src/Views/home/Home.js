@@ -25,6 +25,7 @@ function Home() {
     const [selectedDay, setSelectedDay] = useState(null);
     const [newGoal, setNewGoal] = useState("");
     const address = 'https://flashcardappbackend.onrender.com';
+    const currentStreak = localStorage.getItem("badgeStreak") || 1;
 
     // Get start of the current week (Monday)
     function getWeekStart(date) {
@@ -225,7 +226,7 @@ function Home() {
                                 <Col>
                                 <h3 className="fw-bold text-primary">Current Streak</h3>
                                 <h5 className="mt-2" style={{ fontSize: "2rem" }}>
-                                    <span className="streak-number">5</span> Days
+                                    <span className="streak-number">{currentStreak}</span> Days
                                 </h5>
 
                                 </Col>

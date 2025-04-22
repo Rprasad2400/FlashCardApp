@@ -55,6 +55,7 @@ export default function ProfilePage() {
     let courses = JSON.parse(localStorage.getItem("Course_Info") || "[]");
     const badges = JSON.parse(localStorage.getItem("badges"));
     let recentSets = JSON.parse(localStorage.getItem("recent_sets")) || [];
+    let cardPoints = localStorage.getItem("total_pnts") || 0;
 
     useEffect(() => {
             const fetchCourseInfo = async () => {

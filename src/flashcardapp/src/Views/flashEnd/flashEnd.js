@@ -53,7 +53,7 @@ const FlashEnd = () => {
 
           try {
               console.log('Updating tasks...');
-              const response = await userAPI.updateUserTasksCompleted(userID, setID,score);
+              const response = await userAPI.updateUserTasksCompleted(userID, setID,totalLength);
   
               console.log('Tasks updated:', response.data);
           } catch (error) {

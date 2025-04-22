@@ -77,9 +77,11 @@ const TaskManager = () => {
                         // it is a personal task
                         completedTask = task;
                     }
-                    console.log(completedTask.progress);
-                    if (completedTask && completedTask.progress >= task.goal) {
+                    console.log(task);
+                    if (completedTask && parseInt(completedTask.progress) >= parseInt(task.goal)) {
                         // If progress is >= goal, mark as completed
+                        console.log("Task is completed:", task);
+                        console.log(completedTasks);
                         completedTasks.push(task);
                     } else {
                         // Check if the task's due_date has passed and it's not completed
@@ -167,6 +169,7 @@ const TaskManager = () => {
     
             const data = await response.json();
             if (response.ok) {
+                
                 console.log("Task completed:", data);
             } else {
                 console.error("Error:", data.message);
