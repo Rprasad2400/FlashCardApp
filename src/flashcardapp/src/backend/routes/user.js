@@ -69,6 +69,11 @@ router.get('/get-personal-sets/:userID', async (req, res) => {
     console.log("get personal set: ", req.body);
   
     try {
+      console.log(
+        "userID: ", userID,
+        "course_id: ", course_id,
+        "module_name: ", module_name
+      )
       const user = await User.findById(userID);
       if (!user) return res.status(404).json({ message: 'User not found' });
   
@@ -82,7 +87,6 @@ router.get('/get-personal-sets/:userID', async (req, res) => {
       );
       console.log("First", personalSet);
       console.log("Second", testSearch);
-      console.log("Third", aggregateVersion);
   
       if (!personalSet) return res.json({ personal_set: [] });
 
@@ -93,6 +97,7 @@ router.get('/get-personal-sets/:userID', async (req, res) => {
       console.log("Should succesfully return personal set: ", populatedSets);
       res.json({ personal_set: populatedSets});
     } catch (error) {
+      console.log("Error fetching personal set: ", error);
       res.status(500).json({ message: 'Error fetching personal set', error });
     }
   });
