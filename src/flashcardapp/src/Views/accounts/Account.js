@@ -74,7 +74,8 @@ export default function ProfilePage() {
                     if (data2.success) {
                         //alert("data.courses: " + JSON.stringify(data.user.courses)); 
                         //alert("data: " + JSON.stringify(data));
-                        setRecentSets(data2.recent_sets)
+                        setRecentSets(data2.sets)
+                        localStorage.setItem("recent_sets", JSON.stringify(data.sets));
                     }
 
                 } catch (error) {
