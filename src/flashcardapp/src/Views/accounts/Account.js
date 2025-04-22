@@ -70,14 +70,16 @@ export default function ProfilePage() {
                     }
 
                     console.log("recent_sets", localStorage.getItem('recent_sets'));
+                    const recentSetArray = JSON.parse(localStorage.getItem('recent_sets') || '[]');
+                    const recentSetParam = recentSetArray.join(',');
 
-                    const response2 = await fetch(`${address}/api/user/get-recent-sets/?recent_sets=${localStorage.getItem('recent_sets')}`);  
+                    const response2 = await fetch(`${address}/api/user/get-recent-sets/?recent_sets=${recentSetParam}`);  
                     const data2 = await response2.json();
                     if (data2.success) {
                         //alert("data.courses: " + JSON.stringify(data.user.courses)); 
                         //alert("data: " + JSON.stringify(data));
                         setRecentSets(data2.sets)
-                        localStorage.setItem("recent_sets", JSON.stringify(data.sets));
+                        localStorage.setItem("recent_sets", JSON.stringify(data2.sets));
                     }
 
                 } catch (error) {
