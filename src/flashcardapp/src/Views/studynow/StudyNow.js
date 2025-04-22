@@ -9,31 +9,53 @@ import '../../App.css';
 import CourseCardList from "../../Components/coursesList/coursesList";
 
 
-const courses = [
-  {
-    title: "COP 4600: Operating Systems",
-    description: "This course explores the design and implementation of various components of a modern operating system.",
-    image: 'https://ufl.instructure.com/courses/525691/files/93715075/download',
-    modules: ["Module 1", "Module 2", "Module 3"],
-    link: "/OS-flashcards",
-  },
-  {
-    title: "CEN 3031: Software Engineering",
-    description: "An introduction to software engineering principles, methodologies, and project management.",
-    image: "https://ufl.instructure.com/courses/526699/files/93740995/download", // Replace with actual image
-    modules: ["Module 1", "Module 2", "Module 3", "Module 4"],
-    link: "/SE-flashcards",
-  },
-];
+// const courses = [
+//   {
+//     title: "COP 4600: Operating Systems",
+//     description: "This course explores the design and implementation of various components of a modern operating system.",
+//     image: 'https://ufl.instructure.com/courses/525691/files/93715075/download',
+//     modules: ["Module 1", "Module 2", "Module 3"],
+//     link: "/OS-flashcards",
+//   },
+//   {
+//     title: "CEN 3031: Software Engineering",
+//     description: "An introduction to software engineering principles, methodologies, and project management.",
+//     image: "https://ufl.instructure.com/courses/526699/files/93740995/download", // Replace with actual image
+//     modules: ["Module 1", "Module 2", "Module 3", "Module 4"],
+//     link: "/SE-flashcards",
+//   },
+// ];
 
 function StudyNow() {
   const [showModal, setShowModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(false);
+  let courses = JSON.parse(localStorage.getItem("Course_Info")); // You may or may not need this line
 
   // Save profile changes
   const handleSaveChanges = () => {
     setShowModal(false);
   };
+
+  useEffect(() => {
+    const fetchCourseInfo = async () => {
+        try {
+            const address = 'https://flashcardappbackend.onrender.com';
+            const response = await fetch(`${address}/api/user/get-course-info/${localStorage.getItem('username')}`);  
+            const data = await response.json();
+
+            if (data.success) {
+                localStorage.setItem("Course_Info", JSON.stringify(data.courses));
+                courses = JSON.parse(localStorage.getItem("Course_Info")); // You may or may not need this line
+                console.log("course_info", courses);
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    fetchCourseInfo();
+}, []);
+
 
   return (
       <Container>

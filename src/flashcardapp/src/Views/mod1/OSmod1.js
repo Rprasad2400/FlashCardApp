@@ -252,7 +252,7 @@ export default function OSFlash() {
         isOpen={showModal}
         closeModal={() => 
           setShowModal(false)}
-        givenSet={baseSet.flashcards}
+        givenSet={baseSet?.flashcards || []} // this was breaking the page b/c it was originally null
         onClick={onClick}
       />
       <AddSetModal

@@ -52,9 +52,9 @@ export default function ProfilePage() {
     const [profileImage, setProfileImage] = useState(defaultImg); // Stores the displayed profile image
     const navigate = useNavigate();
     const [newUsername, setNewUsername] = useState(localStorage.getItem('username') || ''); // New username input
-    const courses = JSON.parse(localStorage.getItem("courses") || "[]");
+    let courses = JSON.parse(localStorage.getItem("Course_Info") || "[]");
     const badges = JSON.parse(localStorage.getItem("badges"));
-    const [recentSets, setRecentSets] = useState([]);
+    let recentSets = JSON.parse(localStorage.getItem("recent_sets")) || [];
 
     useEffect(() => {
             const fetchCourseInfo = async () => {
@@ -67,15 +67,22 @@ export default function ProfilePage() {
                         //alert("data.courses: " + JSON.stringify(data.user.courses)); 
                         //alert("data: " + JSON.stringify(data));
                         localStorage.setItem("Course_Info", JSON.stringify(data.courses));
+                        courses = JSON.parse(localStorage.getItem("Course_Info"));
                     }
+                    console.log("courses", localStorage.getItem('courses'));
+                    console.log("course_info", courses);
+                    console.log("recent_sets", localStorage.getItem('recent_sets'));
+                    const recentSetArray = JSON.parse(localStorage.getItem('recent_sets') || '[]');
+                    const recentSetParam = recentSetArray.join(',');
+                    console.log("recent_params", recentSetParam);
 
-                    const response2 = await fetch(`${address}/api/user/get-recent-sets/?recent_sets=${localStorage.getItem('recent_sets')}`);  
+                    const response2 = await fetch(`${address}/api/user/get-recent-sets/?recent_sets=${recentSetParam}`);  
                     const data2 = await response2.json();
                     if (data2.success) {
                         //alert("data.courses: " + JSON.stringify(data.user.courses)); 
                         //alert("data: " + JSON.stringify(data));
-                        setRecentSets(data2.sets)
-                        localStorage.setItem("recent_sets", JSON.stringify(data.sets));
+                        localStorage.setItem("recent_sets", JSON.stringify(data2.sets));
+                        recentSets = JSON.parse(localStorage.getItem("recent_sets"));
                     }
 
                 } catch (error) {
@@ -149,7 +156,7 @@ export default function ProfilePage() {
                 <Modal.Body>
                     <Form>
                         {/* Profile Picture Upload */}
-                        <Form.Group className="mb-3 text-center">
+                        {/* <Form.Group className="mb-3 text-center">
                             <Form.Label>Profile Picture</Form.Label>
                             <div>
                                 <Image
@@ -165,7 +172,7 @@ export default function ProfilePage() {
                                 accept="image/*"
                                 onChange={handleImageChange}
                             />
-                        </Form.Group>
+                        </Form.Group> */}
 
                         {/* Username Field */}
                         <Form.Group className="mb-3">
@@ -221,7 +228,7 @@ export default function ProfilePage() {
                             active={activeSection === "progress"}
                             onClick={() => setActiveSection("progress")}
                         >
-                            Progress
+                            Activity
                         </ListGroup.Item>
                     </ListGroup>
                 </Col>
@@ -318,19 +325,19 @@ export default function ProfilePage() {
                     {activeSection === "progress" && (
                         <Card>
                             <Card.Body>
-                                <h2>Progress</h2>
-                                <p>Check your learning progress here.</p>
+                                <h2>Activity</h2>
+                                <p>Check your recent activity here.</p>
                                 <h5 className="fw-bold text-secondary ms-2">📚 Recent Sets:</h5>
                                 <div style={{ width: "80%", margin: "0 auto", maxHeight: "400px", overflowY: "auto", borderRadius: "5px", padding: "5px" }}>
                                     <ListGroup variant="flush">
-                                        {["Module 1 Flashcards", "Module 2 Flashcards", "Module 3 Flashcards"].map((module, index) => (
+                                        {recentSets.map((set, index) => (
                                             <ListGroup.Item key={index} className="p-3 rounded mb-3" style={{
                                                 border: "1px solid #888", // Dark border color
                                                 transition: "border-color 0.3s ease", // Smooth transition for border color change
                                             }}>
-                                            <Row className="align-items-center">
+                                            <Row className="align-items-center mb-3">
                                                 <Col>
-                                                <b className="text-dark">{module}</b>
+                                                <b className="text-dark">{set.name}</b>
                                                 </Col>
                                                 <Col className="d-flex justify-content-end">
                                                 <Button
@@ -339,7 +346,7 @@ export default function ProfilePage() {
                                                     style={{ transition: "all 0.3s ease-in-out" }}
                                                     onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
                                                     onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
-                                                    href="/module1"
+                                                    href={`/ViewSet/${set._id}`}
                                                 >
                                                     Continue →
                                                 </Button>

@@ -48,7 +48,7 @@ router.get('/get-course-info/:userID', async (req, res) => {
     }
 });
 
-router.get('/get-recent-sets/:userID', async (req, res) => {
+router.get('/get-recent-sets', async (req, res) => {
     //console.log("I am trying!");
     //console.log("usrdID: ", req.params.userID);
     const recentSets = req.query.recent_sets ? req.query.recent_sets.split(',') : []; // turns query into an array
