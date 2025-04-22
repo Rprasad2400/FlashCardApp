@@ -25,6 +25,8 @@ function Home() {
     const [selectedDay, setSelectedDay] = useState(null);
     const [newGoal, setNewGoal] = useState("");
     const address = 'https://flashcardappbackend.onrender.com';
+    let totalGoals = 0;
+    let totalProgress = 0;
 
     // Get start of the current week (Monday)
     function getWeekStart(date) {
@@ -157,7 +159,11 @@ function Home() {
             setNewGoal("");
         }
     };
-    
+
+    useEffect(() => {
+        totalGoals = getTotalGoalsForToday();
+        totalProgress = getTotalProgressForToday();
+    }, [])
     
 
     useEffect(() => {
@@ -185,8 +191,6 @@ function Home() {
         fetchUserData();
     }, []);
 
-    const totalGoals = getTotalGoalsForToday();
-    const totalProgress = getTotalProgressForToday();
     return (
         <Container>
             <BadgePopup/>
