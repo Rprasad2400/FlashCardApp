@@ -147,7 +147,7 @@ export default function OSFlash() {
 
     }
    // navigate(`/FlashCardDisplay`); 
-   navigate(`/ViewSet/${module.mainSet}`);
+   navigate(`/ViewSet/${baseSet._id}`);
    // Create course
 
         // Assuming this is the ID of the main set

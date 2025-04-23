@@ -19,6 +19,16 @@
     align-items: stretch;
     margin-bottom: 10px;
 }
+
+.flashcardTableContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 0rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 100vh; /* Ensures the table container doesn't exceed the viewport height */
+}
 .flashcardTable{
     width: 100%;
     align-self: stretch; /* Ensures the table takes the full width of its container */
@@ -26,6 +36,8 @@
     margin-bottom: 20px;
     background-color: #f8f9fa; /* Light background for the table */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    /* make it scrollable */ 
+
 }
 .answerColumn {
     width: 50%; /* Adjusted to take half of the table width */

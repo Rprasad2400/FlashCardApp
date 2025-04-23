@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Col, Row} from 'react-bootstrap';
 import api from '../../scripts/set/SetService';
+import courseApi from '../../scripts/course/CourseService';
 import { Card } from 'react-bootstrap';
 import styles from './viewSet.module.css';
 import { Button } from 'react-bootstrap';
@@ -12,16 +13,18 @@ import { Table } from 'react-bootstrap'; // Import Table from react-bootstrap
 const ViewSet = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const accountID = id;
+    const setID = id;
     const [data, setData] = useState(null);
+    const [course, setCourse] = useState(null);
     const givenSet = data ? data.flashcards : []; // Use empty array if data is null 
+    
     // Fetch the flashcard set details using the id
 
     const moveToFlashDisplay = () => {
         const savedFlashcards = localStorage.getItem('flashcards');
         if (savedFlashcards=="undefined") {
         localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
-        localStorage.setItem('currentSetID', accountID);
+        localStorage.setItem('currentSetID', setID);
         
         navigate(`/FlashCardDisplay`); 
 
@@ -31,34 +34,51 @@ const ViewSet = () => {
             localStorage.removeItem('flashcards');
             localStorage.removeItem('currentSetID');
             localStorage.setItem('flashcards', JSON.stringify(data.flashcards));
-            localStorage.setItem('currentSetID', accountID);
+            localStorage.setItem('currentSetID', setID);
             navigate(`/FlashCardDisplay`); 
 
         }
     }
 
-    useEffect(() => {
-      async function fetchFlashcards() {
-        console.log("entered");
-        console.log(accountID);
-        try {
-          const response = await api.findSet(accountID);
-          setData(response.data);
-          if (response) {
-            setData(response);
-            console.log(response);
-          } else {
-            console.error("No set found");
-          }
-        
-        } catch (error) {
-          console.error("Error fetching flashcards:", error);
-        }
+    async function fetchFlashcards() {
+      try {
+        const response = await api.findSet(setID);
+        setData(response);
+        console.log("Fetched flashcards:", response);
+        return response;
+      } catch (error) {
+        console.error("Error fetching flashcards:", error);
+        return null;
       }
-
-      fetchFlashcards();
-    }, [accountID]);
-    if(!data){ 
+    }
+  
+    async function fetchCourseName(courseId) {
+      try {
+        console.log("Fetching course with ID:", courseId);
+        const response = await courseApi.findCourse(courseId);
+        setCourse(response.name);
+        console.log("Fetched course:", response);
+        console.log("Course name:", response.name);
+        
+      } catch (error) {
+        console.error("Error fetching course:", error);
+      }
+    }
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        const flashcardData = await fetchFlashcards();
+        console.log("Fetched flashcard data:", flashcardData);
+        if (flashcardData && flashcardData.course) {
+          await fetchCourseName(flashcardData.course);
+        } else {
+          console.error("Course ID not available.");
+        }
+      };
+  
+      fetchData();
+    }, [setID]);
+    if(!data && !course){ 
       return <div>Loading...</div>;
     }
     
@@ -69,6 +89,7 @@ const ViewSet = () => {
             <Row>
                 {/* Displaying the flashcards */}
 <Col>
+<div className={styles.flashcardTableContainer}>
 <Table bordered className={styles.flashcardTable}>
   <thead className={styles.tableHeader} >
     <tr>
@@ -99,7 +120,9 @@ const ViewSet = () => {
     ))}
   </tbody>
 
+
 </Table>
+</div>
 </Col>
             {/* Displaying the set details */}
             <Col className={styles.descriptionColumn}>
@@ -112,7 +135,7 @@ const ViewSet = () => {
                     </div>
                     <div className={styles.entry}>
                         <h3>Course</h3>
-                        <div className={styles.value}>{data.course}</div>
+                        <div className={styles.value}>{course}</div>
                         
                     </div>
                     <div className={styles.entry}>
