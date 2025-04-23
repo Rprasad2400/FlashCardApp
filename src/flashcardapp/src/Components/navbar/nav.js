@@ -61,7 +61,7 @@ function NavbarDarkExample({ isAuthenticated }) {
   return (
     <Navbar data-bs-theme="dark" bg="dark" expand="lg">
       <Container fluid>
-        <Navbar.Brand as={Link} to="/">Flashcard App</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">Flashy Flashcards</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-dark-example" />
         <Navbar.Collapse id="navbar-dark-example">
           <Nav className="me-auto">
