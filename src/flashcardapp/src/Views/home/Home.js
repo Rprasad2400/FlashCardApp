@@ -17,6 +17,7 @@ import BadgePopup from '../../Components/badgePopUp/badgePopUp';
 function Home() {
     const [showModal, setShowModal] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState(false);
+    
     const [date, setDate] = useState(new Date());
     const [weekStart, setWeekStart] = useState(getWeekStart(new Date()));
     const [goals, setGoals] = useState({});
@@ -27,6 +28,7 @@ function Home() {
     const address = 'https://flashcardappbackend.onrender.com';
     let totalGoals = 0;
     let totalProgress = 0;
+    let currentStreak = localStorage.getItem("badgeStreak") || 1;
 
     // Get start of the current week (Monday)
     function getWeekStart(date) {
