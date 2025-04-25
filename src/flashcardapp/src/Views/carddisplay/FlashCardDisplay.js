@@ -15,10 +15,11 @@ export default function FlashCardDisplay() {
 
     const [repeat, setRepeat] = useState(false); // Set to true if you want to repeat the flashcards
     const [shuff, setShuffle] = useState(false); // Set to true if you want to shuffle the flashcards
-    const [currentCap, setCurrentCap] = useState(0);
+    const [currentCap, setCurrentCap] = useState(flashcards.length);
     const [currentScore, setCurrentScore] = useState(0);
     const [currentMisses, setMissed] = useState(0);
     const [stars, setStars] = useState("⭐");
+    const maxPossibleScore = (flashcards.length) * (flashcards.length+1)/2 * 100; // Assuming each flashcard is worth 100 points
     const [streak, setStreak] = useState(0);
     const navigate = useNavigate();
     const calculateWeight = (flashcard) => {
@@ -26,7 +27,7 @@ export default function FlashCardDisplay() {
         const performance = (flashcard.wrong + 1) / (flashcard.correct + 1); // Higher weight for lower accuracy
         const time_factor = Math.exp(flashcard.lastAnswered / 5); // Exponential growth to prioritize spaced repetition
         const gate = 1 / (1 + Math.exp(-0.5 * (flashcard.lastAnswered - cooldown))); // Sigmoid function for smooth control
-        console.log("Current Cap: ", currentCap);
+        
     
         const weight = (flashcard.difficulty ** 1.5) * performance * time_factor * gate;
         return weight;
@@ -124,7 +125,7 @@ export default function FlashCardDisplay() {
 useEffect(() => {
     console.log("Current Cap: ", currentCap);
     console.log("Current Index: ", currentIndex);
-    console.log("Current Score: ", flashcards);
+    console.log("Current Score: ", currentScore);
     console.log("Flashcards: ", currentFlashcard);
     
 
@@ -149,8 +150,12 @@ useEffect(() => {
     if (!currentFlashcard) {
         return <div>Loading...</div>;
     }
+
 const onRedButtonClick = () => {
+    console.log("Current Cap: ", currentCap);
     setCurrentCap((prevCap) => Math.min(prevCap + 1, flashcards.length * 1.5));
+    console.log("Current Cap: ", currentCap);
+
 
     // Create a new array and update values immutably
     setFlashcards((prevFlashcards) => {
@@ -172,17 +177,20 @@ const onRedButtonClick = () => {
             console.log("Sorting and updating flashcards after red button click...");
             console.log(updatedFlashcards);
             return [...updatedFlashcards].sort((a, b) => b.weight - a.weight);
+            
 
     });
 
     if(repeat){
         setCurrentIndex((prevIndex) => (prevIndex + 1) );
         setMissed((prevMissed) => prevMissed + 1);
+        
         setStreak(0);
     }
     else{
         setStreak(0);
         setMissed((prevMissed) => prevMissed + 1);
+        setCurrentScore((prevScore) => Math.max(0,prevScore - 100));
         setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
     }
 };
@@ -206,13 +214,17 @@ const onRedButtonClick = () => {
             // Sort flashcards
             console.log("Runs twice");
             console.log(updatedFlashcards);
+            
             return [...updatedFlashcards].sort((a, b) => b.weight - a.weight);
         });
     
         if(repeat==false){
             console.log("Repeat is false, currentIndex: ", currentIndex);
             console.log("Repeat", repeat);
-            setCurrentScore((prevScore) => prevScore + 100 * (streak + 1));
+            
+            setCurrentScore((prevScore) => Math.min(prevScore + 100 * (streak + 1), maxPossibleScore));
+            console.log("Current Score: ", currentScore);
+            console.log("IMHEREREEF###");
             setStreak((prevStreak) => prevStreak + 1);
             setCurrentIndex((prevIndex) => prevIndex + 1);
         }
@@ -270,7 +282,7 @@ const onRedButtonClick = () => {
                 {/* Right Column (Final Column) */}
                 <Col className={styles.rightCol} xs="auto">
                     <div className={styles.scoreContainer}>
-                        <StreakScore currentScore={currentScore} streak={streak} misses={currentMisses}/>
+                        <StreakScore currentScore={currentScore} maxScore={maxPossibleScore} streak={streak} misses={currentMisses}/>
                     </div>
                 </Col>
             </Row>

@@ -82,18 +82,10 @@ const ViewSet = () => {
     {givenSet.map((item, index) => (
       <tr key={index}>
         <td className={styles.questionColumn}>
-          <Card className={styles.card}>
-            <Card.Body>
-              <Card.Text>{item.question}</Card.Text>
-            </Card.Body>
-          </Card>
+          <p>{item.question}</p>
         </td>
         <td className={styles.answerColumn}> 
-          <Card className={styles.card}>
-            <Card.Body>
-              <Card.Text >{item.answer}</Card.Text>
-            </Card.Body>
-          </Card>
+          <p>{item.answer}</p>
         </td>
       </tr>
     ))}
@@ -112,7 +104,7 @@ const ViewSet = () => {
                     </div>
                     <div className={styles.entry}>
                         <h3>Course</h3>
-                        <div className={styles.value}>{data.course}</div>
+                        <div className={styles.value}>Operating Systems</div>
                         
                     </div>
                     <div className={styles.entry}>

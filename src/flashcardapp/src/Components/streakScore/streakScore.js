@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
 import "./streakScore.css"
 
-function StreakScore({ streak, currentScore, misses }) {
+function StreakScore({ streak, maxScore, currentScore, misses }) {
   const [scoreDisplay, setScoreDisplay] = useState(`${currentScore}`);
+
   const pointsEarned = 100 * streak;
+
   useEffect(() => {
     // Calculate points earned
     
-    const newScore = currentScore + pointsEarned;
+    const newScore =  Math.min(pointsEarned+currentScore, maxScore);
+      
 
     // Show calculation temporarily
-    if(streak >= 0){
+    if(streak > 0 || newScore < maxScore){
+        
         setScoreDisplay(`${currentScore} + (${streak} x 100)`);
     }
     else{

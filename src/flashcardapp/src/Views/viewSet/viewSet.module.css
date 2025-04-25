@@ -45,7 +45,7 @@
     font-size: 1.2rem;
     font-weight: bold;
     text-align: center;
-    background-color: #1a4c7d;
+    background-color: #843636;
     border: 2px solid #dee2e6;
     padding: 10px;
     margin-bottom: 5px;
@@ -61,6 +61,48 @@
     border-radius: 0rem;
     margin-bottom: 10px;
 }
+.flashcardTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    table-layout: fixed; /* Ensures equal width distribution */
+}
+
+.flashcardTable th,
+.flashcardTable td {
+    padding: 16px;
+    border: 1px solid #dee2e6;
+    vertical-align: top;
+    height: 100%;
+    word-wrap: break-word;
+}
+
+.flashcardTable td p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #343a40; /* Darker text for better readability */
+}
+
+.questionColumn,
+.answerColumn {
+    width: 50%;
+    background-color: #ffffff;
+}
+
+.tableHeader th {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    background-color: #34343e;
+    color: white;
+    padding: 12px;
+}
+
+
+
 .flashcardRow {
     display: flex;
     width: 100%;
@@ -96,19 +138,17 @@
     margin: 0;
 }
 
-.card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Ensures content inside is centered */
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    height: 100%; /* Makes the card fill its column */
-    padding: 10px;
-    border: 1px solid #dee2e6;
-    border-radius: 0rem;
-    background-color: #ffffff;
-}
+.flashcardTable td {
+    vertical-align: top;
+    height: 100%;
+  }
+  
+  .flashcardTable tr {
+    height: 100%;
+  }
+  
+
+  
 
 .descriptionContent{
     font-size: 1rem;
