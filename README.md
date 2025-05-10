@@ -1,11 +1,11 @@
-# FlashCardApp
+# Flashy Flashcards
 
 
 <div align="center">
   <img src="./src/flashcardapp/public/real_logo.png" alt="Flashcard App Logo" width="400"/>
 </div>
 
-## Flashcard App
+## Flashy Flashcards
 
 
 A gamified flashcard application that enhances learning through spaced repetition and incentive mechanisms. Users can practice flashcards, track their progress, and engage in interactive learning sessions.
