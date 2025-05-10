@@ -44,8 +44,8 @@ To run the application locally, follow these steps:
 4. **Run the Backend:** Navigate to the backend directory:
 
    ```bash
-   cd src/backend
-   npm start
+   cd src/flashcardapp/src/backend
+   node server.js
    ```
 
    The backend will be running at `http://localhost:5000`.
